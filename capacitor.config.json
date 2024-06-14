@@ -1,0 +1,5 @@
+{
+  "appId": "bird.identifier.app",
+  "appName": "bird-identifier-app",
+  "webDir": "dist"
+}

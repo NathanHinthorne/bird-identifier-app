@@ -1,0 +1,27 @@
+:root {
+    --primary-color: #4CAF50;
+    --secondary-color: #388E3C;
+    --background-color: #1B5E20;
+    --light-background-color: #ffffff;
+    --text-color: rgba(255, 255, 255, 0.87);
+    --light-text-color: #213547;
+    --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    --font-weight: 400;
+    --line-height: 1.5;
+    --font-size: 1em;
+    --header-font-size: 3.2em;
+    --button-background-color: #1a1a1a;
+    --button-border-color: #4CAF50;
+    --button-hover-border-color: #66BB6A;
+    --button-focus-outline-color: -webkit-focus-ring-color;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+}
+
+ion-tab-button {
+    --color-selected: var(--primary-color);
+}
