@@ -1,27 +1,112 @@
 :root {
-    --primary-color: #4CAF50;
-    --secondary-color: #388E3C;
-    --background-color: #1B5E20;
-    --light-background-color: #ffffff;
-    --text-color: rgba(255, 255, 255, 0.87);
-    --light-text-color: #213547;
-    --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    --font-weight: 400;
-    --line-height: 1.5;
-    --font-size: 1em;
-    --header-font-size: 3.2em;
-    --button-background-color: #1a1a1a;
-    --button-border-color: #4CAF50;
-    --button-hover-border-color: #66BB6A;
-    --button-focus-outline-color: -webkit-focus-ring-color;
+    --ion-color-primary: #36824b;
+    --ion-color-primary-rgb: 68, 162, 91;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #448e53;
+    --ion-color-primary-tint: #44a25b;
+
+    /* 
+        other color options:
+
+        ion-color-secondary: #f8faf9;
+        secondary-contrast: #818a8a;
+    */
+    --ion-color-secondary: #eaf1ef;
+    --ion-color-secondary-rbg: 234, 241, 239;
+    --ion-color-secondary-contrast: #687373;
+    --ion-color-secondary-contrast-rgb: 104, 115, 115;
+
+    --ion-background-color: white;
+    --ion-text-color: black;
 }
 
-body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    font-family: var(--font-family);
+ion-text {
+    color: var(--ion-text-color);
+}
+
+ion-title {
+    /* center */
+    color: var(--ion-text-color);
+    text-align: center;
+    font-size: 1.5em;
+}
+
+ion-toolbar {
+    /* center */
+    --ion-toolbar-justify-content: center;
+}
+
+ion-content {
+    --background: var(--ion-background-color);
+}
+
+ion-item {
+    --background: var(--ion-background-color);
+    --color: var(--ion-text-color);
+}
+
+ion-input {
+    --background: var(--ion-background-color);
+    --color: var(--ion-text-color);
+    --placeholder-color: #8d6e63;
+    /* Light brown for placeholders */
+}
+
+ion-label {
+    --color: var(--ion-text-color);
+}
+
+ion-card {
+    --background: var(var(--ion-color-secondary));
+    --color: var(--ion-text-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+ion-card-header {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+ion-card-content {
+
+    padding: 15px;
+}
+
+ion-thumbnail {
+    --border-radius: 10px;
+    overflow: hidden;
+}
+
+ion-icon {
+    color: var(--ion-color-primary-contrast);
+}
+
+ion-tab-bar {
+    background-color: var(--ion-color-secondary);
+    color: var(--ion-color-secondary-contrast);
 }
 
 ion-tab-button {
-    --color-selected: var(--primary-color);
+    --color-selected: var(--ion-color-primary-shade);
+    --color: var(--ion-color-secondary);
+    --background: transparent;
+}
+
+ion-tab-button.ion-tab-button-checked {
+    --background: var(--ion-color-primary);
+    --color: var(--ion-color-primary-contrast);
+}
+
+ion-button {
+    --background: var(--ion-color-primary-tint);
+    --background-activated: var(--ion-color-primary-shade);
+    --background-focused: var(--ion-color-primary-tint);
+    --background-hover: var(--ion-color-primary-tint);
+    --color: var(--ion-color-primary-contrast);
+}
+
+.heading {
+    --background: var(--ion-color-primary-tint);
 }

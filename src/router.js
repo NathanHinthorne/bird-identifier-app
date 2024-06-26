@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import Root from './views/Root.vue';
 import LifeList from './views/LifeList.vue';
 import Explore from './views/Explore.vue';
+import Settings from './views/Settings.vue';
 import Identify from './views/Identify.vue';
 import IdentifyBySound from './views/IdentifyBySound.vue';
 import IdentifyByImage from './views/IdentifyByImage.vue';
@@ -42,6 +43,10 @@ const routes = [
             {
                 path: 'explore',
                 component: Explore
+            },
+            {
+                path: 'settings',
+                component: Settings
             }
         ]
     }

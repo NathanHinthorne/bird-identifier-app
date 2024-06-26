@@ -1,10 +1,4 @@
 <style scoped>
-  .example-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
 </style>
 
 <template>
@@ -24,8 +18,6 @@
 <script setup>
   import { IonList, IonItem, IonThumbnail, IonLabel } from '@ionic/vue';
 
-  import { ref, defineEmits, defineProps } from 'vue';
-
   const emit = defineEmits(['selectBird']);
 
   const props = defineProps({
@@ -34,6 +26,7 @@
 
   const selectBird = (bird) => {
     console.log('Selected bird:', bird);
+
     // emit the selected bird to the parent component
     emit('selectBird', bird);
   };

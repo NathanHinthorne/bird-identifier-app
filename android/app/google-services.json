@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "692416025958",
+    "project_id": "bird-identifier-app",
+    "storage_bucket": "bird-identifier-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692416025958:android:caaa49f49b48e76bf524a7",
+        "android_client_info": {
+          "package_name": "bird.identifier.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGAA5pH5SO73ulGY6-iLsP6sTy4t8ljRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

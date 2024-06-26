@@ -1,12 +1,3 @@
-<style scoped>
-  .example-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-  }
-</style>
-
 <template>
   <ion-page>
     <p>Identify by image</p>
@@ -15,5 +6,21 @@
 </template>
 
 <script setup>
+  // import { submitUserBirdData } from '../services/birdService.js';
+
+  // const submitData = async (type)  => {
+  //   const birdData = {
+  //     birdName: type,
+  //     location: 'Sample Location',
+  //     timestamp: new Date().toISOString(),
+  //     userId: 'sampleUserId' // Replace with actual user ID
+  //   };
+  //   try {
+  //     const response = await submitUserBirdData(birdData);
+  //     console.log('Data submitted:', response);
+  //   } catch (error) {
+  //     console.error('Error submitting data:', error);
+  //   }
+  // }
 
 </script>
