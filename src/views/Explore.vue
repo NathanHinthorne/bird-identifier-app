@@ -12,7 +12,7 @@ differences.
     </ion-toolbar>
         
     <ion-content>
-      <BirdSearch @search="searchBirds" class="heading" />
+      <BirdSearch class="heading" @search="searchBirds" @loadMoreBirds="loadMoreBirds" />
       <BirdList :birds="birds" @selectBird="selectBird" />
 
       <!-- take out this line after transitioning from bird detail being a card
@@ -24,25 +24,27 @@ differences.
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import BirdDetail from '../components/BirdDetail.vue'
 import BirdList from '../components/BirdList.vue';
 import BirdSearch from '../components/BirdSearch.vue';
 import { IonContent, IonPage, IonToolbar, IonTitle } from '@ionic/vue';
+import { useNearbyBirdsStore } from '../stores/nearbyBirdsStore';
 
-import { ref } from 'vue';
-
-const birds = ref([]);
+const nearbyBirdsStore = useNearbyBirdsStore();
 const selectedBird = ref(null);
+const defaultBirds = nearbyBirdsStore.getDisplayedBirds();
+const birds = ref(defaultBirds);
+
+const loadMoreBirds = async () => {
+  nearbyBirdsStore.generateMoreBirds();
+  birds.value = nearbyBirdsStore.getDisplayedBirds();
+};
 
 const searchBirds = (searchTerm) => {
-  // Mock data for demonstration
-  const mockBirds = [
-    { id: 1, name: 'Northern Cardinal', description: 'A small red bird.', image: 'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/385850851/480' },
-    { id: 2, name: 'Blue Jay', description: 'A blue bird with a distinctive crest.', image: 'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/311635911/1800' },
-    { id: 3, name: 'American Robin', description: 'A common bird with a red breast.', image: 'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/303441381/1800' },
-  ];
-
-  birds.value = mockBirds.filter(bird => bird.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  // refresh the list of birds from the store
+  nearbyBirdsStore.applyNewSearch(searchTerm);
+  birds.value = nearbyBirdsStore.getDisplayedBirds();
 
   // erase selected bird when searching
   selectedBird.value = null;

@@ -25,6 +25,7 @@
     "@tensorflow/tfjs": "^4.20.0",
     "axios": "^1.7.2",
     "firebase": "^10.12.2",
+    "node-html-parser": "^6.1.13",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.0.13"
