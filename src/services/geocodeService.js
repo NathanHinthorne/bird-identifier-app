@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-// read geocoding api docs at https://opencagedata.com/api
-
 export const getLocation = async (lat, lng) => {
     const apiKey = import.meta.env.VITE_GEOCODING_API_KEY; // Accessing the API key
     try {
@@ -17,8 +15,10 @@ export const getLocation = async (lat, lng) => {
 
         throw new Error('Location code not found');
     } catch (error) {
-        if (axios.isTimeout(error)) {
+        // Check if the error is due to a timeout
+        if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
             // Retry the request if it times out
+            console.log('Retrying Geocode request...');
             return getLocation(lat, lng);
         }
         throw error;

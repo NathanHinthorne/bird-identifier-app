@@ -7,7 +7,7 @@ export const useLocationStore = defineStore('location', {
     actions: {
         setLocation(location) {
             this.currentLocation = location;
-            console.log('Location set from locationStore:', location);
+            console.log('Location set:', location);
         },
     },
 });

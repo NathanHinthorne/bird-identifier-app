@@ -1,5 +1,15 @@
 apply plugin: 'com.android.application'
 
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}
+
+
 android {
     namespace "bird.identifier.app"
     compileSdk rootProject.ext.compileSdkVersion
@@ -30,12 +40,12 @@ repositories {
     }
 }
 
-plugins {
-  id 'com.android.application'
+// plugins {
+//   id 'com.android.application'
 
-  // Add the Google services Gradle plugin
-  id 'com.google.gms.google-services'
-}
+//   // Add the Google services Gradle plugin
+//   id 'com.google.gms.google-services'
+// }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -60,12 +70,3 @@ dependencies {
 }
 
 apply from: 'capacitor.build.gradle'
-
-try {
-    def servicesJSON = file('google-services.json')
-    if (servicesJSON.text) {
-        apply plugin: 'com.google.gms.google-services'
-    }
-} catch(Exception e) {
-    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
-}

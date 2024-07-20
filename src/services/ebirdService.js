@@ -4,76 +4,58 @@ import { parse } from 'node-html-parser';
 // test ebird api at https://ebird-api-ui.com/taxonomy/ebird-taxonomy
 // read ebird api docs at https://documenter.getpostman.com/view/664302/S1ENwy59
 
-export const fetchNearbyBirds = async (location) => {
-    const apiKey = import.meta.env.VITE_EBIRD_API_KEY; // Access the API key from .env
-    const response = await axios.get(`https://api.ebird.org/v2/product/spplist/${location}`, {
-        headers: {
-            'X-eBirdApiToken': apiKey // Use the API key in the request header
+const retryRequest = async (url, options, maxRetries = 3) => {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const response = await axios.get(url, options);
+            return response.data;
+        } catch (error) {
+            if (attempt === maxRetries) throw error;
         }
-    });
+    }
+};
 
-    return response.data;
+export const fetchNearbyBirds = async (location) => {
+    const apiKey = import.meta.env.VITE_EBIRD_API_KEY;
+    const options = {
+        headers: {
+            'X-eBirdApiToken': apiKey
+        }
+    };
+    const url = `https://api.ebird.org/v2/product/spplist/${location}`;
+    return retryRequest(url, options);
 };
 
 export const fetchBirdNames = async (speciesCodes) => {
-    //https://api.ebird.org/v2/ref/taxonomy/ebird/?species=spcode?fmt=json
-    const apiKey = import.meta.env.VITE_EBIRD_API_KEY; // Access the API key from .env
-    const response = await axios.get(`https://api.ebird.org/v2/ref/taxonomy/ebird/`, {
+    const apiKey = import.meta.env.VITE_EBIRD_API_KEY;
+    const options = {
         headers: {
-            'X-eBirdApiToken': apiKey // Use the API key in the request header
+            'X-eBirdApiToken': apiKey
         },
         params: {
             species: speciesCodes.join(','),
             fmt: 'json'
         }
-    });
+    };
+    const url = `https://api.ebird.org/v2/ref/taxonomy/ebird/`;
+    const data = await retryRequest(url, options);
 
-    // Map over the response data to extract names
-    return response.data.map(bird => ({
+    // Map over the data to extract names
+    return data.map(bird => ({
         speciesCode: bird.speciesCode,
         sciName: bird.sciName || 'Scientific name not available.',
         comName: bird.comName || 'Common name not available.'
     }));
-}
+};
 
 
 
-// Macaulay Library API (Related to eBird. Does not require an API key)
-export const fetchBirdPhotos = async (speciesCodes) => {
-    const baseUrl = 'https://search.macaulaylibrary.org/api/v1/search';
-    const params = {
-        mediaType: 'p',
-        sort: 'rating_rank_desc',
-        // count: 1  // We only need one result per species
-    };
 
-    // use promise all instead
-    const requests = speciesCodes.map(async (speciesCode) => {
-        const response = await axios.get(baseUrl, {
-            params: {
-                taxonCode: speciesCode,
-                ...params
-            }
-        });
-
-        const firstResult = response.data.results.content[0];
-
-        // extract the small and large image URLs from the response
-        const smallImg = firstResult.previewUrl || 'https://search.macaulaylibrary.org/static/blank-placeholder.png'
-        const largeImg = firstResult.largeUrl || 'https://search.macaulaylibrary.org/static/blank-placeholder.png'
-
-        return { smallImg, largeImg };
-    });
-
-    return Promise.all(requests);
-}
-
-
-// Cornell Lab of Ornithology (Web scraping. Does not require an API key)
+// Cornell Lab of Ornithology 
 export const fetchBirdDescription = async (commonName) => {
     try {
-        // Replace spaces with hyphens and convert to lowercase
-        const formattedName = commonName.replace(/\s+/g, '-').toLowerCase();
+        // Replace spaces with underscores and convert to lowercase
+        const formattedName = commonName.replace(/\s+/g, '_').toLowerCase();
         const url = `https://www.allaboutbirds.org/guide/${formattedName}/overview`;
 
         // Fetch the HTML content of the page

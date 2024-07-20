@@ -1,99 +1,170 @@
 <template>
     <ion-page>
+        <Header />
+
+        <div class="scrapbook-container">
+            <div class="corner-image top-left"></div>
+            <div class="corner-image top-right"></div>
+            <div class="corner-image bottom-left"></div>
+            <div class="corner-image bottom-right"></div>
+            <div class="scrapbook-background"></div>
 
         <!-- "last bird seen" section -->
-        <ion-card>
+        <!-- <ion-card>
             <ion-card-header>
                 <ion-card-title>Last Bird Seen</ion-card-title>
             </ion-card-header>
             <ion-card-content class="last-bird-seen">
                 <p>Placeholder for last bird seen.</p>
             </ion-card-content>
-        </ion-card>
+        </ion-card> -->
 
 
         <!-- "identify a bird" section -->
-        <ion-content>
-            <ion-card-header>
-                <div class="heading-container">
-                    <div class="heading-text">IDENTIFY A BIRD</div>
-                </div>
-            </ion-card-header>
-            <ion-card-content>
-                <div class="button-container">
-                    <ion-button class="big-button" @click="identifyBySound">
-                        <ion-icon :icon="mic"></ion-icon>
-                    </ion-button>
-                    <ion-button class="big-button" @click="identifyByImage">
-                        <ion-icon :icon="camera"></ion-icon>
-                    </ion-button>
-                </div>
-            </ion-card-content>
-        </ion-content>
+         <!-- @click="identifyBySound" -->
+         <!-- @click="identifyByImage" -->
+          
+            <div class="button-container">
+                <button class="scrapbook-button sound-button" @click="identifyBySound">
+                    <span>Identify by Sound</span>
+                </button>
+                <button class="scrapbook-button image-button" @click="identifyByImage">
+                    <span>Identify by Image</span>
+                </button>
+            </div>
 
+        </div>
     </ion-page>
 </template>
 
 <script setup>
 import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonPage, IonContent, IonIcon } from '@ionic/vue';
+import Header from '../components/Header.vue';
 
-    // camera and mic icons
-    import { camera, mic } from 'ionicons/icons';
+// camera and mic icons
+import { camera, mic } from 'ionicons/icons';
 
-    import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
-    const router = useRouter();
+const router = useRouter();
 
-    const identifyBySound = () => {
-        console.log('Identifying bird by sound...');
-        // route to the IdentifyBySound page
-        router.push('/identify/sound');
-    };
+const identifyBySound = () => {
+    console.log('Identifying bird by sound...');
+    // route to the IdentifyBySound page
+    router.push('/identify/sound');
+};
 
-    const identifyByImage = () => {
-        console.log('Identifying bird by image...');
-        // route to the IdentifyByImage page
-        router.push('/identify/image');
-    };
+const identifyByImage = () => {
+    console.log('Identifying bird by image...');
+    // route to the IdentifyByImage page
+    router.push('/identify/image');
+};
 </script>
 
 
 
 <style scoped>
-.heading-container {
+
+.button-container {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    right: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin: 20px 0;
+    gap: 20px;
+}
+
+.scrapbook-button {
+    width: 150px;
+    height: 150px;
+    border: none;
+    background-color: transparent;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
     position: relative;
+    transition: transform 0.3s ease;
 }
 
-.heading-container::before,
-.heading-container::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid #B0BEC5;
-    /* Light grey color */
-    margin: 0 10px;
+.scrapbook-button:hover {
+    transform: scale(1.1);
 }
 
-.heading-text {
-    color: var(--ion-color-secondary-contrast);
-    /* Grey color for the text */
-    font-size: 12px;
+.scrapbook-button span {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
     text-align: center;
-    letter-spacing: 1px;
+    color: #4a4a4a;
+    font-weight: bold;
+    font-size: 14px;
+    text-shadow: 1px 1px 2px white;
 }
 
-
-/* buttons */
-.big-button {
-    /* ratio should be 3 high, 2 wide */
-    width: 35vw;
-    height: 20vh;
-    /* round edges*/
-    border-radius: 20px;
+.sound-button {
+    background-image: url('../assets/ui/paper-piece-square-tape.png');
 }
+
+.image-button {
+    background-image: url('../assets/ui/paper-piece-square-tape.png');
+}
+
+.corner-image {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.top-left {
+  top: 0px;
+  left: 0px;
+  background-image: url('../assets/backgrounds/corner-top-left.png');
+}
+
+.top-right {
+  top: 0px;
+  right: 0px;
+  background-image: url('../assets/backgrounds/corner-top-right.png');
+}
+
+.bottom-left {
+  bottom: 0px;
+  left: 0px;
+  background-image: url('../assets/backgrounds/corner-bottom-left.png');
+}
+
+.bottom-right {
+  bottom: 0px;
+  right: 0px;
+  background-image: url('../assets/backgrounds/corner-bottom-right.png');
+}
+
+.scrapbook-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scrapbook-background {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  background-image: url('../assets/backgrounds/scrapbook-bird-lengthened.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
 
 .button-container {
     display: flex;

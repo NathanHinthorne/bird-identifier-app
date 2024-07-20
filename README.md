@@ -2,6 +2,10 @@
 
 ## Description
 
+## Structure
+
+This app (the frontend) uses Firebase to store birds identified by each user, wheras the API (the backend) has a PostGreSQL database for storing all birds (by region) in the US.
+
 ## Installation for Development
 
 ### Android
@@ -28,4 +32,4 @@ A big thank you to my following friends for their contributions to this project:
   
 - Arsh for the random, but brilliant idea of pairing a game with bird identification. 
 
-- And most importantly **Ethan!!!** For his collection of over 600 bird images he spent years personally photographing and organizing.
+- And most importantly **Ethan!!!** For his collection of over 600 bird images he spent years personally photographing and organizing. 

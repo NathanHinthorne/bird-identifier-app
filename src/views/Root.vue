@@ -74,20 +74,25 @@ const handleTabChange = (event) => {
 
 /* WHEN NOT ACTIVE */ 
 ion-tab-button {
-  background-color: var(--ion-color-secondary);
+  background-color: transparent;
 }
 ion-tab-button * {
   font-weight: normal;
-  color: var(--ion-color-secondary-contrast);
+  color: white;
 }
 
 
 .active-tab {
-  background-color: var(--ion-color-primary);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 .active-info {
   font-weight: bold;
-  color: var(--ion-color-primary-contrast);
+  color: black;
+}
+
+ion-tab-bar {
+  background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
+  background-size: cover;
 }
 
 

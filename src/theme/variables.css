@@ -64,11 +64,6 @@ ion-card {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-ion-card-header {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
 ion-card-content {
 
     padding: 15px;
