@@ -166,14 +166,6 @@ const identifyByImage = () => {
 }
 
 
-.button-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-
 /* last bird seen */
 .last-bird-seen {
     display: flex;

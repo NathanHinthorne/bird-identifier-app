@@ -30,6 +30,6 @@ A big thank you to my following friends for their contributions to this project:
   
 - Natan for his witty success text that appears when a bird is identified, such as: "THAT THERE BE A BIRD", "U HAS FOUND BIRD", and "BIRD OBTAINED".
   
-- Arsh for the random, but brilliant idea of pairing a game with bird identification. 
+- Arsh for the idea of pairing a game with bird identification.
 
-- And most importantly **Ethan!!!** For his collection of over 600 bird images he spent years personally photographing and organizing. 
+- And most importantly **Ethan!!!** For his collection of over 600 bird images he spent years personally photographing and organizing.

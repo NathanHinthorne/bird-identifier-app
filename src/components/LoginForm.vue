@@ -19,7 +19,9 @@
 import { ref } from 'vue';
 import { IonItem, IonLabel, IonInput, IonButton } from '@ionic/vue';
 import { useUserStore } from '../stores/userStore';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const userStore = useUserStore();
 const email = ref('');
 const password = ref('');
@@ -27,7 +29,10 @@ const password = ref('');
 const handleSubmit = async () => {
   try {
     await userStore.login(email.value, password.value);
-    // Redirect to home or dashboard
+
+    // Redirect to home
+    router.push({ name: 'Identify' });
+
   } catch (error) {
     console.error('Login failed:', error);
     // Show error message to user

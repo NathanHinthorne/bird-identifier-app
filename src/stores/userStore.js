@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { auth, db } from '@/firebase'; //! Ensure this path is correct
+import { auth, rtdb } from '@/firebase'; // my firebase/index.js file
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    updateEmail,
-    updatePassword
+    updateEmail as firebaseUpdateEmail,
+    updatePassword as firebaseUpdatePassword
 } from 'firebase/auth';
 import { ref as dbRef, set, get } from 'firebase/database';
 
 export const useUserStore = defineStore('user', () => {
+    // State
+
     const user = ref(null);
     const isAuthenticated = computed(() => user.value !== null);
     const settings = ref({
@@ -18,11 +20,18 @@ export const useUserStore = defineStore('user', () => {
         enableMusic: true,
         enableSoundEffects: true
     });
+    const seenBirds = ref([]);
+
+    // Account management
 
     const login = async (email, password) => {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         user.value = userCredential.user;
         await fetchSettings();
+        console.log('Logged in as:', user.value);
+
+        // add test bird in seenBirds
+        seenBirds.value.push('test bird');
     };
 
     const logout = async () => {
@@ -44,37 +53,65 @@ export const useUserStore = defineStore('user', () => {
 
     const updateProfile = async (username) => {
         if (user.value) {
-            await set(dbRef(db, `users/${user.value.uid}/profile`), { username });
+            await set(dbRef(rtdb, `users/${user.value.uid}/profile`), { username });
+            console.log('Updated profile:', username);
         }
     };
 
     const updateEmail = async (newEmail) => {
         if (user.value) {
-            await updateEmail(user.value, newEmail);
+            await firebaseUpdateEmail(user.value, newEmail);
             user.value = auth.currentUser; // Refresh user object
+            console.log('Updated email:', newEmail);
         }
     };
 
     const updatePassword = async (newPassword) => {
         if (user.value) {
-            await updatePassword(user.value, newPassword);
+            await firebaseUpdatePassword(user.value, newPassword);
+            console.log('Updated password');
         }
     };
 
+
+    // Settings
+
     const saveSettings = async () => {
         if (user.value) {
-            await set(dbRef(db, `users/${user.value.uid}/settings`), settings.value);
+            await set(dbRef(rtdb, `users/${user.value.uid}/settings`), settings.value);
+            console.log('Saved settings:', settings.value);
         }
     };
 
     const fetchSettings = async () => {
         if (user.value) {
-            const snapshot = await get(dbRef(db, `users/${user.value.uid}/settings`));
+            const snapshot = await get(dbRef(rtdb, `users/${user.value.uid}/settings`));
             if (snapshot.exists()) {
                 settings.value = snapshot.val();
             }
         }
     };
+
+
+    // Seen birds
+
+    const addSeenBird = async (birdName) => {
+        if (user.value) {
+            seenBirds.value.push(birdName);
+            await set(dbRef(rtdb, `users/${user.value.uid}/seenBirds`), seenBirds.value);
+            console.log('Added seen bird:', birdName);
+        }
+    }
+
+    const fetchSeenBirds = async () => {
+        if (user.value) {
+            const snapshot = await get(dbRef(rtdb, `users/${user.value.uid}/seenBirds`));
+            if (snapshot.exists()) {
+                seenBirds.value = snapshot.val();
+            }
+        }
+    }
+
 
     return {
         user,
@@ -87,6 +124,8 @@ export const useUserStore = defineStore('user', () => {
         updateEmail,
         updatePassword,
         saveSettings,
-        fetchSettings
+        fetchSettings,
+        addSeenBird,
+        fetchSeenBirds
     };
 });

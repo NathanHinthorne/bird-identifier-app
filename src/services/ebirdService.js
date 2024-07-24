@@ -4,7 +4,7 @@ import { parse } from 'node-html-parser';
 // test ebird api at https://ebird-api-ui.com/taxonomy/ebird-taxonomy
 // read ebird api docs at https://documenter.getpostman.com/view/664302/S1ENwy59
 
-const retryRequest = async (url, options, maxRetries = 3) => {
+const retryRequest = async (url, options = "", maxRetries = 15) => {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
             const response = await axios.get(url, options);
@@ -12,6 +12,7 @@ const retryRequest = async (url, options, maxRetries = 3) => {
         } catch (error) {
             if (attempt === maxRetries) throw error;
         }
+        await new Promise(resolve => setTimeout(resolve, 5000)); // Add a delay of 5 seconds
     }
 };
 

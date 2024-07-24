@@ -16,7 +16,16 @@
       "spinnerColor": "#999999",
       "splashFullScreen": true,
       "splashImmersive": true
-    }
+    },
+    "FirebaseAuthentication": {
+      "skipNativeAuth": false,
+      "providers": [
+        "apple.com",
+        "google.com"
+      ]
+    },
+    "FirebaseFirestore": {},
+    "FirebaseDatabase": {}
   },
   "android": {
     "allowMixedContent": true,

@@ -24,6 +24,7 @@ dist-ssr
 *.sln
 *.sw?
 *.env
+serviceAccountKey.json
 
 # Private resources
 *.plist

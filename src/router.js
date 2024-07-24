@@ -84,7 +84,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    // use for production
+    // use for production?
     // history: createWebHistory(import.meta.env.VITE_BASE_URL),
 
     // use for dev

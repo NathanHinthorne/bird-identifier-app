@@ -12,7 +12,6 @@ import { defineStore } from 'pinia'
 // shortDescription: string;
 // longDescription: string;
 // howToFind: string;
-// habitat: string;
 // map: string;
 // learnMoreLink: string;
 

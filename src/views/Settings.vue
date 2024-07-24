@@ -135,3 +135,76 @@ const logout = async () => {
   router.push('/auth');
 };
 </script>
+
+<style scoped>
+.scrapbook-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scrapbook-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/backgrounds/leather-book-back.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  z-index: 0;
+}
+
+ion-list-header {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+ion-item {
+  margin-bottom: 20px; /* Increased margin for more space */
+}
+
+ion-label {
+  color: #666;
+}
+
+ion-textarea {
+  --padding-start: 10px;
+  --padding-end: 10px;
+  --background: #f9f9f9;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-top: 5px; /* Added margin-top for more space */
+}
+
+ion-button {
+  --background: var(--ion-color-primary);
+  --color: white;
+  --border-radius: 5px;
+  font-size: 1.2em;
+  --padding-start: 20px; /* Add padding to the left */
+  --padding-end: 20px;   /* Add padding to the right */
+  --padding-top: 15px;   /* Add padding to the top */
+  --padding-bottom: 15px; /* Add padding to the bottom */
+  
+  /* Center the button */
+  margin: 0 auto;
+  display: block;
+  
+}
+
+ion-toolbar {
+  --background: none;
+  background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
+  background-size: cover;
+  padding: 10px;
+}
+
+ion-title {
+  color: white;
+}
+</style>

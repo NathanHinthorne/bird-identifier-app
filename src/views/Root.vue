@@ -42,7 +42,6 @@ const activeTab = ref('identify'); // Default
 
 const handleTabChange = (event) => {
   activeTab.value = event.tab;
-  console.log(`Current tab: ${activeTab.value}`);
 
   // apply css class to the active tab
   // and remove it from the other tabs
