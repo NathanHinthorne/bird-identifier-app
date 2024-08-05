@@ -1,7 +1,15 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import {
+    getAuth,
+    setPersistence,
+    browserLocalPersistence,
+    onAuthStateChanged
+} from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 import { getFirestore } from 'firebase/firestore';
+import router from '../router.js';
+import { useUserStore } from '../stores/userStore';
+const userStore = useUserStore();
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -17,5 +25,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const rtdb = getDatabase(app);
 const firestore = getFirestore(app);
+
+setPersistence(auth, browserLocalPersistence);
+
+
 
 export { auth, rtdb, firestore };

@@ -14,6 +14,12 @@ After building, go to the android folder and run the following command:
 
 ```bash
 ./gradlew assembleDebug
+``` 
+
+OR to test the app on a connected device:
+
+```bash
+npx cap run android --target=44190DLJH0008S  --external --no-sync
 ```
 
 ## Ideas for Future Features

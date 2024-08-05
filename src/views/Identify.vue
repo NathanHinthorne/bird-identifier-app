@@ -9,17 +9,6 @@
             <div class="corner-image bottom-right"></div>
             <div class="scrapbook-background"></div>
 
-        <!-- "last bird seen" section -->
-        <!-- <ion-card>
-            <ion-card-header>
-                <ion-card-title>Last Bird Seen</ion-card-title>
-            </ion-card-header>
-            <ion-card-content class="last-bird-seen">
-                <p>Placeholder for last bird seen.</p>
-            </ion-card-content>
-        </ion-card> -->
-
-
         <!-- "identify a bird" section -->
          <!-- @click="identifyBySound" -->
          <!-- @click="identifyByImage" -->
@@ -32,6 +21,11 @@
                     <span>Identify by Image</span>
                 </button>
             </div>
+            <div id="bird-shadows-frame"></div>
+            <div id="bird-feather-frame"></div>
+            <div id="field-guide-frame"></div>
+            <div id="map-frame"></div>
+
 
         </div>
     </ion-page>
@@ -40,9 +34,6 @@
 <script setup>
 import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonPage, IonContent, IonIcon } from '@ionic/vue';
 import Header from '../components/Header.vue';
-
-// camera and mic icons
-import { camera, mic } from 'ionicons/icons';
 
 import { useRouter } from 'vue-router';
 
@@ -76,8 +67,6 @@ const identifyByImage = () => {
 }
 
 .scrapbook-button {
-    width: 150px;
-    height: 150px;
     border: none;
     background-color: transparent;
     background-size: contain;
@@ -105,12 +94,71 @@ const identifyByImage = () => {
 }
 
 .sound-button {
-    background-image: url('../assets/ui/paper-piece-square-tape.png');
+    width: 130px;
+    height: 130px;
+    background-image: url('../assets/ui/spectrogram-frame.png');
+    transform: rotate(-3deg);
 }
 
 .image-button {
-    background-image: url('../assets/ui/paper-piece-square-tape.png');
+    width: 200px;
+    height: 200px;
+    background-image: url('../assets/ui/bird-frame.png');
+    transform: rotate(2deg);
 }
+
+#bird-shadows-frame {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    bottom: 7%;
+    left: 60%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 1;
+    transform: rotate(2deg);
+    background-image: url('../assets/ui/bird-shadows-frame.png');
+}
+
+#map-frame {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    bottom: 20%;
+    right: 10%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 1;
+    transform: rotate(-4deg);
+    background-image: url('../assets/ui/map-frame.png');
+}
+
+#bird-feather-frame {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    bottom: 17%;
+    left: 25%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 1;
+    transform: rotate(-2deg);
+    background-image: url('../assets/ui/bird-feather-frame.png');
+}
+
+#field-guide-frame {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    bottom: 25%;
+    left: 18%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 1;
+    transform: rotate(4deg);
+    background-image: url('../assets/ui/field-guide-frame.png');
+}
+
 
 .corner-image {
   position: absolute;
@@ -119,30 +167,31 @@ const identifyByImage = () => {
   background-size: contain;
   background-repeat: no-repeat;
   z-index: 1;
+  background-image: url('../assets/backgrounds/scrapbook-corner.png');
 }
 
 .top-left {
-  top: 0px;
-  left: 0px;
-  background-image: url('../assets/backgrounds/corner-top-left.png');
+  top: 10px;
+  left: 10px;
+  transform: rotate(0deg);
 }
 
 .top-right {
-  top: 0px;
-  right: 0px;
-  background-image: url('../assets/backgrounds/corner-top-right.png');
+  top: 10px;
+  right: 10px;
+  transform: rotate(90deg);
 }
 
 .bottom-left {
-  bottom: 0px;
-  left: 0px;
-  background-image: url('../assets/backgrounds/corner-bottom-left.png');
+  bottom: 10px;
+  left: 10px;
+  transform: rotate(270deg);
 }
 
 .bottom-right {
-  bottom: 0px;
-  right: 0px;
-  background-image: url('../assets/backgrounds/corner-bottom-right.png');
+  bottom: 10px;
+  right: 10px;
+  transform: rotate(180deg);
 }
 
 .scrapbook-container {
@@ -154,31 +203,59 @@ const identifyByImage = () => {
 
 .scrapbook-background {
   position: absolute;
-  top: 5px;
-  left: 5px;
-  right: 5px;
-  bottom: 5px;
-  background-image: url('../assets/backgrounds/scrapbook-bird-lengthened.png');
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   z-index: 0;
+  background-image: url('../assets/backgrounds/parchment-paper-wrinkled.jpg');
 }
 
-
-/* last bird seen */
-.last-bird-seen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 28vh;
-    font-size: 1.5rem;
-    color: var(--ion-color-secondary-contrast);
-    background-color: var(--ion-color-light);
+.scrapbook-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0) 5%
+  ),
+  linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0) 5%
+  ),
+  linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0) 5%
+  ),
+  linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0) 5%
+  );
+  z-index: 1;
+  pointer-events: none; /* Ensure the overlay does not interfere with interactions */
 }
 
-ion-icon {
-    font-size: 3rem;
+/*
+.scrapbook-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 2;
+  pointer-events: none;
 }
-
+  */
 </style>

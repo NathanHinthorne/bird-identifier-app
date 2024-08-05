@@ -77,10 +77,10 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/vue';
-import { useNearbyBirdsStore } from '../stores/nearbyBirdsStore';
+import { useRegionalBirdStore } from '../stores/regionalBirdStore';
 
 const route = useRoute();
-const nearbyBirdsStore = useNearbyBirdsStore();
+const regionalBirdStore = useRegionalBirdStore();
 const bird = ref({});
 
 const audio = ref(null);
@@ -91,7 +91,7 @@ const rightReelRotation = ref(0);
 
 onMounted(async () => {
   const birdName = route.params.birdName;
-  bird.value = await nearbyBirdsStore.getBirdByName(birdName);
+  bird.value = await regionalBirdStore.getBirdByName(birdName);
   
   audio.value = new Audio(bird.value.sound);
   audio.value.addEventListener('timeupdate', updateProgress);

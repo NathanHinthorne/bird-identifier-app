@@ -10,37 +10,37 @@
       </ion-header>
       <ion-content class="ion-padding">
         <!-- Preferences Section -->
-        <ion-list-header>
-          <ion-label>Preferences</ion-label>
-        </ion-list-header>
-        <ion-item>
-          <ion-label>Enable Unlockable Puns</ion-label>
-          <ion-toggle v-model="userStore.settings.enablePuns" @ionChange="saveSettings"></ion-toggle>
-        </ion-item>
-        <ion-item>
-          <ion-label>Enable Music</ion-label>
-          <ion-toggle v-model="userStore.settings.enableMusic" @ionChange="saveSettings"></ion-toggle>
-        </ion-item>
-        <ion-item>
-          <ion-label>Enable Sound Effects</ion-label>
-          <ion-toggle v-model="userStore.settings.enableSoundEffects" @ionChange="saveSettings"></ion-toggle>
-        </ion-item>
+        <div class="scrapbook-section">
+          <div class="scrapbook-section-title">Preferences</div>
+          <ion-item>
+            <ion-label>Enable Unlockable Puns</ion-label>
+            <ion-toggle v-model="userStore.settings.enablePuns" @ionChange="saveSettings"></ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-label>Enable Music</ion-label>
+            <ion-toggle v-model="userStore.settings.enableMusic" @ionChange="saveSettings"></ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-label>Enable Sound Effects</ion-label>
+            <ion-toggle v-model="userStore.settings.enableSoundEffects" @ionChange="saveSettings"></ion-toggle>
+          </ion-item>
+        </div>
 
         <!-- Account Section -->
-        <ion-list-header>
-          <ion-label>Account</ion-label>
-        </ion-list-header>
-        <ion-item>
-          <ion-label>Email</ion-label>
-          <ion-input v-model="email" readonly></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label>Username</ion-label>
-          <ion-input v-model="username"></ion-input>
-        </ion-item>
-        <ion-button expand="block" @click="updateProfile">Update Profile</ion-button>
-        <ion-button expand="block" @click="showChangePasswordModal">Change Password</ion-button>
-        <ion-button expand="block" color="danger" @click="logout">Logout</ion-button>
+        <div class="scrapbook-section">
+          <div class="scrapbook-section-title">Account</div>
+          <ion-item>
+            <ion-label>Email</ion-label>
+            <ion-input v-model="email" readonly></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Username</ion-label>
+            <ion-input v-model="username"></ion-input>
+          </ion-item>
+          <ion-button expand="block" @click="updateUsername">Update Profile</ion-button>
+          <ion-button expand="block" @click="showChangePasswordModal">Change Password</ion-button>
+          <ion-button expand="block" color="danger" @click="logout">Logout</ion-button>
+        </div>
       </ion-content>
     </div>
 
@@ -72,8 +72,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { 
-  IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, 
-  IonLabel, IonToggle, IonInput, IonButton, IonListHeader, IonModal, IonButtons
+  IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, 
+  IonLabel, IonToggle, IonInput, IonButton, IonModal, IonButtons 
 } from '@ionic/vue';
 import { useUserStore } from '../stores/userStore';
 import { useRouter } from 'vue-router';
@@ -89,7 +89,7 @@ const confirmPassword = ref('');
 
 onMounted(async () => {
   if (userStore.isAuthenticated) {
-    await userStore.fetchSettings();
+    await userStore.pullSettings();
     email.value = userStore.user.email;
     username.value = userStore.user.displayName || '';
   } else {
@@ -101,9 +101,9 @@ const saveSettings = async () => {
   await userStore.saveSettings();
 };
 
-const updateProfile = async () => {
+const updateUsername = async () => {
   try {
-    await userStore.updateProfile(username.value);
+    await userStore.updateUsername(username.value);
     // Show success message
   } catch (error) {
     console.error('Error updating profile:', error);
@@ -150,29 +150,60 @@ const logout = async () => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../assets/backgrounds/leather-book-back.png');
-  background-repeat: no-repeat;
-  background-size: contain;
+  background-image: url('../assets/backgrounds/parchment-paper.jpg');
+  background-size: cover;
   background-position: center;
   z-index: 0;
 }
 
-ion-list-header {
+ion-header {
+  --background: none;
+}
+
+ion-toolbar {
+  background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
+  background-size: cover;
+}
+
+ion-title {
+  color: white;
+  font-family: 'Homemade Apple', cursive; /* Example of a handwritten font */
+}
+
+ion-content {
+  background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+  backdrop-filter: blur(5px); /* Adds a blur effect to the background */
+}
+
+.scrapbook-section {
+  margin-bottom: 20px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.9); /* Slightly transparent background for sections */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+.scrapbook-section-title {
   font-size: 1.2em;
   font-weight: bold;
   color: #444;
+  font-family: 'Homemade Apple', cursive; /* Example of a handwritten font */
   margin-bottom: 10px;
+  position: relative;
+  padding-left: 30px;
+  background: url('../assets/backgrounds/sticky-note.png') no-repeat left center;
+  background-size: 20px;
 }
 
 ion-item {
-  margin-bottom: 20px; /* Increased margin for more space */
+  margin-bottom: 15px; /* Adjusted margin for better spacing */
 }
 
 ion-label {
   color: #666;
 }
 
-ion-textarea {
+ion-input {
   --padding-start: 10px;
   --padding-end: 10px;
   --background: #f9f9f9;
@@ -194,17 +225,10 @@ ion-button {
   /* Center the button */
   margin: 0 auto;
   display: block;
-  
 }
 
-ion-toolbar {
-  --background: none;
-  background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
-  background-size: cover;
-  padding: 10px;
-}
-
-ion-title {
-  color: white;
+ion-modal {
+  --background: rgba(255, 255, 255, 0.9); /* Slightly transparent background for modal */
+  backdrop-filter: blur(5px); /* Adds a blur effect to the modal background */
 }
 </style>

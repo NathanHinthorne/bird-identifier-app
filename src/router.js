@@ -8,8 +8,8 @@ import Settings from './views/Settings.vue';
 import Identify from './views/Identify.vue';
 import IdentifyBySound from './components/IdentifyBySound.vue';
 import IdentifyByImage from './components/IdentifyByImage.vue';
-import IdentifiedBirdInfo from './views/IdentifiedBirdInfo.vue';
-import GeneralBirdInfo from './views/GeneralBirdInfo.vue';
+import SeenBirdInfo from './views/SeenBirdInfo.vue';
+import RegionalBirdInfo from './views/RegionalBirdInfo.vue';
 import Auth from './views/Auth.vue';
 
 
@@ -57,14 +57,14 @@ const routes = [
             },
             {
                 path: 'life-list/bird-info/:birdName',
-                name: 'IdentifiedBirdInfo',
-                component: IdentifiedBirdInfo,
+                name: 'SeenBirdInfo',
+                component: SeenBirdInfo,
                 props: true
             },
             {
                 path: 'explore/bird-info/:birdName',
-                name: 'GeneralBirdInfo',
-                component: GeneralBirdInfo,
+                name: 'RegionalBirdInfo',
+                component: RegionalBirdInfo,
                 props: true
             },
             {
@@ -93,15 +93,15 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
-    const userStore = useUserStore();
-    if (to.name !== 'Auth' && !userStore.isAuthenticated) {
-        next({ name: 'Auth' });
-    } else if (to.name === 'Auth' && userStore.isAuthenticated) {
-        next({ name: 'Identify' });
-    } else {
-        next();
-    }
-});
+// router.beforeEach((to, from, next) => {
+//      const userStore = useUserStore();
+//     if (to.name !== 'Auth' && !userStore.isAuthenticated) {
+//         next({ name: 'Auth' });
+//     } else if (to.name === 'Auth' && userStore.isAuthenticated) {
+//         next({ name: 'Identify' });
+//     } else {
+//         next();
+//     }
+// });
 
 export default router;

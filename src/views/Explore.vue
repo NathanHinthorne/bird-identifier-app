@@ -21,31 +21,32 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import BirdList from '../components/BirdList.vue';
-import BirdSearch from '../components/BirdSearch.vue';
+import BirdList from '@/components/BirdList.vue';
+import BirdSearch from '@/components/BirdSearch.vue';
 import { IonContent, IonPage, IonToolbar, IonTitle, IonHeader } from '@ionic/vue';
-import { useNearbyBirdsStore } from '../stores/nearbyBirdsStore';
+import { useRegionalBirdStore } from '@/stores/regionalBirdStore';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-const nearbyBirdsStore = useNearbyBirdsStore();
+const regionalBirdStore = useRegionalBirdStore();
 const selectedBird = ref(null);
 const isLoading = ref(false);
 
 // Use a computed property to reactively get the displayed birds
-const displayedBirds = computed(() => nearbyBirdsStore.getDisplayedBirds());
+const displayedBirds = computed(() => regionalBirdStore.getDisplayedBirds());
 
 // Load initial birds when the component is mounted
 onMounted(async () => {
+
   isLoading.value = true;
-  nearbyBirdsStore.generateInitialBirds();
+  regionalBirdStore.generateInitialBirds();
 });
 
 const handleLoadMore = async (event) => {
   isLoading.value = true;
   try {
-    await nearbyBirdsStore.generateMoreBirds();
+    await regionalBirdStore.generateMoreBirds();
   } finally {
     isLoading.value = false;
     event.target.complete();
@@ -56,7 +57,7 @@ const handleLoadMore = async (event) => {
 const searchBirds = async (searchTerm) => {
   isLoading.value = true;
   try {
-    await nearbyBirdsStore.applyNewSearch(searchTerm);
+    await regionalBirdStore.applyNewSearch(searchTerm);
   } finally {
     isLoading.value = false;
   }
@@ -65,8 +66,6 @@ const searchBirds = async (searchTerm) => {
 
 const handleSelectBird = (bird) => {
   selectedBird.value = bird;
-
-  console.log('Selected bird:', bird.comName, bird.id)
 
   // push to the route
   router.push('/explore/bird-info/' + bird.formattedComName);

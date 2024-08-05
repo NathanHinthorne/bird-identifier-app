@@ -7,15 +7,13 @@
     "SplashScreen": {
       "launchShowDuration": 3000,
       "launchAutoHide": true,
-      "backgroundColor": "#ffffffff",
-      "androidSplashResourceName": "splash",
       "androidScaleType": "CENTER_CROP",
-      "showSpinner": true,
-      "androidSpinnerStyle": "large",
-      "iosSpinnerStyle": "small",
-      "spinnerColor": "#999999",
+      "splashImmersive": true,
+      "backgroundColor": "#ffffff",
+      "androidSplashResourceName": "splash",
+      "showSpinner": false,
       "splashFullScreen": true,
-      "splashImmersive": true
+      "splashLottie": "public/assets/splash.json"
     },
     "FirebaseAuthentication": {
       "skipNativeAuth": false,

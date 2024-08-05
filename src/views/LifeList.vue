@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-
+    
     <ion-toolbar>
       <ion-header>
         <ion-title>Life List</ion-title>
@@ -9,53 +9,83 @@
     </ion-toolbar>
         
     <ion-content>
-      <BirdList :birds="birds" @selectBird="selectBird" />
+      <BirdList
+        :birds="displayedBirds" 
+        :isLoading="isLoading"
+        @selectBird="handleSelectBird" 
+        @loadMoreBirds="handleLoadMore" 
+      />
     </ion-content>
-
   </ion-page>
 </template>
 
 <script setup>
-import BirdList from '../components/BirdList.vue';
-import BirdSearch from '../components/BirdSearch.vue';
+import { ref, onMounted, computed } from 'vue';
+import BirdList from '@/components/BirdList.vue';
+import BirdSearch from '@/components/BirdSearch.vue';
 import { IonContent, IonPage, IonToolbar, IonTitle, IonHeader } from '@ionic/vue';
+import { useSeenBirdStore } from '@/stores/seenBirdStore';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 
-import { ref } from 'vue';
-
-const birds = ref([]);
+const seenBirdStore = useSeenBirdStore();
 const selectedBird = ref(null);
+const isLoading = ref(false);
 
-const searchBirds = (searchTerm) => {
-  // Mock data for demonstration
-  const mockBirds = [
-    { id: 1, name: 'Northern Cardinal', description: 'A small red bird.', image: 'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/385850851/480' },
-    { id: 2, name: 'Blue Jay', description: 'A blue bird with a distinctive crest.', image: 'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/311635911/1800' },
-    { id: 3, name: 'American Robin', description: 'A common bird with a red breast.', image: 'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/303441381/1800' },
-  ];
+// Use a computed property to reactively get the displayed birds
+const displayedBirds = computed(() => seenBirdStore.getDisplayedBirds());
 
-  birds.value = mockBirds.filter(bird => bird.name.toLowerCase().includes(searchTerm.toLowerCase()));
+// Load initial birds when the component is mounted
+onMounted(async () => {
+  isLoading.value = true;
+  seenBirdStore.generateInitialBirds();
+});
+
+const handleLoadMore = async (event) => {
+  isLoading.value = true;
+  try {
+    await seenBirdStore.generateMoreBirds();
+  } finally {
+    isLoading.value = false;
+    event.target.complete();
+    console.log('Done loading!');
+  }
 };
 
-const selectBird = (bird) => {
+const searchBirds = async (searchTerm) => {
+  isLoading.value = true;
+  try {
+    await seenBirdStore.applyNewSearch(searchTerm);
+  } finally {
+    isLoading.value = false;
+  }
+  selectedBird.value = null;
+};
+
+const handleSelectBird = (bird) => {
   selectedBird.value = bird;
+
+  // push to the route
+  router.push('/life-list/bird-info/' + bird.formattedComName);
 };
 </script>
 
 <style scoped>
-.custom-searchbar {
-  --background: transparent;
-  margin-top: 10px; /* Add margin-top for spacing */
-}
-
 ion-toolbar {
   --background: none;
   background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
   background-size: cover;
   padding: 10px;
 }
-
 ion-title {
   color: white;
 }
+
+.custom-searchbar {
+  --background: transparent;
+  margin-top: 10px; /* Add margin-top for spacing */
+}
+
+
 </style>

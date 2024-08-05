@@ -18,7 +18,7 @@
 <script setup>
 import { ref } from 'vue';
 import { IonItem, IonLabel, IonInput, IonButton } from '@ionic/vue';
-import { useUserStore } from '../stores/userStore';
+import { useUserStore } from '@/stores/userStore';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();

@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { parse } from 'node-html-parser';
 
 // test ebird api at https://ebird-api-ui.com/taxonomy/ebird-taxonomy
 // read ebird api docs at https://documenter.getpostman.com/view/664302/S1ENwy59
+
+//! NOT IN USE
 
 const retryRequest = async (url, options = "", maxRetries = 15) => {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -16,7 +17,7 @@ const retryRequest = async (url, options = "", maxRetries = 15) => {
     }
 };
 
-export const fetchNearbyBirds = async (location) => {
+export const fetchRegionalBirds = async (location) => {
     const apiKey = import.meta.env.VITE_EBIRD_API_KEY;
     const options = {
         headers: {
@@ -51,33 +52,3 @@ export const fetchBirdNames = async (speciesCodes) => {
 
 
 
-
-// Cornell Lab of Ornithology 
-export const fetchBirdDescription = async (commonName) => {
-    try {
-        // Replace spaces with underscores and convert to lowercase
-        const formattedName = commonName.replace(/\s+/g, '_').toLowerCase();
-        const url = `https://www.allaboutbirds.org/guide/${formattedName}/overview`;
-
-        // Fetch the HTML content of the page
-        const response = await axios.get(url);
-        const html = response.data;
-
-        // Parse the HTML
-        const root = parse(html);
-
-        // Find the "Basic Description" section
-        const basicDescriptionHeader = root.querySelector('h2:contains("Basic Description")');
-        if (!basicDescriptionHeader) {
-            return 'Basic Description not found.';
-        }
-
-        // Get the next paragraph after the "Basic Description" header
-        const basicDescription = basicDescriptionHeader.nextElementSibling?.textContent;
-
-        return basicDescription?.trim() || 'Description not available.';
-    } catch (error) {
-        console.error('Error fetching bird description:', error);
-        return 'Description not available.';
-    }
-}

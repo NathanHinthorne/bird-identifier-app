@@ -4,15 +4,19 @@ import { auth, rtdb } from '@/firebase'; // my firebase/index.js file
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    signOut,
+    signOut as firebaseSignOut,
     updateEmail as firebaseUpdateEmail,
-    updatePassword as firebaseUpdatePassword
+    updatePassword as firebaseUpdatePassword,
+    onAuthStateChanged
 } from 'firebase/auth';
 import { ref as dbRef, set, get } from 'firebase/database';
+import router from '@/router';
+
+
+// NOTE: for ease of use, this store makes calls to firebase when its state is changed
 
 export const useUserStore = defineStore('user', () => {
     // State
-
     const user = ref(null);
     const isAuthenticated = computed(() => user.value !== null);
     const settings = ref({
@@ -20,38 +24,87 @@ export const useUserStore = defineStore('user', () => {
         enableMusic: true,
         enableSoundEffects: true
     });
-    const seenBirds = ref([]);
+    const seenBirdNames = ref([]);
+    const location = ref(null);
 
-    // Account management
+    // Helper functions
+    const pullUserState = async () => {
+        if (user.value) {
+            console.log('Pulling user state...');
 
-    const login = async (email, password) => {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        user.value = userCredential.user;
-        await fetchSettings();
-        console.log('Logged in as:', user.value);
+            await Promise.all([
+                pullSettings(),
+                pullSeenBirdNames(),
+            ]);
 
-        // add test bird in seenBirds
-        seenBirds.value.push('test bird');
+            console.log('Finished pulling user state', settings.value, seenBirdNames.value);
+        }
     };
 
-    const logout = async () => {
-        await signOut(auth);
+    const resetUserState = () => {
         user.value = null;
         settings.value = {
             enablePuns: true,
             enableMusic: true,
             enableSoundEffects: true
         };
+        seenBirdNames.value = [];
+        location.value = null;
+    };
+
+    // Account management
+    const init = () => {
+        onAuthStateChanged(auth, (activeUser) => {
+            if (activeUser) {
+                user.value = activeUser;
+                pullUserState(); // don't need to await this, just let it run in the background
+
+                // User is signed in, redirect to the home page
+                router.push({ name: 'Identify' });
+                console.log('User is signed in:', activeUser.uid, activeUser.email);
+            } else {
+                // No user is signed in, redirect to the auth page
+                router.push({ name: 'Auth' });
+                console.log('No user is signed in');
+            }
+        });
+    };
+
+    const login = async (email, password) => {
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            user.value = userCredential.user;
+            await pullUserState();
+            console.log('Logged in as:', user.value);
+
+        } catch (error) {
+            console.error('Error logging in:', error);
+        }
+    };
+
+    const logout = async () => {
+        resetUserState();
+        await firebaseSignOut(auth);
     };
 
     const register = async (email, password, username) => {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        user.value = userCredential.user;
-        await updateProfile(username);
-        await saveSettings();
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            user.value = userCredential.user;
+            await updateUsername(username);
+            await saveSettings();
+            console.log('Registered new user:', email);
+
+            // add test bird in seenBirds
+            await addSeenBirdName('Canada_Goose');
+            await addSeenBirdName('American_Robin');
+
+        } catch (error) {
+            console.error('Error registering new user:', error);
+        }
     };
 
-    const updateProfile = async (username) => {
+    const updateUsername = async (username) => {
         if (user.value) {
             await set(dbRef(rtdb, `users/${user.value.uid}/profile`), { username });
             console.log('Updated profile:', username);
@@ -73,9 +126,6 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
-
-    // Settings
-
     const saveSettings = async () => {
         if (user.value) {
             await set(dbRef(rtdb, `users/${user.value.uid}/settings`), settings.value);
@@ -83,7 +133,7 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
-    const fetchSettings = async () => {
+    const pullSettings = async () => {
         if (user.value) {
             const snapshot = await get(dbRef(rtdb, `users/${user.value.uid}/settings`));
             if (snapshot.exists()) {
@@ -92,40 +142,67 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
-
-    // Seen birds
-
-    const addSeenBird = async (birdName) => {
-        if (user.value) {
-            seenBirds.value.push(birdName);
-            await set(dbRef(rtdb, `users/${user.value.uid}/seenBirds`), seenBirds.value);
-            console.log('Added seen bird:', birdName);
-        }
-    }
-
-    const fetchSeenBirds = async () => {
+    const pullSeenBirdNames = async () => {
         if (user.value) {
             const snapshot = await get(dbRef(rtdb, `users/${user.value.uid}/seenBirds`));
             if (snapshot.exists()) {
-                seenBirds.value = snapshot.val();
+                seenBirdNames.value = snapshot.val();
             }
         }
-    }
+    };
 
+    // probably won't need this since we set loc instantly
+    // if user doesn't have wifi, this wouldn't work anyway
+    // TODO find a way to cache user's location and use it when no wifi
+    const pullLocation = async () => {
+        if (user.value) {
+            const snapshot = await get(dbRef(rtdb, `users/${user.value.uid}/location`));
+            if (snapshot.exists()) {
+                location.value = snapshot.val();
+            }
+        }
+    };
+
+    const setLocation = (newLocation) => {
+        location.value = newLocation;
+        if (user.value) {
+            set(dbRef(rtdb, `users/${user.value.uid}/location`), newLocation);
+        }
+        console.log('Location set:', newLocation);
+    };
+
+
+    //TODO Give each bird name an observationDate, observationLoc, and note
+    //TODO let user fill in observationLoc. 
+    //TODO Make observationDate automatically filled in.
+    //TODO let user add note later
+
+    const addSeenBirdName = async (birdName) => {
+        if (user.value) {
+            seenBirdNames.value.push(birdName);
+            await set(dbRef(rtdb, `users/${user.value.uid}/seenBirds`), seenBirdNames.value);
+            console.log('Added seen bird:', birdName);
+        }
+    };
 
     return {
         user,
-        isAuthenticated,
         settings,
+        seenBirdNames,
+        location,
+        isAuthenticated,
+        init,
         login,
         logout,
         register,
-        updateProfile,
+        updateUsername,
         updateEmail,
         updatePassword,
         saveSettings,
-        fetchSettings,
-        addSeenBird,
-        fetchSeenBirds
+        addSeenBirdName,
+        setLocation,
+        pullSettings,
+        pullSeenBirdNames,
+        pullLocation
     };
 });
