@@ -2,17 +2,23 @@
   <ion-header>
     <ion-toolbar>
       <!-- <ion-title>Birding Pal</ion-title> -->
-      <img :src="logo" alt="Birding Pal logo" />
-      <div class="credits"> 
+       <div class="logoContainer">
+         <img :src="logo" class="logo" alt="Birding Pal logo" />
+         <img :src="logoText" alt="Birding Pal logo text" />
+       </div>
+
+      <!-- <div class="credits"> 
         <ion-text color="primary">Developed by Nathan Hinthorne</ion-text>
-      </div>
+      </div> -->
     </ion-toolbar>
   </ion-header>
 </template>
 
 <script setup>
 import { IonHeader, IonToolbar, IonTitle, IonText } from '@ionic/vue';
-import logo from '@/assets/birdingPalLogo3.png'
+// import logo from '../assets/birdingPalLogo3.png'
+import logo from '../assets/logo1c.png'
+import logoText from '../assets/logoText.png'
 </script>
 
 <style scoped>
@@ -36,11 +42,20 @@ import logo from '@/assets/birdingPalLogo3.png'
     font-style: italic;
   }
 
+  .logoContainer {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+  }
+
+  .logo {
+     width: 4rem;
+   }
+
   .credits {
     display: flex;
     justify-content: right;
-    margin-right: 1rem;
+    margin-right: 0.5rem;
     margin-bottom: 0.5rem;
-    margin-top: -2rem;
   }
 </style>

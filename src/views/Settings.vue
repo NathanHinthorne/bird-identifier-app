@@ -1,48 +1,57 @@
 <template>
   <ion-page>
-    <div class="scrapbook-container">
-      <div class="scrapbook-background"></div>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Settings</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Settings</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <!-- Preferences Section -->
-        <div class="scrapbook-section">
-          <div class="scrapbook-section-title">Preferences</div>
-          <ion-item>
-            <ion-label>Enable Unlockable Puns</ion-label>
-            <ion-toggle v-model="userStore.settings.enablePuns" @ionChange="saveSettings"></ion-toggle>
-          </ion-item>
-          <ion-item>
-            <ion-label>Enable Music</ion-label>
-            <ion-toggle v-model="userStore.settings.enableMusic" @ionChange="saveSettings"></ion-toggle>
-          </ion-item>
-          <ion-item>
-            <ion-label>Enable Sound Effects</ion-label>
-            <ion-toggle v-model="userStore.settings.enableSoundEffects" @ionChange="saveSettings"></ion-toggle>
-          </ion-item>
-        </div>
+    <ion-content class="ion-padding">
+      <div class="scrapbook-container">
+        <div class="scrapbook-background"></div>
 
-        <!-- Account Section -->
-        <div class="scrapbook-section">
-          <div class="scrapbook-section-title">Account</div>
-          <ion-item>
-            <ion-label>Email</ion-label>
-            <ion-input v-model="email" readonly></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Username</ion-label>
-            <ion-input v-model="username"></ion-input>
-          </ion-item>
-          <ion-button expand="block" @click="updateUsername">Update Profile</ion-button>
-          <ion-button expand="block" @click="showChangePasswordModal">Change Password</ion-button>
-          <ion-button expand="block" color="danger" @click="logout">Logout</ion-button>
+        <div class="scrapbook-content">
+          <!-- Preferences Section -->
+          <div class="scrapbook-section">
+            <div class="scrapbook-section-title">Preferences</div>
+            <div class="scrapbook-section-content">
+              <ion-item>
+                <ion-label>Enable Unlockable Puns</ion-label>
+                <ion-toggle v-model="userStore.settings.enablePuns" @ionChange="saveSettings"></ion-toggle>
+              </ion-item>
+              <ion-item>
+                <ion-label>Enable Music</ion-label>
+                <ion-toggle v-model="userStore.settings.enableMusic" @ionChange="saveSettings"></ion-toggle>
+              </ion-item>
+              <ion-item>
+                <ion-label>Enable Sound Effects</ion-label>
+                <ion-toggle v-model="userStore.settings.enableSoundEffects" @ionChange="saveSettings"></ion-toggle>
+              </ion-item>
+            </div>
+          </div>
+
+          <!-- Account Section -->
+          <div class="scrapbook-section">
+            <div class="scrapbook-section-title">Account</div>
+            <div class="scrapbook-section-content">
+              <ion-item>
+                <ion-label>Email</ion-label>
+                <ion-input v-model="email" readonly></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>Username</ion-label>
+                <ion-input v-model="username"></ion-input>
+              </ion-item>
+              <div class="button-container">
+                <button @click="updateUsername">Update Profile</button>
+                <button @click="showChangePasswordModal">Change Password</button>
+                <button @click="logout">Logout</button>
+              </div>
+            </div>
+          </div>
         </div>
-      </ion-content>
-    </div>
+      </div>
+    </ion-content>
 
     <!-- Change Password Modal -->
     <ion-modal :is-open="isChangePasswordModalOpen">
@@ -156,38 +165,39 @@ const logout = async () => {
   z-index: 0;
 }
 
-ion-header {
-  --background: none;
-}
+.scrapbook-content {
+  --background: transparent;  
+  position: relative; 
+  height: auto; 
+  overflow-y: auto;
+  padding-bottom: 120px;
+  z-index: 1;
+} 
 
 ion-toolbar {
+  --background: none;
   background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
   background-size: cover;
+  padding: 10px;
 }
 
 ion-title {
   color: white;
-  font-family: 'Homemade Apple', cursive; /* Example of a handwritten font */
-}
-
-ion-content {
-  background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
-  backdrop-filter: blur(5px); /* Adds a blur effect to the background */
+  /* font-family: 'Just Another Hand', cursive; */
 }
 
 .scrapbook-section {
   margin-bottom: 20px;
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.9); /* Slightly transparent background for sections */
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  padding: 20px; /* Increased padding for extra spacing */
+  background-image: url('../assets/ui/paper-piece-square.png');
+  background-size: cover;
 }
 
 .scrapbook-section-title {
-  font-size: 1.2em;
+  font-size: 2em;
   font-weight: bold;
   color: #444;
-  font-family: 'Homemade Apple', cursive; /* Example of a handwritten font */
+  font-family: 'Just Another Hand';
   margin-bottom: 10px;
   position: relative;
   padding-left: 30px;
@@ -195,36 +205,59 @@ ion-content {
   background-size: 20px;
 }
 
+.scrapbook-section-content {
+  padding: 10px;
+  background: transparent;
+  border-radius: 10px;
+}
+
 ion-item {
   margin-bottom: 15px; /* Adjusted margin for better spacing */
+  --background: transparent; /* Make ion-item background transparent */
 }
 
 ion-label {
-  color: #666;
+  color: #444; /* Ensure label text is visible */
 }
 
 ion-input {
+  --background: transparent; /* Make input background transparent */
   --padding-start: 10px;
   --padding-end: 10px;
-  --background: #f9f9f9;
   border-radius: 5px;
   border: 1px solid #ddd;
   margin-top: 5px; /* Added margin-top for more space */
 }
 
-ion-button {
-  --background: var(--ion-color-primary);
-  --color: white;
-  --border-radius: 5px;
-  font-size: 1.2em;
-  --padding-start: 20px; /* Add padding to the left */
-  --padding-end: 20px;   /* Add padding to the right */
-  --padding-top: 15px;   /* Add padding to the top */
-  --padding-bottom: 15px; /* Add padding to the bottom */
-  
-  /* Center the button */
-  margin: 0 auto;
-  display: block;
+ion-toggle {
+  --background: transparent; /* Make toggle background transparent */
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.button-container button {
+  background-color: #5e2f0d;
+  color: #f0e6d2;
+  border: none;
+  border-radius: 20%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  font-family: 'Just Another Hand', cursive;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* add spacing between buttons */
+  margin-right: 10px;
+}
+
+.button-container button:hover {
+  background-color: #7a3d10;
 }
 
 ion-modal {

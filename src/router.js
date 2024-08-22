@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { useUserStore } from './stores/userStore';
+// import { useUserStore } from './stores/userStore';
 
 import Root from './views/Root.vue';
 import LifeList from './views/LifeList.vue';

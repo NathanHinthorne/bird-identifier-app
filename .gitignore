@@ -31,3 +31,6 @@ serviceAccountKey.json
 google-services.json*
 
 
+
+resources/ios/**/*
+resources/android/**/*

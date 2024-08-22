@@ -44,10 +44,7 @@ watch(
   async (isAuthenticated) => {
     if (isAuthenticated) {
       console.log("App.vue noticed user is authenticated, triggering setup...");
-      await setup();
-
-      // Hide splash screen after setup is complete
-      SplashScreen.hide();
+      setup();
     }
   }
 );
@@ -55,12 +52,6 @@ watch(
 
 onMounted(async () => {
   console.log("App mounted");
-
-  // Show splash screen
-  await SplashScreen.show({
-    showDuration: 8000,
-    autoHide: false
-  });
 
   userStore.init();
 });
@@ -76,7 +67,7 @@ const setup = async () => {
   // Step 2: Find birds in the region
   const regionalBirds = await firestoreService.fetchRegionalBirds(location);
 
-  // TEMPORARY: remove birds with no common name
+  // TEMPORARY:
   // check through each bird to see if it's null, then log its index and remove it
   regionalBirds.forEach((bird, index) => {
     if (bird.comName === "" || bird.comName === undefined) {

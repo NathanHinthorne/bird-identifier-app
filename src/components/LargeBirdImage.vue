@@ -2,7 +2,10 @@
   <div class="bird-image-container" :style="{ '--rotation': randomRotation() }">
     <div class="bird-image-tape" :style="{ '--tape-rotation': randomTapeRotation() }"></div>
     <div class="bird-image-frame">
-      <img :src="imageUrl" :alt="birdName" class="bird-image" />
+      <div class="bird-image-wrapper">
+        <img :src="imageUrl" :alt="birdName" class="bird-image" />
+        <img v-if="inGame" :src="gameImage" alt="In-game badge" class="in-game-badge" />
+      </div>
     </div>
     <p class="bird-image-caption">{{ birdName }}</p>
   </div>
@@ -10,6 +13,7 @@
 
 <script setup>
 import { defineProps, onMounted } from 'vue';
+import gameImage from '../assets/in-game-badge2.png';
 
 const props = defineProps({
   imageUrl: {
@@ -19,6 +23,10 @@ const props = defineProps({
   birdName: {
     type: String,
     required: true
+  },
+  inGame: {
+    type: Boolean,
+    required: true
   }
 });
 
@@ -27,6 +35,11 @@ const randomTapeRotation = () => `${Math.random() * 20 - 10}deg`;
 
 onMounted(() => {
   console.log('LargeBirdImage mounted with props:', props);
+
+  // wait 5 seconds before printing
+  setTimeout(() => {
+    console.log('1 second later:', props);
+  }, 1000);
 });
 
 </script>
@@ -77,6 +90,24 @@ onMounted(() => {
   background-color: rgba(255, 255, 255, 0.7);
   padding: 5px;
   border-radius: 5px;
+}
+
+/* this is used so the badge is latched to the bottom right of the image */
+.bird-image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+
+/* In-game badge */
+.in-game-badge {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 2.8em;
+  /*
+  transform: rotate(-10deg);
+  */
 }
 
 /* Override styles on smaller screens */

@@ -7,7 +7,7 @@
         <ion-item v-for="bird in birds" :key="bird.id" @click="selectBird(bird)"
                   :class="{ 'bird-selected': selectedBirdId && selectedBirdId === bird.id }">
           <div class="bird-entry">
-            <SmallBirdImage :imageUrl="bird.previewPhoto" :birdName="bird.comName" />
+            <SmallBirdImage :imageUrl="bird.previewPhoto" :birdName="bird.comName" :inGame="bird.inGame" />
             <div class="bird-description-container">
               <p class="bird-description">{{ bird.shortDesc }}</p>
             </div>

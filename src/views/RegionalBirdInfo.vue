@@ -14,15 +14,18 @@
         <div class="scrapbook-background"></div>
         <div class="scrapbook-content">
           <div class="bird-info-card">
-            <!-- <BirdImage :imageUrl="bird.maleBreedingPhoto" :birdName="bird.comName" /> -->
-            <LargeBirdImage :imageUrl="bird.previewPhoto" :birdName="bird.comName" />
+            <div v-if="bird.photographer" class="photographer">Photographed by {{ bird.photographer }}</div>
+            <LargeBirdImage :imageUrl="bird.previewPhoto" :birdName="bird.comName" :inGame="bird.inGame" />
             <div class="bird-details">
-              <div class="bird-section stats-section">
+
+              <BirdRarityLabel :rarity="bird.rarity" />
+
+              <div class="bird-section">
                 <div class="section-header">
                   <img src="../assets/ui/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Stats</h3>
                 </div>
-                <BirdStats :stats="stats" />
+                <BirdStats :stats="formatBirdStats(bird)" />
               </div>
               
               <div class="bird-section">
@@ -67,24 +70,36 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/vue';
 import { useRegionalBirdStore } from '../stores/regionalBirdStore';
 import AudioPlayer from '../components/AudioPlayer.vue';
 import LargeBirdImage from '../components/LargeBirdImage.vue';
 import BirdStats from '../components/BirdStats.vue';
+import BirdRarityLabel from '../components/BirdRarityLabel.vue';
 
 const route = useRoute();
 const regionalBirdStore = useRegionalBirdStore();
 const bird = ref({});
 
-const stats = ref([
-  { label: 'Attack', value: 2 },
-  { label: 'Defense', value: 2 },
-  { label: 'Speed', value: 5 },
-  { label: 'Intelligence', value: 3 },
-]);
+// sample stats data
+const stats = [
+  { label: 'Attack', value: '1' },
+  { label: 'Defense', value: '2' },
+  { label: 'Speed', value: '3' },
+  { label: 'Intelligence', value: '1' },
+];
+
+const formatBirdStats = (bird) => {
+  return [
+    { label: 'Attack', value: bird.attackStat },
+    { label: 'Defense', value: bird.defenseStat },
+    { label: 'Speed', value: bird.speedStat },
+    { label: 'Intelligence', value: bird.IntelligenceStat }
+  ];
+}
+
 
 onMounted(async () => {
   const birdName = route.params.birdName;
@@ -124,6 +139,15 @@ onMounted(async () => {
   padding: 20px;
   margin-bottom: 20px;
 }
+
+.photographer {
+  font-family: 'Just Another Hand', cursive;
+  font-size: 20px;
+  margin-bottom: 30px;
+  text-align: right;
+}
+
+
 
 
 .bird-details {
@@ -215,6 +239,8 @@ ion-title {
 }
 
 
+
+
 /* Override styles on smaller screens */
 @media (max-width: 480px) {
   .bird-details h2 {
@@ -238,6 +264,5 @@ ion-title {
     font-size: 28px;
   }
 }
-
 
 </style>

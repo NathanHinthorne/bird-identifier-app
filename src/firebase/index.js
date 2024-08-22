@@ -7,9 +7,7 @@ import {
 } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 import { getFirestore } from 'firebase/firestore';
-import router from '../router.js';
 import { useUserStore } from '../stores/userStore';
-const userStore = useUserStore();
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,

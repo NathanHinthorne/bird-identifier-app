@@ -26,10 +26,6 @@ npx cap run android --target=44190DLJH0008S  --external --no-sync
 
 - Animation of birds perched on UI buttons that flutter away when clicked.
   
-- A "bird book" animation instead of a list for Life List section. Users will be able to flip through to see all the birds they've identified. Maybe just keep this "bird book" inside the paired bird game since it would cause problems in the app.
-
-- Replacing all UI elements with SVG pixel art. This would be done to match the style of the paired bird game.
-
 ## Credits
 
 A big thank you to my following friends for their contributions to this project:
