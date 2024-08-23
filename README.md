@@ -1,5 +1,13 @@
 # Bird Identification App
 
+<!-- add image to be displayed -->
+<p align="center">
+  <img src="https://live.staticflickr.com/65535/53941243746_30d3aa168e_c.jpg" width="200">
+  <img src="https://live.staticflickr.com/65535/53941233061_8ee12ef1de_c.jpg" width="200">
+  <img src="https://live.staticflickr.com/65535/53941685105_079f8d8308_c.jpg" width="200">
+  <img src="https://live.staticflickr.com/65535/53941566474_6aa9c4e2df_c.jpg" width="200">
+</p>
+
 ## Description
 
 This app is designed to help users identify birds they see in the wild. It uses machine learning to identify birds based on live audio recordings, as well as step-by-step questions to identify birds based on their characteristics.
