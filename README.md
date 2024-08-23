@@ -2,31 +2,43 @@
 
 ## Description
 
+This app is designed to help users identify birds they see in the wild. It uses machine learning to identify birds based on live audio recordings, as well as step-by-step questions to identify birds based on their characteristics.
+
+I originally made this app as a fun project to help grow my skills in machine learning and mobile app development. However, I quickly realized that this app could be useful for bird enthusiasts and nature lovers alike, so I decided to publish it on the app store. I hope you enjoy it!
+
 ## Structure
 
-This app (the frontend) uses Firebase to store birds identified by each user, wheras the API (the backend) has a PostGreSQL database for storing all birds (by region) in the US.
+This app uses Firebase for the following features:
+
+- Authentication
+  - User authentication is handled through Firebase Authentication.
+  - Users can sign up, log in, and log out.
+  - User passwords are hashed and salted for security.
+  - User authentication is required to access the app.
+  
+- Database
+  - Realtime Database to store birds identified by each user, along with info about each bird.
+  - Firestore to store all bird images, descriptions, etc.
+  
+- Hosting
+  - Firebase Hosting is used to host the app.
 
 ## Installation for Development
 
 ### Android
 
-After building, go to the android folder and run the following command:
+After building, cd to the android folder and run the following command:
 
 ```bash
 gradlew assembleDebug
-``` 
-
-
-## Ideas for Future Features
-
-- Animation of birds perched on UI buttons that flutter away when clicked.
+```
   
 ## Credits
 
 A big thank you to my following friends for their contributions to this project:
   
 - Natan for his witty success text that appears when a bird is identified, such as: "THAT THERE BE A BIRD", "U HAS FOUND BIRD", and "BIRD OBTAINED".
-  
+
 - Arsh for the idea of pairing a game with bird identification.
 
 - And most importantly **Ethan!!!** for his help writing bird descriptions and his contribution of over 100 bird images he spent years personally photographing and organizing. You can find a wonderful wildlife book he wrote [here on Amazon](https://www.amazon.com/Masterpieces-Evergreen-State-Narration-Washington/dp/B09GCXXTBX). I would highly recommend checking it out!
