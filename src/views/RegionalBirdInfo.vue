@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button default-href="/explore"></ion-back-button>
+          <ion-back-button default-href="/explore" text="Back"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ bird.comName }}</ion-title>
       </ion-toolbar>
@@ -209,7 +209,8 @@ ion-toolbar {
   padding: 10px;
 }
 
-ion-title {
+ion-title,
+ion-back-button {
   color: white;
 }
 
@@ -230,8 +231,8 @@ ion-title {
   transform: translate(-50%, -50%);
   margin: 0;
   padding: 5px 10px;
-  font-family: 'Just Another Hand', cursive;
-  font-size: 32px;
+  font-family: 'Pacifico';
+  font-size: 1em;
   font-weight: bold;
   color: #333;
   text-align: center;
@@ -261,7 +262,7 @@ ion-title {
   }
 
   .section-header h3 {
-    font-size: 28px;
+    font-size: 0.7em;
   }
 }
 

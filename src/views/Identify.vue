@@ -5,16 +5,12 @@
         <div class="scrapbook-container">
             <div class="scrapbook-background"></div>
 
-        <!-- "identify a bird" section -->
-         <!-- @click="identifyBySound" -->
-         <!-- @click="identifyByImage" -->
-          
             <div class="button-container">
                 <button class="scrapbook-button sound-button" @click="identifyBySound">
                     <span>Identify by Sound</span>
                 </button>
                 <button class="scrapbook-button image-button" @click="identifyByImage">
-                    <span>Identify by Image</span>
+                    <span>Identify by Description</span>
                 </button>
             </div>
 
@@ -37,9 +33,9 @@ const identifyBySound = () => {
 };
 
 const identifyByImage = () => {
-    console.log('Identifying bird by image...');
-    // route to the IdentifyByImage page
-    router.push('/identify/image');
+    console.log('Identifying bird by description...');
+    // route to the IdentifyByDescription page
+    router.push('/identify/description');
 };
 </script>
 
@@ -74,9 +70,10 @@ const identifyByImage = () => {
 
 .scrapbook-button span {
     position: absolute;
-    bottom: -20px;
+    bottom: -40px;
     left: 0;
     right: 0;
+    max-width: 8em;
     text-align: center;
     font-size: 20px;
     /* font-family: 'Cabin Sketch', bold; */

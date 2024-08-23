@@ -6,8 +6,8 @@ import LifeList from './views/LifeList.vue';
 import Explore from './views/Explore.vue';
 import Settings from './views/Settings.vue';
 import Identify from './views/Identify.vue';
-import IdentifyBySound from './components/IdentifyBySound.vue';
-import IdentifyByImage from './components/IdentifyByImage.vue';
+import IdentifyBySound from './views/IdentifyBySound.vue';
+import IdentifyByDescription from './views/IdentifyByDescription.vue';
 import SeenBirdInfo from './views/SeenBirdInfo.vue';
 import RegionalBirdInfo from './views/RegionalBirdInfo.vue';
 import Auth from './views/Auth.vue';
@@ -29,19 +29,17 @@ const routes = [
             {
                 path: 'identify',
                 name: 'Identify',
-                component: Identify,
-                children: [
-                    {
-                        path: 'sound',
-                        name: 'IdentifyBySound',
-                        component: IdentifyBySound
-                    },
-                    {
-                        path: 'image',
-                        name: 'IdentifyByImage',
-                        component: IdentifyByImage
-                    }
-                ]
+                component: Identify
+            },
+            {
+                path: 'identify/sound',
+                name: 'IdentifyBySound',
+                component: IdentifyBySound
+            },
+            {
+                path: 'identify/description',
+                name: 'IdentifyByDescription',
+                component: IdentifyByDescription
             },
             {
                 // Remember, child components will be rendered INSIDE the parent component
