@@ -12,9 +12,9 @@
 
 This app is designed to help users identify birds they see in the wild. It uses machine learning to identify birds based on live audio recordings, as well as step-by-step questions to identify birds based on their characteristics.
 
-I originally made this app as a fun project to help grow my skills in machine learning and mobile app development. However, I quickly realized that this app could be useful for bird enthusiasts and nature lovers alike, so I decided to publish it on the app store. I hope you enjoy it!
+It also has the option of syncing the user's life list to a separate bird battler game I created. The game is a simple RPG where the user's birds battle against other birds in a turn-based system.
 
-## Structure
+## 3rd Party Libraries
 
 This app uses Firebase for the following features:
 
@@ -27,9 +27,14 @@ This app uses Firebase for the following features:
 - Database
   - Realtime Database to store birds identified by each user, along with info about each bird.
   - Firestore to store all bird images, descriptions, etc.
-  
-- Hosting
-  - Firebase Hosting is used to host the app.
+
+## Future Plans
+
+- [ ] Add an un-annoying popups for my bird battler game in the life list, and a permanent one in settings or identify page.
+- [ ] Cache all regional birds in user's file system to allow offline use.
+- [ ] Create forgot password recovery feature with Firebase.
+- [ ] Create change email feature with Firebase.
+- [ ] Re-train ML audio model to improve accuracy.
 
 ## Installation for Development
 
