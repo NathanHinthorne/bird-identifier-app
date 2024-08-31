@@ -1,41 +1,45 @@
 <template>
   <ion-page>
-    <ion-tabs @ionTabsDidChange="handleTabChange">
+      <ion-tabs @ionTabsDidChange="handleTabChange">
 
-      <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="identify" href="/identify">
-          <ion-icon :icon="search"></ion-icon>
-          <ion-label>Identify</ion-label>
-        </ion-tab-button>
+        <ion-router-outlet></ion-router-outlet>
+        <ion-tab-bar slot="bottom">
+          <ion-tab-button tab="identify" href="/identify" :disabled="!isAuthenticated">
+            <ion-icon :icon="search"></ion-icon>
+            <ion-label>Identify</ion-label>
+          </ion-tab-button>
 
-        <ion-tab-button tab="life-list" href="/life-list">
-          <ion-icon :icon="bookOutline"></ion-icon>
-          <ion-label>Life List</ion-label>
-        </ion-tab-button>
+          <ion-tab-button tab="life-list" href="/life-list" :disabled="!isAuthenticated">
+            <ion-icon :icon="bookOutline"></ion-icon>
+            <ion-label>Life List</ion-label>
+          </ion-tab-button>
 
-        <ion-tab-button tab="explore" href="/explore">
-          <ion-icon :icon="compassOutline"></ion-icon>
-          <ion-label>Explore</ion-label>
-        </ion-tab-button>
+          <ion-tab-button tab="explore" href="/explore" :disabled="!isAuthenticated">
+            <ion-icon :icon="compassOutline"></ion-icon>
+            <ion-label>Explore</ion-label>
+          </ion-tab-button>
 
-        <ion-tab-button tab="settings" href="/settings">
-          <ion-icon :icon="settingsOutline"></ion-icon>
-          <ion-label>Settings</ion-label>
-        </ion-tab-button>
+          <ion-tab-button tab="settings" href="/settings" :disabled="!isAuthenticated">
+            <ion-icon :icon="settingsOutline"></ion-icon>
+            <ion-label>Settings</ion-label>
+          </ion-tab-button>
 
-        <!-- Add more ion-tab-button components for other tabs as needed -->
+          <!-- Add more ion-tab-button components for other tabs as needed -->
 
-      </ion-tab-bar>
+        </ion-tab-bar>
 
-    </ion-tabs>
+      </ion-tabs>
   </ion-page>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { IonPage, IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonLabel, IonIcon } from '@ionic/vue';
 import { compassOutline, bookOutline, search, settingsOutline } from 'ionicons/icons';
+import { useUserStore } from '../stores/userStore';
+
+const userStore = useUserStore();
+const isAuthenticated = computed(() => userStore.isAuthenticated);
 
 // Reactive property to track the active tab
 const activeTab = ref('identify'); // Default
@@ -94,5 +98,9 @@ ion-tab-bar {
   background-size: cover;
 }
 
+ion-tab-button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
 
 </style>

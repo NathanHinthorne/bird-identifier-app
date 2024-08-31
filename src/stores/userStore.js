@@ -16,14 +16,17 @@ import router from '@/router';
 // NOTE: for ease of use, this store makes calls to firebase when its state is changed
 
 export const useUserStore = defineStore('user', () => {
+    // Default state values
+    const defaultSettings = {
+        enableMusic: true,
+        enableSoundEffects: true,
+        showGameInfo: true
+    };
+
     // State
     const user = ref(null);
     const isAuthenticated = computed(() => user.value !== null);
-    const settings = ref({
-        enablePuns: true,
-        enableMusic: true,
-        enableSoundEffects: true
-    });
+    const settings = ref({ ...defaultSettings });
     const seenBirdNames = ref([]);
     const location = ref(null);
 
@@ -43,11 +46,7 @@ export const useUserStore = defineStore('user', () => {
 
     const resetUserState = () => {
         user.value = null;
-        settings.value = {
-            enablePuns: true,
-            enableMusic: true,
-            enableSoundEffects: true
-        };
+        settings.value = { ...defaultSettings };
         seenBirdNames.value = [];
         location.value = null;
     };

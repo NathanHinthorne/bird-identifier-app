@@ -47,7 +47,6 @@ export const useRegionalBirdStore = defineStore('regionalBirds', {
             this.generateInitialBirds();
         },
         async generateMoreBirds() {
-            console.log('Generating more birds from store...');
             this.isLoading = true;
             try {
                 const filteredBirds = this.filterBirds();

@@ -1,6 +1,6 @@
 {
   "appId": "bird.identifier.app",
-  "appName": "bird-identifier-app",
+  "appName": "Birding Pal",
   "webDir": "dist",
   "bundledWebRuntime": false,
   "plugins": {

@@ -27,7 +27,7 @@ export const useSeenBirdStore = defineStore('seenBirds', {
             this.isLoading = true;
 
             try {
-                return this.totalRegionalBirds.find(bird => bird.formattedComName == name);
+                return this.totalSeenBirds.find(bird => bird.formattedComName == name);
 
             } catch (error) {
                 console.error('Error getting bird by id:', error);
@@ -80,5 +80,8 @@ export const useSeenBirdStore = defineStore('seenBirds', {
                 ? this.totalSeenBirds.filter(bird => bird.comName.toLowerCase().includes(this.currentSearchTerm.toLowerCase()))
                 : this.totalSeenBirds;
         },
+        allBirdsLoaded() {
+            return this.displayedSeenBirds.length >= this.totalSeenBirds.length;
+        }
     },
 });

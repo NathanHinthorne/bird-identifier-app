@@ -21,10 +21,10 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import BirdList from '@/components/BirdList.vue';
-import BirdSearch from '@/components/BirdSearch.vue';
+import BirdList from '../components/BirdList.vue';
+import BirdSearch from '../components/BirdSearch.vue';
 import { IonContent, IonPage, IonToolbar, IonTitle, IonHeader } from '@ionic/vue';
-import { useSeenBirdStore } from '@/stores/seenBirdStore';
+import { useSeenBirdStore } from '../stores/seenBirdStore';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -36,6 +36,8 @@ const isLoading = ref(false);
 // Use a computed property to reactively get the displayed birds
 const displayedBirds = computed(() => seenBirdStore.getDisplayedBirds());
 
+const allBirdsLoaded = computed(() => seenBirdStore.allBirdsLoaded());
+
 // Load initial birds when the component is mounted
 onMounted(async () => {
   isLoading.value = true;
@@ -43,6 +45,11 @@ onMounted(async () => {
 });
 
 const handleLoadMore = async (event) => {
+  if (!allBirdsLoaded.value) {
+    event.target.complete();
+    return;
+  }
+
   isLoading.value = true;
   try {
     await seenBirdStore.generateMoreBirds();
@@ -72,15 +79,6 @@ const handleSelectBird = (bird) => {
 </script>
 
 <style scoped>
-ion-toolbar {
-  --background: none;
-  background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
-  background-size: cover;
-  padding: 10px;
-}
-ion-title {
-  color: white;
-}
 
 .custom-searchbar {
   --background: transparent;

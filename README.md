@@ -32,6 +32,7 @@ This app uses Firebase for the following features:
 
 - [ ] Add an un-annoying popups for my bird battler game in the life list, and a permanent one in settings or identify page.
 - [ ] Cache all regional birds in user's file system to allow offline use.
+  - Either use the [sqlite capacitor plugin](https://github.com/capacitor-community/sqlite) and phone's storage for that, or connect Firebase directly to android (instead of the current web mode) and then use Firebase's offline storage. [capacitor@preference](https://www.npmjs.com/package/@capacitor/preferences) might also work, but it's meant for lightweight data and not an entire db.
 - [ ] Create forgot password recovery feature with Firebase.
 - [ ] Create change email feature with Firebase.
 - [ ] Re-train ML audio model to improve accuracy.
@@ -45,12 +46,16 @@ After building, cd to the android folder and run the following command:
 ```bash
 gradlew assembleDebug
 ```
-  
+
+```bash
+npx cap run android --target=44190DLJH0008S  --external
+```
+
 ## Credits
 
 A big thank you to my following friends for their contributions to this project:
   
-- Natan for his witty success text that appears when a bird is identified, such as: "THAT THERE BE A BIRD", "U HAS FOUND BIRD", and "BIRD OBTAINED".
+- Natan for his funny success text that appears when a bird is identified, such as: "THAT THERE BE A BIRD", "U HAS FOUND BIRD", and "BIRD OBTAINED".
 
 - Arsh for the idea of pairing a game with bird identification.
 

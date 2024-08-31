@@ -73,15 +73,6 @@ const handleSelectBird = (bird) => {
 </script>
 
 <style scoped>
-ion-toolbar {
-  --background: none;
-  background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
-  background-size: cover;
-  padding: 10px;
-}
-ion-title {
-  color: white;
-}
 
 .custom-searchbar {
   --background: transparent;

@@ -6,12 +6,6 @@
     --ion-color-primary-shade: #448e53;
     --ion-color-primary-tint: #44a25b;
 
-    /* 
-        other color options:
-
-        ion-color-secondary: #f8faf9;
-        secondary-contrast: #818a8a;
-    */
     --ion-color-secondary: #eaf1ef;
     --ion-color-secondary-rbg: 234, 241, 239;
     --ion-color-secondary-contrast: #687373;
@@ -25,36 +19,58 @@ ion-text {
     color: var(--ion-text-color);
 }
 
-ion-title {
-    /* center */
-    color: var(--ion-text-color);
-    text-align: center;
-    font-size: 1.5em;
+ion-back-button {
+    font-family: 'Fredericka the Great', cursive;
+    color: white;
 }
 
-ion-toolbar {
-    /* center */
-    --ion-toolbar-justify-content: center;
+ion-title {
+    color: white;
+    text-align: center;
+    font-size: 1.2em;
+    font-family: 'Fredericka the Great', cursive;
 }
+
+
+ion-toolbar {
+    --ion-toolbar-justify-content: center;
+    --background: none;
+    background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
+    background-size: cover;
+    padding: 10px;
+}
+
+ion-item {
+    --background: transparent;
+    --color: var(--ion-text-color);
+}
+
+ion-input {
+    --background: rgba(255, 255, 255, 0.2);
+    /* Slightly transparent background for input */
+    --padding-start: 10px;
+    --padding-end: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+    /* Added margin-top for more space */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Add subtle shadow */
+}
+
+
 
 ion-content {
     --background: var(--ion-background-color);
 }
 
-ion-item {
-    --background: var(--ion-background-color);
-    --color: var(--ion-text-color);
-}
-
-ion-input {
-    --background: var(--ion-background-color);
-    --color: var(--ion-text-color);
-    --placeholder-color: #8d6e63;
-    /* Light brown for placeholders */
-}
 
 ion-label {
-    --color: var(--ion-text-color);
+    /* Use !important to override Ionic's default font */
+    --color: var(--ion-text-color) !important;
+    font-family: 'Just Another Hand', cursive !important;
+    font-size: 1.8em !important;
+    padding-bottom: 10px;
 }
 
 ion-card {
@@ -65,7 +81,6 @@ ion-card {
 }
 
 ion-card-content {
-
     padding: 15px;
 }
 
@@ -100,8 +115,4 @@ ion-button {
     --background-focused: var(--ion-color-primary-tint);
     --background-hover: var(--ion-color-primary-tint);
     --color: var(--ion-color-primary-contrast);
-}
-
-.heading {
-    --background: var(--ion-color-primary-tint);
 }

@@ -16,8 +16,8 @@
               <div class="scrapbook-section-title">Preferences</div>
               <div class="scrapbook-section-content">
                 <ion-item>
-                  <ion-label>Enable Unlockable Puns</ion-label>
-                  <input type="checkbox" v-model="userStore.settings.enablePuns" @change="saveSettings" class="custom-checkbox">
+                  <ion-label>Show Game Info</ion-label>
+                  <input type="checkbox" v-model="userStore.settings.showGameInfo" @change="saveSettings" class="custom-checkbox">
                 </ion-item>
                 <ion-item>
                   <ion-label>Enable Music</ion-label>
@@ -47,6 +47,9 @@
                   <button @click="showChangePasswordModal">Change Password</button>
                   <button @click="logout">Logout</button>
                 </div>
+                <!-- <div class="button-container">
+                  <button class="warn-button" @click="deleteAccount">Delete Account</button>
+                </div> -->
               </div>
             </div>
         </div>
@@ -54,54 +57,68 @@
     </ion-content>
 
     <!-- Change Username Modal -->
-    <ion-modal :is-open="isChangeUsernameModalOpen">
+    <ion-modal :is-open="isChangeUsernameModalOpen" @ionModalDidDismiss="handleModalDismiss('username')">
       <ion-header>
         <ion-toolbar>
           <ion-title>Change Username</ion-title>
-          <ion-buttons slot="end">
-            <ion-button @click="isChangeUsernameModalOpen = false">Close</ion-button>
+          <ion-buttons slot="start">
+            <ion-button class="close-button" @click="isChangeUsernameModalOpen = false">Close</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <ion-content class="ion-padding">
-        <ion-item>
-          <ion-label position="floating">New Username</ion-label>
-          <ion-input v-model="newUsername"></ion-input>
-        </ion-item>
-        <ion-button expand="block" @click="changeUsername">Change Username</ion-button>
+      <ion-content>
+        <div class="scrapbook-container">
+          <div class="scrapbook-background"></div>
+            <div class="scrapbook-section-content">
+            <ion-item>
+              <ion-label position="stacked">New Username</ion-label>
+              <ion-input v-model="newUsername"></ion-input>
+            </ion-item>
+            </div>
+          <div class="button-container">
+            <button @click="changeUsername">Change Username</button>
+          </div>
+        </div>
       </ion-content>
     </ion-modal>
 
     <!-- Change Password Modal -->
-    <ion-modal :is-open="isChangePasswordModalOpen">
+    <ion-modal :is-open="isChangePasswordModalOpen" @ionModalDidDismiss="handleModalDismiss('password')">
       <ion-header>
         <ion-toolbar>
           <ion-title>Change Password</ion-title>
-          <ion-buttons slot="end">
-            <ion-button @click="isChangePasswordModalOpen = false">Close</ion-button>
+          <ion-buttons slot="start">
+            <ion-button class="close-button" @click="isChangePasswordModalOpen = false">Close</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <ion-content class="ion-padding">
-        <ion-item>
-          <ion-label position="floating">New Password</ion-label>
-          <ion-input v-model="newPassword" type="password"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Confirm New Password</ion-label>
-          <ion-input v-model="confirmPassword" type="password"></ion-input>
-        </ion-item>
-        <ion-button expand="block" @click="changePassword">Change Password</ion-button>
+      <ion-content>
+        <div class="scrapbook-container">
+          <div class="scrapbook-background"></div>
+          <div class="scrapbook-section-content">
+            <ion-item>
+              <ion-label position="stacked">New Password</ion-label>
+              <ion-input v-model="newPassword" type="password"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">Confirm New Password</ion-label>
+              <ion-input v-model="confirmPassword" type="password"></ion-input>
+            </ion-item>
+          </div>
+          <div class="button-container">
+            <button @click="changePassword">Change Password</button>
+          </div>
+        </div>
       </ion-content>
     </ion-modal>
   </ion-page>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { 
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, 
-  IonLabel, IonToggle, IonInput, IonButton, IonModal, IonButtons 
+  IonLabel, IonInput, IonButton, IonModal, IonButtons, IonBackButton
 } from '@ionic/vue';
 import { useUserStore } from '../stores/userStore';
 import { useRouter } from 'vue-router';
@@ -111,6 +128,12 @@ const router = useRouter();
 
 const email = ref('');
 const username = ref('');
+// const email = computed(() => {
+//   return userStore.user.email;
+// })
+// const username = computed(() => {
+//   return userStore.user.displayName || '';
+// })
 const isChangeUsernameModalOpen = ref(false);
 const isChangePasswordModalOpen = ref(false);
 const newUsername = ref('');
@@ -170,6 +193,26 @@ const logout = async () => {
   await userStore.logout();
   router.push('/auth');
 };
+
+const handleModalDismiss = (modalType) => {
+  if (modalType === 'username') {
+    isChangeUsernameModalOpen.value = false;
+  } else if (modalType === 'password') {
+    isChangePasswordModalOpen.value = false;
+  }
+};
+
+const deleteAccount = async () => {
+
+  console.log("YOU'VE DELETED YOUR WHOLE ACCOUNT!! OH NO")
+  // try {
+  //   await userStore.deleteAccount();
+  //   router.push('/auth');
+  // } catch (error) {
+  //   console.error('Error deleting account:', error);
+  //   // Show error message
+  // }
+};
 </script>
 
 <style scoped>
@@ -202,7 +245,7 @@ const logout = async () => {
 .scrapbook-section {
   margin-bottom: 20px;
   padding: 20px; /* Increased padding for extra spacing */
-  background-image: url('../assets/ui/paper-piece-square.png');
+  background-image: url('../assets/containers/paper-piece-square.png');
   background-size: cover;
   height: auto; /* Ensure the section can expand */
 }
@@ -211,38 +254,20 @@ const logout = async () => {
   font-size: 1.5em;
   font-weight: bold;
   color: #444;
-  font-family: 'Pacifico';
+  font-family: 'Pacifico', cursive;
   margin: 10px 0;
   position: relative;
   padding-left: 30px;
-  background: url('../assets/backgrounds/sticky-note.png') no-repeat left center;
   background-size: 20px;
 }
 
 .scrapbook-section-content {
   padding: 10px;
   background: transparent;
-  border-radius: 10px;
+  border-radius: 5%;
 
   font-size: 1.2em;
   font-family: 'Just Another Hand';
-}
-
-.ion-item-label {
-  font-size: 1.2em;
-  font-family: 'Just Another Hand';
-}
-
-ion-toolbar {
-  --background: none;
-  background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
-  background-size: cover;
-  padding: 10px;
-}
-
-ion-title {
-  color: white;
-  /* font-family: 'Just Another Hand', cursive; */
 }
 
 ion-item {
@@ -275,7 +300,7 @@ ion-toggle {
   background-color: #5e2f0d;
   color: #f0e6d2;
   border: none;
-  border-radius: 20%;
+  border-radius: 5%;
   height: 40px;
   font-size: 1.2em;
   font-family: 'Just Another Hand', cursive;
@@ -289,6 +314,16 @@ ion-toggle {
 
 .button-container button:hover {
   background-color: #7a3d10;
+}
+
+.warn-button {
+  background-color: #c0392b !important;  /* Red */
+}
+
+
+.close-button {
+    font-family: 'Fredericka the Great', cursive;
+    color: white;
 }
 
 .custom-checkbox {
@@ -319,7 +354,7 @@ ion-toggle {
 }
 
 ion-modal {
-  --background: rgba(255, 255, 255, 0.9); /* Slightly transparent background for modal */
+  --background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(5px); /* Adds a blur effect to the modal background */
 }
 </style>

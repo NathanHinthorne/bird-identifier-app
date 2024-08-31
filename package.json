@@ -11,6 +11,7 @@
     "ionic:serve": "vite dev --host"
   },
   "dependencies": {
+    "@capacitor-community/media": "^6.0.0",
     "@capacitor-firebase/app": "^6.1.0",
     "@capacitor-firebase/authentication": "^6.1.0",
     "@capacitor-firebase/firestore": "^6.1.0",
@@ -19,6 +20,7 @@
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^6.1.1",
     "@capacitor/core": "^6.1.1",
+    "@capacitor/filesystem": "^6.0.1",
     "@capacitor/geolocation": "^6.0.0",
     "@capacitor/haptics": "6.0.0",
     "@capacitor/ios": "^6.1.1",
@@ -29,6 +31,7 @@
     "@ionic/vue-router": "^8.2.2",
     "@tensorflow/tfjs": "^4.20.0",
     "axios": "^1.7.2",
+    "capacitor-voice-recorder": "^6.0.3",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.4.5",
     "firebase": "^10.12.4",

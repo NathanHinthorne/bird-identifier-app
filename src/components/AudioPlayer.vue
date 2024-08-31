@@ -44,7 +44,7 @@ onMounted(() => {
     plugins: [
       Spectrogram.create({
         labels: true,
-        height: 250,
+        height: 150,
         windowFunc: 'hann',
       }),
     ],
@@ -147,7 +147,7 @@ const updateScroll = () => {
 .spectrogram-container {
   width: 100%;
   max-width: 600px;
-  height: 250px;
+  height: 150px;
   border: 2px solid #5e2f0d;
   border-radius: 10px;
   background-color: #d2b48c;

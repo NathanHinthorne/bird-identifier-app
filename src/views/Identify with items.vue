@@ -96,16 +96,14 @@ const identifyByImage = () => {
 .sound-button {
     width: 170px;
     height: 170px;
-    /*background-image: url('../assets/ui/spectrogram-frame.png');*/
-    background-image: url('../assets/ui/bird-sound-button2.png');
+    background-image: url('../assets/buttons/bird-sound-traced.png');
     transform: rotate(-3deg);
 }
 
 .image-button {
     width: 150px;
     height: 150px;
-    /*background-image: url('../assets/ui/bird-frame2.png');*/
-    background-image: url('../assets/ui/bird-image-button3.png');
+    background-image: url('../assets/buttons/bird-image-traced-text.png');
     transform: rotate(2deg);
 }
 

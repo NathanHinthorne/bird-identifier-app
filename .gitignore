@@ -30,6 +30,11 @@ serviceAccountKey.json
 *.plist
 google-services.json*
 
+# ai-prompt-template folder
+---
+ai-prompt-templates
+---
+
 
 
 resources/ios/**/*

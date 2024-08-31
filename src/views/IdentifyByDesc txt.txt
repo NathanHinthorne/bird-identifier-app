@@ -1,0 +1,25 @@
+step-by-step ID
+
+1. Size
+Purpose: Identify the bird’s approximate size to further narrow down species.
+Options: Tiny (sparrow-sized), small (robin-sized), medium (crow-sized), large (goose-sized), very large (eagle-sized).
+
+2. Main Colors
+Purpose: Identify the bird based on its primary colors.
+Options: Users can select one or more main colors of the bird (e.g., brown, black, white, yellow, red, blue, green).
+
+3. Pattern - OPTIONAL
+Purpose: Identify distinctive patterns on the bird’s body.
+Options: Speckled, striped, solid, or other. This can be combined with the color selections.
+
+4. Shape and Structure - OPTIONAL
+Purpose: Determine the bird's general body shape and proportions.
+Options: Options could include shape of the body, length of the neck, tail, and beak (e.g., round, slender, long-tailed, short-legged).
+
+5. Habitat
+Purpose: Correlate the bird's features with the environment it was seen in.
+Options: Forest, wetlands, grassland, urban areas, coastlines, etc.
+
+6. Behavior - OPTIONAL
+Purpose: Use behavioral traits to assist in identification.
+Details: Include questions about what the bird was doing (e.g., walking, perching, swimming, wading, hovering, soaring, eating at a feeder).

@@ -20,9 +20,9 @@
 
               <BirdRarityLabel :rarity="bird.rarity" />
 
-              <div class="bird-section">
+              <div v-if="userStore.settings.showGameInfo" class="bird-section">
                 <div class="section-header">
-                  <img src="../assets/ui/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
+                  <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Stats</h3>
                 </div>
                 <BirdStats :stats="formatBirdStats(bird)" />
@@ -30,7 +30,7 @@
               
               <div class="bird-section">
                 <div class="section-header">
-                  <img src="../assets/ui/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
+                  <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Description</h3>
                 </div>
                 <p>{{ bird.longDesc }}</p>
@@ -38,7 +38,7 @@
               
               <div class="bird-section">
                 <div class="section-header">
-                  <img src="../assets/ui/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
+                  <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>How to Find</h3>
                 </div>
                 <p>{{ bird.howToFind }}</p>
@@ -46,7 +46,7 @@
 
               <div class="bird-section">
                 <div class="section-header">
-                  <img src="../assets/ui/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
+                  <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Listen</h3>
                 </div>
                 <!-- <AudioPlayer :audioSrc="bird.sound" /> -->
@@ -56,7 +56,7 @@
               
               <div class="bird-section">
                 <div class="section-header">
-                  <img src="../assets/ui/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
+                  <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Learn More</h3>
                 </div>
                 <p>Find out more about the {{ bird.comName }} on the <a :href="bird.learnMoreLink" target="_blank" rel="noopener noreferrer">All About Birds</a> website.</p>
@@ -78,18 +78,13 @@ import AudioPlayer from '../components/AudioPlayer.vue';
 import LargeBirdImage from '../components/LargeBirdImage.vue';
 import BirdStats from '../components/BirdStats.vue';
 import BirdRarityLabel from '../components/BirdRarityLabel.vue';
+import { useUserStore } from '../stores/userStore';
 
+const userStore = useUserStore(); // user store for game info toggle
 const route = useRoute();
 const regionalBirdStore = useRegionalBirdStore();
 const bird = ref({});
 
-// sample stats data
-const stats = [
-  { label: 'Attack', value: '1' },
-  { label: 'Defense', value: '2' },
-  { label: 'Speed', value: '3' },
-  { label: 'Intelligence', value: '1' },
-];
 
 const formatBirdStats = (bird) => {
   return [
@@ -148,8 +143,6 @@ onMounted(async () => {
 }
 
 
-
-
 .bird-details {
   font-family: 'Just Another Hand', cursive;
   color: #444;
@@ -202,18 +195,6 @@ onMounted(async () => {
   background-color: var(--ion-color-primary-shade);
 }
 
-ion-toolbar {
-  --background: none;
-  background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
-  background-size: cover;
-  padding: 10px;
-}
-
-ion-title,
-ion-back-button {
-  color: white;
-}
-
 .section-header {
   position: relative;
   margin-bottom: 15px;
@@ -231,7 +212,7 @@ ion-back-button {
   transform: translate(-50%, -50%);
   margin: 0;
   padding: 5px 10px;
-  font-family: 'Pacifico';
+  font-family: 'Pacifico', cursive;
   font-size: 1em;
   font-weight: bold;
   color: #333;

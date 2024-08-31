@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button default-href="/life-list"></ion-back-button>
+          <ion-back-button default-href="/life-list" text="Back"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ bird.comName }}</ion-title>
       </ion-toolbar>
@@ -14,20 +14,23 @@
         <div class="scrapbook-background"></div>
         <div class="scrapbook-content">
           <div class="bird-info-card">
-            <!-- <BirdImage :imageUrl="bird.maleBreedingPhoto" :birdName="bird.comName" /> -->
-            <LargeBirdImage :imageUrl="bird.previewPhoto" :birdName="bird.comName" />
+            <div v-if="bird.photographer" class="photographer">Photographed by {{ bird.photographer }}</div>
+            <LargeBirdImage :imageUrl="bird.previewPhoto" :birdName="bird.comName" :inGame="bird.inGame" />
             <div class="bird-details">
-              <div class="bird-section stats-section">
+
+              <BirdRarityLabel :rarity="bird.rarity" />
+
+              <div v-if="userStore.settings.showGameInfo" class="bird-section">
                 <div class="section-header">
-                  <img src="../assets/ui/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
+                  <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Stats</h3>
                 </div>
-                <BirdStats :stats="stats" />
+                <BirdStats :stats="formatBirdStats(bird)" />
               </div>
               
               <div class="bird-section">
                 <div class="section-header">
-                  <img src="../assets/ui/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
+                  <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Description</h3>
                 </div>
                 <p>{{ bird.longDesc }}</p>
@@ -35,7 +38,7 @@
               
               <div class="bird-section">
                 <div class="section-header">
-                  <img src="../assets/ui/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
+                  <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>How to Find</h3>
                 </div>
                 <p>{{ bird.howToFind }}</p>
@@ -43,15 +46,17 @@
 
               <div class="bird-section">
                 <div class="section-header">
-                  <img src="../assets/ui/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
+                  <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Listen</h3>
                 </div>
-                <AudioPlayer :audioSrc="bird.sound" :label="bird.comName" />
+                <!-- <AudioPlayer :audioSrc="bird.sound" /> -->
+                <AudioPlayer :audioSrc="'https://upload.wikimedia.org/wikipedia/commons/5/5b/Poecile_atricapillus_-_Black-capped_Chickadee_XC70185.mp3'" />
+                
               </div>
               
               <div class="bird-section">
                 <div class="section-header">
-                  <img src="../assets/ui/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
+                  <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Learn More</h3>
                 </div>
                 <p>Find out more about the {{ bird.comName }} on the <a :href="bird.learnMoreLink" target="_blank" rel="noopener noreferrer">All About Birds</a> website.</p>
@@ -65,28 +70,35 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/vue';
-import { useRegionalBirdStore } from '../stores/regionalBirdStore';
+import { useSeenBirdStore } from '../stores/seenBirdStore';
 import AudioPlayer from '../components/AudioPlayer.vue';
 import LargeBirdImage from '../components/LargeBirdImage.vue';
 import BirdStats from '../components/BirdStats.vue';
+import BirdRarityLabel from '../components/BirdRarityLabel.vue';
+import { useUserStore } from '../stores/userStore';
 
+const userStore = useUserStore(); // user store for game info toggle
 const route = useRoute();
-const regionalBirdStore = useRegionalBirdStore();
+const seenBirdStore = useSeenBirdStore();
 const bird = ref({});
 
-const stats = ref([
-  { label: 'Attack', value: 2 },
-  { label: 'Defense', value: 2 },
-  { label: 'Speed', value: 5 },
-  { label: 'Intelligence', value: 3 },
-]);
+
+const formatBirdStats = (bird) => {
+  return [
+    { label: 'Attack', value: bird.attackStat },
+    { label: 'Defense', value: bird.defenseStat },
+    { label: 'Speed', value: bird.speedStat },
+    { label: 'Intelligence', value: bird.IntelligenceStat }
+  ];
+}
+
 
 onMounted(async () => {
   const birdName = route.params.birdName;
-  bird.value = await regionalBirdStore.getBirdByName(birdName);
+  bird.value = await seenBirdStore.getBirdByName(birdName);
 });
 </script>
 
@@ -121,6 +133,13 @@ onMounted(async () => {
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
+}
+
+.photographer {
+  font-family: 'Just Another Hand', cursive;
+  font-size: 20px;
+  margin-bottom: 30px;
+  text-align: right;
 }
 
 
@@ -176,17 +195,6 @@ onMounted(async () => {
   background-color: var(--ion-color-primary-shade);
 }
 
-ion-toolbar {
-  --background: none;
-  background: url('../assets/backgrounds/leather-bar.png') no-repeat center center;
-  background-size: cover;
-  padding: 10px;
-}
-
-ion-title {
-  color: white;
-}
-
 .section-header {
   position: relative;
   margin-bottom: 15px;
@@ -204,7 +212,7 @@ ion-title {
   transform: translate(-50%, -50%);
   margin: 0;
   padding: 5px 10px;
-  font-family: 'Just Another Hand', cursive;
+  font-family: 'Pacifico', cursive;
   font-size: 32px;
   font-weight: bold;
   color: #333;
@@ -233,7 +241,7 @@ ion-title {
   }
 
   .section-header h3 {
-    font-size: 28px;
+    font-size: 0.7em;
   }
 }
 

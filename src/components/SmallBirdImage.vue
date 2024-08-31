@@ -5,7 +5,7 @@
       <div class="bird-image-frame">
         <div class="bird-image-wrapper">
           <img :src="computedImageUrl" :alt="birdName" class="bird-image" />
-          <img v-if="inGame" :src="gameImage" alt="In-game badge" class="in-game-badge" />
+          <img v-if="inGame && userStore.settings.showGameInfo" :src="gameImage" alt="In-game badge" class="in-game-badge" />
         </div>
       </div>
       <p class="bird-image-caption">{{ birdName }}</p>
@@ -27,7 +27,9 @@
 import { defineProps, computed } from 'vue';
 import defaultImage from '../assets/bird-silhouette.png';
 import gameImage from '../assets/in-game-badge2.png';
+import { useUserStore } from '../stores/userStore';
 
+const userStore = useUserStore(); // user store for game info toggle
 const props = defineProps({
   imageUrl: {
     type: String,

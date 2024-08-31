@@ -84,16 +84,14 @@ const identifyByImage = () => {
 .sound-button {
     width: 170px;
     height: 170px;
-    /*background-image: url('../assets/ui/spectrogram-frame.png');*/
-    background-image: url('../assets/ui/bird-sound-button2.png');
+    background-image: url('../assets/buttons/bird-sound-traced.png');
     transform: rotate(-3deg);
 }
 
 .image-button {
     width: 170px;
     height: 170px;
-    /*background-image: url('../assets/ui/bird-frame2.png');*/
-    background-image: url('../assets/ui/bird-image-button3.png');
+    background-image: url('../assets/buttons/bird-image-traced-text.png');
     transform: rotate(2deg);
 }
 .scrapbook-container {
@@ -113,9 +111,9 @@ const identifyByImage = () => {
   background-size: cover;
   background-position: center;
   z-index: 0;
-  background-image: url('../assets/backgrounds/parchment-paper-tattered2.png');
-  /*background-image: url('../assets/backgrounds/parchment-paper-wrinkled.jpg'); */
+  background-image: url('../assets/backgrounds/parchment-paper-tattered3.png');
 }
+
 .scrapbook-background::before {
   content: '';
   position: absolute;
@@ -144,8 +142,10 @@ const identifyByImage = () => {
     rgba(0, 0, 0, 0) 5%
   );
   z-index: 1;
-  pointer-events: none; /* Ensure the overlay does not interfere with interactions */
+  pointer-events: none;
 }
+/*
+  
 .scrapbook-background::after {
   content: '';
   position: absolute;
@@ -157,4 +157,5 @@ const identifyByImage = () => {
   z-index: 2;
   pointer-events: none;
 }
+*/
 </style>
