@@ -47,7 +47,6 @@ import Spectrogram from 'wavesurfer.js/dist/plugins/spectrogram.esm.js';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { Capacitor } from '@capacitor/core';
 
-
 const spectrogramContainer = ref(null);
 const waveform = ref(null);
 const wavesurfer = ref(null);
@@ -163,6 +162,16 @@ async function downloadFile(blob) {
     downloadLink.click();
 
   } else {
+
+    /*
+    mismatch between the MIME type of the blob and the file extension
+    Your blob has a MIME type of audio/webm;codecs=opus, but you're saving it with a .wav extension
+    This discrepancy can cause media players to fail to read the file correctly.    
+    
+    Currently, since your blob is of type audio/webm, you should save it with a .webm extension instead of .wav.
+    */
+
+
     // download wav on android/iOS filesystem
     const reader = new FileReader();
     reader.readAsDataURL(blob);

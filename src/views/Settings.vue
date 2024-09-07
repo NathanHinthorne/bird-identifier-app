@@ -52,6 +52,8 @@
                 </div> -->
               </div>
             </div>
+
+            <BirdBattlerAd :canRemove="false"/>
         </div>
       </div>
     </ion-content>
@@ -122,6 +124,7 @@ import {
 } from '@ionic/vue';
 import { useUserStore } from '../stores/userStore';
 import { useRouter } from 'vue-router';
+import BirdBattlerAd from '../components/BirdBattlerAd.vue'
 
 const userStore = useUserStore();
 const router = useRouter();

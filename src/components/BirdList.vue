@@ -1,32 +1,26 @@
 <template>
-  <div class="scrapbook-container">
-    <div class="scrapbook-background"></div>
-    
-    <ion-content class="scrapbook-content">
-      <ion-list>
-        <ion-item v-for="bird in birds" :key="bird.id" @click="selectBird(bird)"
-                  :class="{ 'bird-selected': selectedBirdId && selectedBirdId === bird.id }">
-          <div class="bird-entry">
-            <SmallBirdImage :imageUrl="bird.previewPhoto" :birdName="bird.comName" :inGame="bird.inGame" />
-            <div class="bird-description-container">
-              <p class="bird-description">{{ bird.shortDesc }}</p>
-            </div>
-          </div>
-        </ion-item>
+  <ion-list>
+    <ion-item v-for="bird in birds" :key="bird.id" @click="selectBird(bird)"
+              :class="{ 'bird-selected': selectedBirdId && selectedBirdId === bird.id }">
+      <div class="bird-entry">
+        <SmallBirdImage :imageUrl="bird.previewPhoto" :birdName="bird.comName" :inGame="bird.inGame" />
+        <div class="bird-description-container">
+          <p class="bird-description">{{ bird.shortDesc }}</p>
+        </div>
+      </div>
+    </ion-item>
 
-        <ion-item v-if="isLoading" v-for="i in 4" :key="i">
-          <div class="bird-entry skeleton">
-            <SmallBirdImage isSkeleton />
-          </div>
-        </ion-item>
-      </ion-list>
+    <ion-item v-if="isLoading" v-for="i in 2" :key="i">
+      <div class="bird-entry skeleton">
+        <SmallBirdImage isSkeleton />
+      </div>
+    </ion-item>
+  </ion-list>
 
-      <ion-infinite-scroll @ionInfinite="loadMoreBirds" threshold="100px">
-        <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="Loading more birds...">
-        </ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-    </ion-content>
-  </div>
+  <ion-infinite-scroll @ionInfinite="loadMoreBirds" threshold="100px">
+    <ion-infinite-scroll-content loading-spinner="bubbles" loading-text="Loading more birds...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </template>
 
 <script setup>
@@ -66,32 +60,6 @@ const ionInfinite = (event) => {
 </script>
 
 <style scoped>
-
-.scrapbook-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.scrapbook-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('@/assets/backgrounds/parchment-paper.jpg');
-  background-size: cover;
-  background-position: center;
-  z-index: 0;
-}
-
-.scrapbook-content {
-  --background: transparent;  
-  position: relative; 
-  height: 100%; 
-  z-index: 1;
-} 
 
 .bird-entry {
   display: flex;

@@ -12,8 +12,6 @@ import { onMounted, ref, watch } from 'vue';
 import { Geolocation } from '@capacitor/geolocation';
 
 // Splash screen
-// import { Plugins } from '@capacitor/core';
-// const { SplashScreen } = Plugins;
 import { SplashScreen } from '@capacitor/splash-screen';
 
 // services 
@@ -52,6 +50,11 @@ watch(
 
 onMounted(async () => {
   console.log("App mounted");
+
+  // Show the splash for an indefinite amount of time
+  await SplashScreen.show({
+    autoHide: false,
+  });
 
   userStore.init();
 });
@@ -95,6 +98,7 @@ const setup = async () => {
   console.log("userBirds: ", sortedUserBirds);
 
   console.log("finished loading birds in your region");
-
+  
+  await SplashScreen.hide();
 };
 </script>

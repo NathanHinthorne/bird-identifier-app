@@ -3,7 +3,8 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button default-href="/explore" text="Back"></ion-back-button>
+          <!-- <ion-back-button default-href="/explore" text="Back"></ion-back-button> -->
+          <ion-back-button text="Back"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ bird.comName }}</ion-title>
       </ion-toolbar>
@@ -20,7 +21,7 @@
 
               <BirdRarityLabel :rarity="bird.rarity" />
 
-              <div v-if="userStore.settings.showGameInfo" class="bird-section">
+              <div v-if="userStore.settings.showGameInfo && bird.inGame" class="bird-section">
                 <div class="section-header">
                   <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Stats</h3>
@@ -44,14 +45,13 @@
                 <p>{{ bird.howToFind }}</p>
               </div>
 
-              <div class="bird-section">
+              <div class="bird-section" v-if="bird.sound">
                 <div class="section-header">
                   <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Listen</h3>
                 </div>
-                <!-- <AudioPlayer :audioSrc="bird.sound" /> -->
-                <AudioPlayer :audioSrc="'https://upload.wikimedia.org/wikipedia/commons/5/5b/Poecile_atricapillus_-_Black-capped_Chickadee_XC70185.mp3'" />
-                
+                <AudioPlayer :audioSrc="bird.sound" />
+                <!-- <AudioPlayer :audioSrc="'https://upload.wikimedia.org/wikipedia/commons/5/5b/Poecile_atricapillus_-_Black-capped_Chickadee_XC70185.mp3'" /> -->
               </div>
               
               <div class="bird-section">

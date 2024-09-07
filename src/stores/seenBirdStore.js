@@ -8,11 +8,13 @@ export const useSeenBirdStore = defineStore('seenBirds', {
         page: 1,
         birdsPerPage: 20,
         isLoading: false,
+        fetchingBirds: true,
     }),
     actions: {
         setBirds(birds) {
             this.totalSeenBirds = birds;
             this.generateInitialBirds();
+            this.fetchingBirds = false;
         },
         clearBirds() {
             this.totalSeenBirds = [];

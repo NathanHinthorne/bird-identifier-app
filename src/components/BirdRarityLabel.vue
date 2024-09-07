@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue';
+import { computed } from 'vue';
 import featherIcon from '../assets/icons/feather1.png';
 
 const props = defineProps({

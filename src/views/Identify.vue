@@ -85,6 +85,9 @@ const identifyByImage = () => {
     width: 170px;
     height: 170px;
     background-image: url('../assets/buttons/bird-sound-traced.png');
+    /* pickles
+    background-image: url('https://png.pngtree.com/png-clipart/20231022/original/pngtree-pickles-jar-home-picture-image_13190852.png');
+    */
     transform: rotate(-3deg);
 }
 
@@ -92,6 +95,9 @@ const identifyByImage = () => {
     width: 170px;
     height: 170px;
     background-image: url('../assets/buttons/bird-image-traced-text.png');
+    /* pickles
+    background-image: url('https://png.pngtree.com/png-clipart/20231022/original/pngtree-pickles-jar-home-picture-image_13190852.png');
+    */
     transform: rotate(2deg);
 }
 .scrapbook-container {

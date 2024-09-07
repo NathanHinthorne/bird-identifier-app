@@ -5,13 +5,11 @@
   "bundledWebRuntime": false,
   "plugins": {
     "SplashScreen": {
-      "launchShowDuration": 2000,
-      "launchAutoHide": true,
-      "androidScaleType": "CENTER_CROP",
+      "launchAutoHide": false,
       "splashImmersive": true,
       "backgroundColor": "#ffffff",
       "androidSplashResourceName": "splash",
-      "showSpinner": false,
+      "showSpinner": true,
       "splashFullScreen": true
     },
     "FirebaseAuthentication": {

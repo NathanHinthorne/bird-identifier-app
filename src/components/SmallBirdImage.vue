@@ -5,7 +5,8 @@
       <div class="bird-image-frame">
         <div class="bird-image-wrapper">
           <img :src="computedImageUrl" :alt="birdName" class="bird-image" />
-          <img v-if="inGame && userStore.settings.showGameInfo" :src="gameImage" alt="In-game badge" class="in-game-badge" />
+          <img v-if="inGame && userStore.settings.showGameInfo" :src="gameBadge" alt="In-game badge" class="in-game-badge" />
+          <!-- <img :src="checkmarkBadge" class="checkmark-badge" /> -->
         </div>
       </div>
       <p class="bird-image-caption">{{ birdName }}</p>
@@ -24,9 +25,10 @@
 </template>
 
 <script setup>
-import { defineProps, computed } from 'vue';
+import { computed } from 'vue';
 import defaultImage from '../assets/bird-silhouette.png';
-import gameImage from '../assets/in-game-badge2.png';
+import gameBadge from '../assets/badges/in-game-badge2.png';
+import checkmarkBadge from '../assets/badges/checkmark.png'
 import { useUserStore } from '../stores/userStore';
 
 const userStore = useUserStore(); // user store for game info toggle
@@ -43,6 +45,10 @@ const props = defineProps({
     type: Boolean,
     required: false
   },
+  // userHasSeen: {
+  //   type: Boolean,
+  //   required: false
+  // },
   isSkeleton: {
     type: Boolean,
     default: false
@@ -127,6 +133,13 @@ const randomTapeRotation = () => {
   */
 }
 
+.checkmark-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 1.8em;
+}
+
 
 /* Skeleton styles */
 .skeleton .bird-image-frame {
@@ -178,6 +191,24 @@ const randomTapeRotation = () => {
   .bird-image-caption,
   .skeleton-caption {
     font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .bird-image-container {
+    width: 100px;
+    margin-right: 5px;
+  }
+
+  .bird-image,
+  .skeleton-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .bird-image-caption,
+  .skeleton-caption {
+    font-size: 10px;
   }
 }
 </style>

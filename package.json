@@ -31,7 +31,6 @@
     "@ionic/vue-router": "^8.2.2",
     "@tensorflow/tfjs": "^4.20.0",
     "axios": "^1.7.2",
-    "capacitor-voice-recorder": "^6.0.3",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.4.5",
     "firebase": "^10.12.4",

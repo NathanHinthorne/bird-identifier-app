@@ -9,48 +9,63 @@
       </ion-toolbar>
     </ion-header>
     
-    <div class="scrapbook-page">
-      <div class="step-tracker">{{ currentQuestionIndex + 1 }}/{{ questions.length }}</div>
-      <div class="question-container">
-        <h2>{{ currentQuestion.title }}</h2>
-        <!-- <p>{{ currentQuestion.description }}</p> -->
+    <div class="scrapbook-page" v-if="!showBirdResults">
+        <div class="step-tracker">{{ currentQuestionIndex + 1 }}/{{ questions.length }}</div>
+        <div class="question-container">
+          <h2>{{ currentQuestion.title }}</h2>
 
-        <ion-content class="ion-padding">
-          <div :class="['options-container', `${currentQuestion.id}-options`]">
-            <div v-for="option in currentQuestion.options" :key="option.value" 
-            :class="['option-item', `${currentQuestion.id}-option`, { 'selected': isOptionSelected(option.value) }]"
-            @click="selectOption(option.value)">
-              <template v-if="currentQuestion.id === 'size'">
-                <img :src="option.image" :alt="option.label" class="option-image" :style="{ width: option.width, height: option.height }">
-                <span class="option-label">
-                  <div>{{ option.size }}</div>
-                  <div>{{ option.reference }}</div>
-                </span>
-              </template>
-              <template v-else-if="currentQuestion.id === 'habitat'">
-                <img :src="option.image" :alt="option.label" class="option-image">
-                <span class="option-label">{{ option.label }}</span>
-              </template>
-              <template v-else-if="currentQuestion.id === 'colors'">
-                <div class="color-swatch" :style="{ backgroundColor: option.color }"></div>
-                <span class="option-label">{{ option.label }}</span>
-              </template>
+          <ion-content class="ion-padding">
+            <div :class="['options-container', `${currentQuestion.id}-options`]">
+              <div v-for="option in currentQuestion.options" :key="option.value" 
+              :class="['option-item', `${currentQuestion.id}-option`, { 'selected': isOptionSelected(option.value) }]"
+              @click="selectOption(option.value)">
+                <template v-if="currentQuestion.id === 'size'">
+                  <img :src="option.image" :alt="option.label" class="option-image" :style="{ width: option.width, height: option.height }">
+                  <span class="option-label">
+                    <div>{{ option.size }}</div>
+                    <div>{{ option.reference }}</div>
+                  </span>
+                </template>
+                <template v-else-if="currentQuestion.id === 'habitat'">
+                  <img :src="option.image" :alt="option.label" class="option-image">
+                  <span class="option-label">{{ option.label }}</span>
+                </template>
+                <template v-else-if="currentQuestion.id === 'colors'">
+                  <div class="color-swatch" :style="{ backgroundColor: option.color }"></div>
+                  <span class="option-label">{{ option.label }}</span>
+                </template>
+              </div>
             </div>
+          </ion-content>
+        </div>
+
+        <ion-footer class="footer-section">
+          <div class="navigation-buttons">
+            <ion-button @click="previousQuestion" :disabled="currentQuestionIndex === 0">
+              Previous
+            </ion-button>
+            <ion-button @click="nextQuestion" :disabled="!isCurrentQuestionAnswered">
+              {{ currentQuestionIndex === questions.length - 1 ? 'Identify' : 'Next' }}
+            </ion-button>
           </div>
-        </ion-content>
+        </ion-footer>
       </div>
 
-      <ion-footer class="footer-section">
-        <div class="navigation-buttons">
-          <ion-button @click="previousQuestion" :disabled="currentQuestionIndex === 0">
-            Previous
-          </ion-button>
-          <!-- <ion-button @click="nextQuestion" :disabled="currentQuestionIndex === questions.length - 1 || !isCurrentQuestionAnswered"> -->
-          <ion-button @click="nextQuestion" :disabled="!isCurrentQuestionAnswered">
-            {{ currentQuestionIndex === questions.length - 1 ? 'Identify' : 'Next' }}
-          </ion-button>
-        </div>
-      </ion-footer>
+    <div class="scrapbook-page" v-if="showBirdResults">
+        <h2>Identification Results</h2>
+        <p v-if="filteredBirds.length === 0">No birds match your description. Try adjusting your criteria.</p>
+        <IDBirdList 
+          :birds="filteredBirds"
+          @selectBird="handleSelectBird" 
+          @birdID="handleIdentifyBird"
+        />
+        <!-- <ion-button @click="resetIdentification">Start Over</ion-button> -->
+
+        <SightingNote 
+          v-if="showNote"
+          @cancel="handleCancelNote"
+          @submit="handleSubmitNote"
+        />
     </div>
   </ion-page>
 </template>
@@ -58,8 +73,11 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons, IonFooter, IonButton } from '@ionic/vue';
+import { useRegionalBirdStore } from '../stores/regionalBirdStore';
+import IDBirdList from '../components/IDBirdList.vue';
+import SightingNote from '../components/SightingNote.vue';
+import { useRouter } from 'vue-router';
 
-// Import images (same as before)
 import sparrow from '../assets/bird-sizes/sparrow.png';
 import robin from'../assets/bird-sizes/robin.png';
 import crow from '../assets/bird-sizes/crow.png';
@@ -72,6 +90,9 @@ import wetland from '../assets/habitats/wetlands2.jpg';
 import coastline from '../assets/habitats/coastline.jpg';
 import grassland from '../assets/habitats/grassland1.jpg';
 import mountainous from '../assets/habitats/mountainous1.jpg';
+
+const regionalBirdStore = useRegionalBirdStore();
+const router = useRouter();
 
 const questions = [
   {
@@ -121,6 +142,11 @@ const questions = [
 
 const currentQuestionIndex = ref(0);
 const answers = ref({});
+const showBirdResults = ref(false);
+const showNote = ref(false);
+const filteredBirds = ref([]);
+const selectedBird = ref(null);
+const identifiedBird = ref(null);
 
 const currentQuestion = computed(() => questions[currentQuestionIndex.value]);
 
@@ -162,12 +188,54 @@ function nextQuestion() {
   if (currentQuestionIndex.value < questions.length - 1) {
     currentQuestionIndex.value++;
   } else {
-    identifyBird();
+    filterBirds();
   }
 }
 
-function identifyBird() {
+function filterBirds() {
   console.log('Bird identification data:', answers.value);
+
+  const allBirds = regionalBirdStore.getAllBirds();
+  
+  filteredBirds.value = allBirds.filter(bird => {
+    const sizeMatch = bird.size === answers.value.size;
+    const colorMatch = answers.value.colors.some(color => bird.maleColors.includes(color));
+    const habitatMatch = bird.habitats.includes(answers.value.habitat);
+    
+    return sizeMatch && colorMatch && habitatMatch;
+  });
+
+  showBirdResults.value = true;
+}
+
+const handleSelectBird = (bird) => {
+  selectedBird.value = bird;
+
+  // push to the route
+  router.push('/explore/bird-info/' + bird.formattedComName);
+};
+
+const handleIdentifyBird = (bird) => {
+  identifiedBird.value = bird;
+
+  showNote.value = true;
+};
+
+const handleCancelNote = () => {
+  showNote.value = false;
+}
+
+const handleSubmitNote = (noteText) => {
+  showNote.value = false;
+
+  // put note text alongside bird in seenBirdNames in user db
+}
+
+function resetIdentification() {
+  showBirdResults.value = false;
+  currentQuestionIndex.value = 0;
+  answers.value = {};
+  filteredBirds.value = [];
 }
 </script>
 
@@ -200,11 +268,13 @@ function identifyBird() {
 h2 {
   font-family: 'Fredericka the Great', cursive;
   color: #8b4513;
+  text-align: center;
 }
 
 p {
   font-family: 'Just Another Hand', cursive;
   font-size: 1.8em;
+  text-align: center;
 }
 
 .options-container {
@@ -288,6 +358,13 @@ p {
   /* remove margin on top */
   margin-top: 0;
   padding-top: 0;
+}
+
+.bird-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
 

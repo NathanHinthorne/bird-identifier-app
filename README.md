@@ -14,6 +14,10 @@ This app is designed to help users identify birds they see in the wild. It uses 
 
 It also has the option of syncing the user's life list to a separate bird battler game I created. The game is a simple RPG where the user's birds battle against other birds in a turn-based system.
 
+Unlike other bird identification apps, this app is designed to be more of a personal bird journal, both in asthetic and in features. It will allow users to upload their own photos of birds and write their own descriptions of birds they've seen. It also has a bird battler game that syncs with the life list.
+
+Keep in mind this app was produced by a single developer, not a whole lab of ornithology who have crazy amounts of data at their disposal. As a result, it currently only contains birds in the Washington State region and doesn't display information such as range maps, seasonal occurrence, etc. I hope to add more regions in the future. If you would like to contribute to the project, please see the [Future Plans](#future-plans) section below or shoot me an email at [nathanrh856@gmail.com](mailto:nathanrh856@gmail.com) about helping to expand my Google Sheet full of all the bird data.
+
 ## 3rd Party Libraries
 
 This app uses Firebase for the following features:
@@ -31,6 +35,9 @@ This app uses Firebase for the following features:
 ## Future Plans
 
 - [ ] Add an un-annoying popups for my bird battler game in the life list, and a permanent one in settings or identify page.
+- [ ] Center the app around personalization features to make it feel like a bird "journal". This is a major part of what separates it from apps like Merlin.
+  - [ ] Add ability for user to upload their own photo of a bird that will be a substitute for the original photo (maybe using Capacitor Media plugin).
+  - [ ] Add ability for user to write their own short description of a bird that will show up in the life list. This will allow users to add their own personal experiences with the bird.
 - [ ] Cache all regional birds in user's file system to allow offline use.
   - Either use the [sqlite capacitor plugin](https://github.com/capacitor-community/sqlite) and phone's storage for that, or connect Firebase directly to android (instead of the current web mode) and then use Firebase's offline storage. [capacitor@preference](https://www.npmjs.com/package/@capacitor/preferences) might also work, but it's meant for lightweight data and not an entire db.
 - [ ] Create forgot password recovery feature with Firebase.

@@ -8,11 +8,13 @@ export const useRegionalBirdStore = defineStore('regionalBirds', {
         page: 1,
         birdsPerPage: 20,
         isLoading: false,
+        fetchingBirds: true,
     }),
     actions: {
         setBirds(birds) {
             this.totalRegionalBirds = birds;
             this.generateInitialBirds();
+            this.fetchingBirds = false;
         },
         clearBirds() {
             this.totalRegionalBirds = [];

@@ -1,21 +1,28 @@
 <template>
   <ion-page>
-    
     <ion-toolbar>
       <ion-header>
         <ion-title>Life List</ion-title>
         <BirdSearch @search="searchBirds" class="custom-searchbar" />
       </ion-header>
     </ion-toolbar>
-        
-    <ion-content>
-      <BirdList
-        :birds="displayedBirds" 
-        :isLoading="isLoading"
-        @selectBird="handleSelectBird" 
-        @loadMoreBirds="handleLoadMore" 
-      />
-    </ion-content>
+
+    <div class="scrapbook-container">
+      <div class="scrapbook-background"></div>
+          
+      <ion-content class="scrapbook-content">
+        <LoadingAnimation v-if="seenBirdStore.fetchingBirds" />
+        <template v-if="!seenBirdStore.fetchingBirds" >
+          <BirdBattlerAd v-if="userStore.settings.showBirdBattlerAd" :canRemove="true"/>
+          <BirdList
+            :birds="displayedBirds" 
+            :isLoading="isLoading"
+            @selectBird="handleSelectBird" 
+            @loadMoreBirds="handleLoadMore" 
+          />
+        </template>
+      </ion-content>
+    </div>
   </ion-page>
 </template>
 
@@ -23,9 +30,14 @@
 import { ref, onMounted, computed } from 'vue';
 import BirdList from '../components/BirdList.vue';
 import BirdSearch from '../components/BirdSearch.vue';
+import LoadingAnimation from '../components/LoadingAnimation.vue';
+import BirdBattlerAd from '../components/BirdBattlerAd.vue';
 import { IonContent, IonPage, IonToolbar, IonTitle, IonHeader } from '@ionic/vue';
 import { useSeenBirdStore } from '../stores/seenBirdStore';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '../stores/userStore';
+
+const userStore = useUserStore();
 
 const router = useRouter();
 
@@ -33,12 +45,10 @@ const seenBirdStore = useSeenBirdStore();
 const selectedBird = ref(null);
 const isLoading = ref(false);
 
-// Use a computed property to reactively get the displayed birds
 const displayedBirds = computed(() => seenBirdStore.getDisplayedBirds());
 
 const allBirdsLoaded = computed(() => seenBirdStore.allBirdsLoaded());
 
-// Load initial birds when the component is mounted
 onMounted(async () => {
   isLoading.value = true;
   seenBirdStore.generateInitialBirds();
@@ -72,18 +82,39 @@ const searchBirds = async (searchTerm) => {
 
 const handleSelectBird = (bird) => {
   selectedBird.value = bird;
-
-  // push to the route
   router.push('/life-list/bird-info/' + bird.formattedComName);
 };
 </script>
 
 <style scoped>
+.scrapbook-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.scrapbook-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('@/assets/backgrounds/parchment-paper.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.scrapbook-content {
+  --background: transparent;  
+  position: relative; 
+  height: 100%; 
+  z-index: 1;
+} 
 
 .custom-searchbar {
   --background: transparent;
-  margin-top: 10px; /* Add margin-top for spacing */
+  margin-top: 10px;
 }
-
-
 </style>

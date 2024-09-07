@@ -20,7 +20,8 @@ export const useUserStore = defineStore('user', () => {
     const defaultSettings = {
         enableMusic: true,
         enableSoundEffects: true,
-        showGameInfo: true
+        showGameInfo: true,
+        showBirdBattlerAd: false
     };
 
     // State

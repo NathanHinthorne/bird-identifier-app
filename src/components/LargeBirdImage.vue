@@ -12,8 +12,8 @@
 </template>
 
 <script setup>
-import { defineProps, onMounted } from 'vue';
-import gameImage from '../assets/in-game-badge2.png';
+import { onMounted } from 'vue';
+import gameImage from '../assets/badges/in-game-badge2.png';
 import { useUserStore } from '../stores/userStore';
 
 const userStore = useUserStore(); // user store for game info toggle
