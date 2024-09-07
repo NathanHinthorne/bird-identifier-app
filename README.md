@@ -34,16 +34,13 @@ This app uses Firebase for the following features:
 
 ## Future Plans
 
-- [x] Add an un-annoying popups for my bird battler game in the life list, and a permanent one in settings or identify page.
-- [ ] Center the app around personalization features to make it feel like a bird "journal". This is a major part of what separates it from apps like Merlin.
-  - [x] Add ability for user to write a short "bird sighting note" that will appear next to their identified bird in the life list page.
-  - [ ] Add ability for user to upload their own photo of a bird that will be a substitute for the original photo (maybe using Capacitor Media plugin).
-  - [ ] Add ability for user to write their own short description of a bird that will show up in the life list. This will allow users to add their own personal experiences with the bird.
-- [ ] Cache all regional birds in user's file system to allow offline use.
+- Center the app around personalization features to make it feel like a bird "journal". This is a major part of what separates it from apps like Merlin.
+  - Add ability for user to write their own short description of a bird that will show up in the life list. This will allow users to add their own personal experiences with the bird.
+- Cache all regional birds in user's file system to allow offline use.
   - Either use the [sqlite capacitor plugin](https://github.com/capacitor-community/sqlite) and phone's storage for that, or connect Firebase directly to android (instead of the current web mode) and then use Firebase's offline storage. [capacitor@preference](https://www.npmjs.com/package/@capacitor/preferences) might also work, but it's meant for lightweight data and not an entire db.
-- [ ] Create "forgot password" recovery feature with Firebase.
-- [ ] Create change email feature with Firebase.
-- [ ] Re-train ML audio model to improve accuracy.
+- Create "forgot password" recovery feature with Firebase.
+- Create change email feature with Firebase.
+- Re-train ML audio model to improve accuracy.
 
 ## Installation for Development
 
