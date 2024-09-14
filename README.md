@@ -12,7 +12,7 @@
 
 This app is designed to help users identify birds they see in the wild. It uses machine learning to identify birds based on live audio recordings, as well as step-by-step questions to identify birds based on their characteristics.
 
-It also has the option of syncing the user's life list to a separate bird battler game I created. The game is a simple RPG where the user's birds battle against other birds in a turn-based system.
+It also has the option of syncing the user's life list to a separate bird battler game I'm still developing. The game is a simple RPG where the user's birds battle against other birds in a turn-based system.
 
 Unlike other bird identification apps, this app is designed to be more of a personal bird journal, both in asthetic and in features. It will allow users to upload their own photos of birds and write their own descriptions of birds they've seen. It also has a bird battler game that syncs with the life list.
 
@@ -20,24 +20,31 @@ Keep in mind this app was produced by a single developer, not a whole lab of orn
 
 ## 3rd Party Libraries
 
-This app uses Firebase for the following features:
+- Firebase
 
-- Authentication
-  - User authentication is handled through Firebase Authentication.
-  - Users can sign up, log in, and log out.
-  - User passwords are hashed and salted for security.
-  - User authentication is required to access the app.
+  - Authentication
   
-- Database
-  - Realtime Database to store birds identified by each user, along with info about each bird.
-  - Firestore to store all bird images, descriptions, etc.
+    - User authentication is handled through Firebase Authentication.
+    - Users can sign up, log in, and log out.
+    - User passwords are hashed and salted for security.
+    - User authentication is required to access the app.
+
+  - Database
+  
+    - Realtime Database to store birds identified by each user, along with info about each bird.
+    - Firestore to store all bird images, descriptions, etc.
+
+- Geocode
+  - Reverse geolocation to get region from user's latitude and longitude.
 
 ## Future Plans
 
 - Center the app around personalization features to make it feel like a bird "journal". This is a major part of what separates it from apps like Merlin.
   - Add ability for user to write their own short description of a bird that will show up in the life list. This will allow users to add their own personal experiences with the bird.
-- Cache all regional birds in user's file system to allow offline use.
-  - Either use the [sqlite capacitor plugin](https://github.com/capacitor-community/sqlite) and phone's storage for that, or connect Firebase directly to android (instead of the current web mode) and then use Firebase's offline storage. [capacitor@preference](https://www.npmjs.com/package/@capacitor/preferences) might also work, but it's meant for lightweight data and not an entire db.
+- Cache all regional birds in user's file system (Directory.Data) to allow offline use.
+  - Use the [sqlite capacitor plugin](https://github.com/capacitor-community/sqlite) and phone's storage for that.
+  - For audio files, transition to Dropbox and its API. Only access the API when a user needs to download a new region of birds. Cache all data dropbox provides so we don't have unnecessary usage of the API.
+  - An offline mode implies all the data will be offline, and will only connect when downloading new data. This requires old code that interacts with the data to be rewritten. This situation could be avoided with Firebase's offline database support for Android (app currently uses web version), but SQLite is a viable solution too, especially since it means I can store large files without worrying about Firebase's API limits.
 - Create "forgot password" recovery feature with Firebase.
 - Create change email feature with Firebase.
 - Re-train ML audio model to improve accuracy.
@@ -58,13 +65,7 @@ npx cap run android --target=44190DLJH0008S  --external
 
 ## Credits
 
-A big thank you to my following friends for their contributions to this project:
-  
-- Natan for his funny success text that appears when a bird is identified, such as: "THAT THERE BE A BIRD", "U HAS FOUND BIRD", and "BIRD OBTAINED".
-
-- Arsh for the idea of pairing a game with bird identification.
-
-- And most importantly **Ethan!!!** for his help writing bird descriptions and his contribution of over 100 bird images he spent years personally photographing and organizing. You can find a wonderful wildlife book he wrote [here on Amazon](https://www.amazon.com/Masterpieces-Evergreen-State-Narration-Washington/dp/B09GCXXTBX). I would highly recommend checking it out!
+A big thank you to my friend Ethan for his help writing bird descriptions and his contribution of over 100 bird images he spent years personally photographing and organizing! You can find a wonderful wildlife book he wrote [here on Amazon](https://www.amazon.com/Masterpieces-Evergreen-State-Narration-Washington/dp/B09GCXXTBX). I would highly recommend checking it out!
 
 ## License
 

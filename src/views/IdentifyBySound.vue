@@ -18,9 +18,18 @@
       <ion-content>
           <div class="birds-section">
             <h2>Possible Birds</h2>
-            <div v-for="(bird, index) in possibleBirds" :key="index" class="bird-item">
-              {{ bird }}
-            </div>
+
+            <IDBirdList 
+              :birds="possibleBirds"
+              @selectBird="handleSelectBird" 
+              @birdID="handleIdentifyBird"
+            />
+
+            <SightingNote 
+              v-if="showNote"
+              @cancel="handleCancelNote"
+              @submit="handleSubmitNote"
+            />
           </div>
 
       </ion-content>
@@ -46,13 +55,28 @@ import RecordPlugin from 'wavesurfer.js/dist/plugins/record.esm.js';
 import Spectrogram from 'wavesurfer.js/dist/plugins/spectrogram.esm.js';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { Capacitor } from '@capacitor/core';
+import { useRegionalBirdStore } from '../stores/regionalBirdStore';
+import IDBirdList from '../components/IDBirdList.vue';
+import SightingNote from '../components/SightingNote.vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '../stores/userStore';
+import { useSeenBirdStore } from '../stores/seenBirdStore';
 
 const spectrogramContainer = ref(null);
 const waveform = ref(null);
 const wavesurfer = ref(null);
 const record = ref(null);
 const isRecording = ref(false);
+
 const possibleBirds = ref([]);
+const showNote = ref(false);
+const selectedBird = ref(null);
+const identifiedBird = ref(null);
+const userStore = useUserStore();
+const seenBirdStore = useSeenBirdStore();
+const regionalBirdStore = useRegionalBirdStore();
+const router = useRouter();
+
 let scrollingWaveform = true;
 let birdInterval = null;
 
@@ -96,7 +120,8 @@ function createWaveSurfer() {
   );
 
   record.value.on('record-end', (blob) => {
-    downloadFile(blob)
+    // comment back in for production code
+    // downloadFile(blob)
   });
 
   record.value.on('deviceError', (code) => {
@@ -211,13 +236,38 @@ async function downloadFile(blob) {
   }
 }
 
+const handleSelectBird = (bird) => {
+  selectedBird.value = bird;
+
+  // push to the route
+  router.push('/explore/bird-info/' + bird.formattedComName);
+};
+
+const handleIdentifyBird = (bird) => {
+  identifiedBird.value = bird;
+
+  showNote.value = true;
+};
+
+const handleCancelNote = () => {
+  showNote.value = false;
+}
+
+const handleSubmitNote = (noteText) => {
+  showNote.value = false;
+
+  userStore.addSeenBirdName(identifiedBird.value);
+  seenBirdStore.addBird(identifiedBird.value)
+  userStore.addSeenBirdNote(noteText);
+}
 
 /* TEMP FUNCTIONS TO TEST BIRDS */
 
-function startBirdInterval() {
-  birdInterval = setInterval(() => {
-    const newBird = generateFakeBird();
+async function startBirdInterval() {
+  birdInterval = setInterval(async () => {
+    const newBird = await generateFakeBird();
     possibleBirds.value.push(newBird);
+    console.log("heard bird:", newBird.comName)
   }, 2000); // Add a new bird every 2 seconds
 }
 
@@ -228,10 +278,13 @@ function clearBirdInterval() {
   }
 }
 
-function generateFakeBird() {
-  const birdNames = ['Sparrow', 'Robin', 'Blue Jay', 'Cardinal', 'Goldfinch'];
+async function generateFakeBird() {
+  const birdNames = ['House_Sparrow', 'American_Robin', 'Black-capped_Chickadee', 'Annas_Hummingbird'];
   const randomIndex = Math.floor(Math.random() * birdNames.length);
-  return birdNames[randomIndex];
+  const selectedBird = birdNames[randomIndex];
+
+  const birdObj = await regionalBirdStore.getBirdByName(selectedBird);
+  return birdObj;
 }
 </script>
 

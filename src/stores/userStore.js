@@ -11,6 +11,7 @@ import {
 } from 'firebase/auth';
 import { ref as dbRef, set, get } from 'firebase/database';
 import router from '@/router';
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 
 
 // NOTE: for ease of use, this store makes calls to firebase when its state is changed
@@ -94,10 +95,6 @@ export const useUserStore = defineStore('user', () => {
             await updateUsername(username);
             await saveSettings();
             console.log('Registered new user:', email);
-
-            // add test bird in seenBirds
-            await addSeenBirdName('Canada_Goose');
-            await addSeenBirdName('American_Robin');
 
         } catch (error) {
             console.error('Error registering new user:', error);
@@ -185,6 +182,59 @@ export const useUserStore = defineStore('user', () => {
         }
     };
 
+    const addSeenBirdNote = async (birdNote) => {
+        if (user.value) {
+            console.log('TODO - add note to bird:', birdNote);
+        }
+    };
+
+    /*
+    const saveDataToCache = async () => {
+        const dateTime = new Date().toISOString();
+        const subfolder = 'User/';
+        const fileName = `bird_data_${dateTime}.json`;
+
+        // need to save settings, seenBirdNames, and location
+        const data = JSON.stringify(settings.value);
+
+        try {
+            const savedFile = await Filesystem.writeFile({
+                path: subfolder + fileName,
+                data: data,
+                directory: Directory.Data,
+                encoding: Encoding.UTF8,
+            });
+            console.log('Bird data saved to cache:', savedFile);
+        } catch (error) {
+            console.error('Error saving bird data to cache:', error);
+        }
+    };
+
+    const fetchLatestDataFromCache = async () => {
+        // fileName should be the latest save file
+        const files = await Filesystem.readdir({
+            path: '',
+            directory: Directory.Data,
+        });
+        const latestFile = files.files.sort((a, b) => b.lastModified - a.lastModified)[0];
+        const fileName = latestFile.name;
+
+        try {
+            const result = await Filesystem.readFile({
+                path: fileName,
+                directory: Directory.Data,
+                encoding: Encoding.UTF8,
+            });
+            const birdData = JSON.parse(result.data);
+            console.log('Bird data retrieved from cache:', birdData);
+            return birdData;
+        } catch (error) {
+            console.error('Error retrieving bird data from cache:', error);
+            return null;
+        }
+    };
+    */
+
     return {
         user,
         settings,
@@ -200,9 +250,10 @@ export const useUserStore = defineStore('user', () => {
         updatePassword,
         saveSettings,
         addSeenBirdName,
+        addSeenBirdNote,
         setLocation,
         pullSettings,
         pullSeenBirdNames,
-        pullLocation
+        pullLocation,
     };
 });

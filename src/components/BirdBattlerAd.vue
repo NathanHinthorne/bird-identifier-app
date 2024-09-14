@@ -13,6 +13,7 @@
         <div v-show="showScrollIndicator" class="scroll-indicator"></div>
         <img :src="adImageUrl" :alt="adImageAlt" class="large">
         <h2>Bird Battler Game</h2>
+        <h2 style="color: green; font-style: italic;">COMING SOON!</h2>
         <p>Use birds from your Life List to engage in fun battles!</p>
         <ul>
           <li>Turn-based strategy game</li>

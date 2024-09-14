@@ -93,7 +93,7 @@ textarea {
   font-size: 1.5em;
   line-height: 1.6;
   color: #3c2f2f;
-  resize: vertical;
+  resize: none; /* Disable resizing */
 }
 
 textarea:focus {

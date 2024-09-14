@@ -5,7 +5,7 @@ export const getLocation = async (lat, lng) => {
     try {
         const response = await axios.get(
             `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}`,
-            { timeout: 5000 } // Set a timeout of 5 seconds
+            { timeout: 3000 } // Set a timeout of 5 seconds
         );
 
         if (response.data.results && response.data.results.length > 0) {

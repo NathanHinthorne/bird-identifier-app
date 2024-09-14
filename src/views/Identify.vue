@@ -3,9 +3,10 @@
         <Header />
 
         <div class="scrapbook-container">
-            <div class="scrapbook-background"></div>
+          <div class="scrapbook-background"></div>
+          <LoadingAnimation v-if="regionalBirdStore.fetchingBirds" />
 
-            <div class="button-container">
+            <div class="button-container" v-else>
                 <button class="scrapbook-button sound-button" @click="identifyBySound">
                     <span>Identify by Sound</span>
                 </button>
@@ -21,9 +22,11 @@
 <script setup>
 import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonPage, IonContent, IonIcon } from '@ionic/vue';
 import Header from '../components/Header.vue';
-
+import LoadingAnimation from '../components/LoadingAnimation.vue';
+import { useRegionalBirdStore } from '../stores/regionalBirdStore';
 import { useRouter } from 'vue-router';
 
+const regionalBirdStore = useRegionalBirdStore();
 const router = useRouter();
 
 const identifyBySound = () => {

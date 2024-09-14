@@ -52,7 +52,7 @@
       </div>
 
     <div class="scrapbook-page" v-if="showBirdResults">
-        <h2>Identification Results</h2>
+        <h2>Possible Birds</h2>
         <p v-if="filteredBirds.length === 0">No birds match your description. Try adjusting your criteria.</p>
         <IDBirdList 
           :birds="filteredBirds"
@@ -77,6 +77,8 @@ import { useRegionalBirdStore } from '../stores/regionalBirdStore';
 import IDBirdList from '../components/IDBirdList.vue';
 import SightingNote from '../components/SightingNote.vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '../stores/userStore';
+import { useSeenBirdStore } from '../stores/seenBirdStore';
 
 import sparrow from '../assets/bird-sizes/sparrow.png';
 import robin from'../assets/bird-sizes/robin.png';
@@ -91,6 +93,8 @@ import coastline from '../assets/habitats/coastline.jpg';
 import grassland from '../assets/habitats/grassland1.jpg';
 import mountainous from '../assets/habitats/mountainous1.jpg';
 
+const userStore = useUserStore();
+const seenBirdStore = useSeenBirdStore();
 const regionalBirdStore = useRegionalBirdStore();
 const router = useRouter();
 
@@ -122,6 +126,7 @@ const questions = [
       { value: 'green', label: 'Green', color: '#008000' },
       { value: 'orange', label: 'Orange', color: '#FFA500' },
       { value: 'purple', label: 'Purple', color: '#800080' },
+      { value: 'pink', label: 'Pink', color: '#FFB6C1'}
     ],
     multiSelect: true,
   },
@@ -140,11 +145,19 @@ const questions = [
   },
 ];
 
+const sizeMap = {
+  "tiny": 1,
+  "small": 2,
+  "medium": 3,
+  "large": 4,
+  "very large": 5
+}
+
 const currentQuestionIndex = ref(0);
 const answers = ref({});
 const showBirdResults = ref(false);
-const showNote = ref(false);
 const filteredBirds = ref([]);
+const showNote = ref(false);
 const selectedBird = ref(null);
 const identifiedBird = ref(null);
 
@@ -198,8 +211,18 @@ function filterBirds() {
   const allBirds = regionalBirdStore.getAllBirds();
   
   filteredBirds.value = allBirds.filter(bird => {
-    const sizeMatch = bird.size === answers.value.size;
-    const colorMatch = answers.value.colors.some(color => bird.maleColors.includes(color));
+    // const sizeMatch = bird.size === answers.value.size;
+    // possibly include a margin of error (match 1 above + 1 below)
+    const targetSizeNum = sizeMap[answers.value.size];
+    const birdSizeNum = sizeMap[bird.size];
+    const sizeMatch = (birdSizeNum >= targetSizeNum - 1) && (birdSizeNum <= targetSizeNum + 1);
+
+
+    // Treat male and female color cases differently
+    const maleColorMatch = answers.value.colors.every(color => bird.maleColors.includes(color));
+    const femaleColorMatch = answers.value.colors.every(color => bird.femaleColors.includes(color));
+    const colorMatch = maleColorMatch || femaleColorMatch;
+
     const habitatMatch = bird.habitats.includes(answers.value.habitat);
     
     return sizeMatch && colorMatch && habitatMatch;
@@ -228,7 +251,9 @@ const handleCancelNote = () => {
 const handleSubmitNote = (noteText) => {
   showNote.value = false;
 
-  // put note text alongside bird in seenBirdNames in user db
+  userStore.addSeenBirdName(identifiedBird.value);
+  seenBirdStore.addBird(identifiedBird.value)
+  userStore.addSeenBirdNote(noteText);
 }
 
 function resetIdentification() {

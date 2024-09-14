@@ -3,7 +3,6 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <!-- <ion-back-button default-href="/explore" text="Back"></ion-back-button> -->
           <ion-back-button text="Back"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ bird.comName }}</ion-title>
@@ -45,14 +44,16 @@
                 <p>{{ bird.howToFind }}</p>
               </div>
 
-              <div class="bird-section" v-if="bird.sound">
+              <div class="bird-section" v-if="bird.sound1">
                 <div class="section-header">
                   <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Listen</h3>
                 </div>
-                <AudioPlayer :audioSrc="bird.sound" />
-                <!-- <AudioPlayer :audioSrc="'https://upload.wikimedia.org/wikipedia/commons/5/5b/Poecile_atricapillus_-_Black-capped_Chickadee_XC70185.mp3'" /> -->
-              </div>
+                <!-- <AudioPlayer audioSrc="https://upload.wikimedia.org/wikipedia/commons/0/05/Melanerpes_formicivorus_-_Acorn_Woodpecker_XC110258.mp3"></AudioPlayer> -->
+                <AudioPlayer :audioSrc="bird.sound1" />
+                <AudioPlayer :audioSrc="bird.sound2" v-if="bird.sound2"/>
+                <AudioPlayer :audioSrc="bird.sound3" v-if="bird.sound3"/>
+              </div>  
               
               <div class="bird-section">
                 <div class="section-header">

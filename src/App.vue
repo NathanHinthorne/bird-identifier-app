@@ -79,9 +79,17 @@ const setup = async () => {
     }
   });
 
+  // sort a-z
   const sortedRegionalBirds = regionalBirds.sort((a, b) => {
     return a.comName.localeCompare(b.comName);
   });
+
+  // sort by rarity
+  // const sortedRegionalBirds = regionalBirds.sort((a, b) => {
+  //   return a.rarity - b.rarity;
+  // });
+
+
   regionalBirdStore.setBirds(sortedRegionalBirds);
   console.log("regionalBirds: ", sortedRegionalBirds);
 
@@ -90,6 +98,7 @@ const setup = async () => {
   console.log("userBirdNames: ", userBirdNames);
   
   // Step 4: Find birds with given names
+  // NOTE: after expanding regions, we can't rely on the regionalBirdStore to contain ALL of our seen birds
   const userBirds = await firestoreService.fetchBirdsByName(userBirdNames);
   const sortedUserBirds = userBirds.sort((a, b) => {
     return a.comName.localeCompare(b.comName);
