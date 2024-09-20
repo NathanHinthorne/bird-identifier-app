@@ -1,0 +1,10 @@
+whistle, 
+ascending whistle, 
+descending whistle, 
+trill, 
+chirp,
+buzz,
+bark, 
+rattle,
+hoot,
+squawk

@@ -1,0 +1,24 @@
+Finches, Sparrows, Doves, Pigeons, Jays, Grosbeaks, Crows, Magpies, Ravens, Titmice, Larks, Towhees, Buntings, Quail
+seeds
+
+Warblers, Flycatchers, Swallows, Wrens, Thrushes, Nighthawks, Chickadees, Kinglets, Phoebes, Creepers, Vireos, Larks, 
+Crows, Magpies, Ravens, Titmice, Nuthatches, Woodpeckers, Kingfishers, Cuckoos
+bugs
+
+Gulls, Terns, Pelicans, Cormorants, Grebes, Ducks, Loons, Kingfishers, Herons, Egrets, Ospreys
+fish
+
+Hawks, Owls, Falcons, Eagles, Crows, Magpies, Ravens
+rodents
+
+Robins, Waxwings, Tanagers, Orioles, Thrushes, Crows, Magpies, Ravens, Jays, Mockingbirds, Thrashers, Grosbeaks
+fruit
+
+Hummingbirds, Orioles, Warblers
+nectar
+
+Geese, Ducks, Pigeons, Pheasants, Crows, Magpies, Ravens, Quail, Sparrows, Doves, Larks
+vegetation
+
+Shorebirds, Sandpipers, Plovers, Herons, Egrets, Oystercatchers, Gulls, Terns, Crows, Ravens
+crustaceans 
