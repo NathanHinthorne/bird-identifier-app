@@ -14,7 +14,7 @@ This app is designed to help users identify birds they see in the wild. It uses 
 
 It also has the option of syncing the user's life list to a separate bird battler [game I'm still developing](https://github.com/NathanHinthorne/bird-battler-game). The game is a simple RPG where the user's birds battle against other birds in a turn-based system.
 
-Unlike other bird identification apps, this app is designed to be more of a personal bird journal, both in asthetic and in features. It will allow users to upload their own photos of birds and write their own descriptions of birds they've seen.
+Unlike other bird identification apps, this app is designed to be more of a personal bird journal, both in asthetic and in features. It will allow users to upload their own photos of birds and write their own notes of birds they've seen.
 
 Keep in mind this app was produced by a single developer, not a whole lab of ornithology who have crazy amounts of data at their disposal. As a result, it currently only contains birds in the Washington State region and doesn't display information such as range maps, seasonal occurrence, etc. I hope to add more regions in the future. If you would like to contribute to the project, please see the [Future Plans](#future-plans) section below or shoot me an email at [nathanrh856@gmail.com](mailto:nathanrh856@gmail.com) about helping to expand my Google Sheet full of all the bird data.
 
@@ -40,7 +40,7 @@ Keep in mind this app was produced by a single developer, not a whole lab of orn
 ## Future Plans
 
 - Center the app around personalization features to make it feel like a bird "journal". This is a major part of what separates it from apps like Merlin.
-  - ADD CHECKMARK BADGE IF BIRD IS SEEN
+  - Add checkmark badge if bird is seen
   - Change "sighting history" button to look like a small page from a scrapbook with scribbles and horizontal lines to represent lists of birds.
   - Change "sighting history" PAGE to feature a couple pages piled on top of each other. Each page is a sighting, so the user will "flip" between the pages.
   - During the sighting note pop-up, allow user to upload a photo. This photo will be displayed alongside the written note in the "sighting history" page.
@@ -68,10 +68,6 @@ After building, cd to the android folder and run the following command:
 
 ```bash
 gradlew assembleDebug
-```
-
-```bash
-npx cap run android --target=44190DLJH0008S  --external
 ```
 
 ## Credits
