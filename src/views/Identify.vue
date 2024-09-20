@@ -4,7 +4,7 @@
 
         <div class="scrapbook-container">
           <div class="scrapbook-background"></div>
-          <LoadingAnimation v-if="regionalBirdStore.fetchingBirds" />
+          <LoadingAnimation v-if="regionalBirdStore.fetchingBirds" loadingText="Loading..."/>
 
             <div class="button-container" v-else>
                 <button class="scrapbook-button sound-button" @click="identifyBySound">

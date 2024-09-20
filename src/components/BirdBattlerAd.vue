@@ -147,6 +147,17 @@ img.small {
   flex-direction: column;
 }
 
+.expanded-content ul {
+  text-align: left; /* Align the bullet points to the left */
+  margin-left: 0; /* Remove default left margin */
+  padding-left: 20px; /* Add left padding */
+}
+
+/* spacing between each bullet point */
+.expanded-content ul li {
+  margin-bottom: 10px;
+}
+
 .scrollable-content {
   padding: 20px;
   overflow-y: auto;

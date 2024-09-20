@@ -11,15 +11,17 @@
       <div class="scrapbook-background"></div>
           
       <ion-content class="scrapbook-content">
-        <LoadingAnimation v-if="seenBirdStore.fetchingBirds" />
+        <LoadingAnimation v-if="seenBirdStore.fetchingBirds" loadingText="Loading birds..."/>
         <template v-if="!seenBirdStore.fetchingBirds" >
           <BirdBattlerAd v-if="userStore.settings.showBirdBattlerAd" :canRemove="true"/>
           <BirdList
+            v-if="displayedBirds.length > 0"
             :birds="displayedBirds" 
             :isLoading="isLoading"
             @selectBird="handleSelectBird" 
             @loadMoreBirds="handleLoadMore" 
           />
+          <p v-else class="no-birds-message">No birds here. Try spotting some!</p>
         </template>
       </ion-content>
     </div>
@@ -116,5 +118,12 @@ const handleSelectBird = (bird) => {
 .custom-searchbar {
   --background: transparent;
   margin-top: 10px;
+}
+
+.no-birds-message {
+  font-family: "Just Another Hand", cursive;
+  font-size: 2em;
+  text-align: center;
+  margin-top: 50px;
 }
 </style>

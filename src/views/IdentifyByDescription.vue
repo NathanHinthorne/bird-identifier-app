@@ -27,7 +27,9 @@
                   </span>
                 </template>
                 <template v-else-if="currentQuestion.id === 'habitat'">
-                  <img :src="option.image" :alt="option.label" class="option-image">
+                  <div class="picture-frame">
+                    <img :src="option.image" :alt="option.label" class="option-image">
+                  </div>
                   <span class="option-label">{{ option.label }}</span>
                 </template>
                 <template v-else-if="currentQuestion.id === 'colors'">
@@ -41,12 +43,12 @@
 
         <ion-footer class="footer-section">
           <div class="navigation-buttons">
-            <ion-button @click="previousQuestion" :disabled="currentQuestionIndex === 0">
+            <button @click="previousQuestion" :disabled="currentQuestionIndex === 0">
               Previous
-            </ion-button>
-            <ion-button @click="nextQuestion" :disabled="!isCurrentQuestionAnswered">
+            </button>
+            <button @click="nextQuestion" :disabled="!isCurrentQuestionAnswered">
               {{ currentQuestionIndex === questions.length - 1 ? 'Identify' : 'Next' }}
-            </ion-button>
+            </button>
           </div>
         </ion-footer>
       </div>
@@ -59,7 +61,7 @@
           @selectBird="handleSelectBird" 
           @birdID="handleIdentifyBird"
         />
-        <!-- <ion-button @click="resetIdentification">Start Over</ion-button> -->
+        <button @click="resetIdentification">Start Over</button>
 
         <SightingNote 
           v-if="showNote"
@@ -108,7 +110,7 @@ const questions = [
       { value: 'small', size: 'Small', reference: '(robin-sized)', image: robin, width: '40px', height: '40px' },
       { value: 'medium', size: 'Medium', reference: '(crow-sized)', image: crow, width: '50px', height: '50px' },
       { value: 'large', size: 'Large', reference: '(goose-sized)', image: goose, width: '60px', height: '60px' },
-      { value: 'very-large', size: 'Very Large', reference: '(eagle-sized)', image: eagle, width: '70px', height: '70px' },
+      { value: 'very large', size: 'Very Large', reference: '(eagle-sized)', image: eagle, width: '70px', height: '70px' },
     ],
   },
   {
@@ -206,17 +208,17 @@ function nextQuestion() {
 }
 
 function filterBirds() {
-  console.log('Bird identification data:', answers.value);
+  console.log('Bird identification data:', answers.value.size, answers.value.colors, answers.value.habitat);
 
   const allBirds = regionalBirdStore.getAllBirds();
   
   filteredBirds.value = allBirds.filter(bird => {
     // const sizeMatch = bird.size === answers.value.size;
-    // possibly include a margin of error (match 1 above + 1 below)
+
+    // include a margin of error (match 1 above + 1 below)
     const targetSizeNum = sizeMap[answers.value.size];
     const birdSizeNum = sizeMap[bird.size];
     const sizeMatch = (birdSizeNum >= targetSizeNum - 1) && (birdSizeNum <= targetSizeNum + 1);
-
 
     // Treat male and female color cases differently
     const maleColorMatch = answers.value.colors.every(color => bird.maleColors.includes(color));
@@ -241,6 +243,8 @@ const handleSelectBird = (bird) => {
 const handleIdentifyBird = (bird) => {
   identifiedBird.value = bird;
 
+  console.log('clicked on bird OBJECT', identifiedBird.value);
+
   showNote.value = true;
 };
 
@@ -251,9 +255,14 @@ const handleCancelNote = () => {
 const handleSubmitNote = (noteText) => {
   showNote.value = false;
 
-  userStore.addSeenBirdName(identifiedBird.value);
-  seenBirdStore.addBird(identifiedBird.value)
-  userStore.addSeenBirdNote(noteText);
+  // add bird name along with all its sighting information
+  userStore.addBirdSighting(identifiedBird.value.formattedComName, noteText, '2024-01-01', 'Seattle, WA');
+
+  // place the bird in the storage for seen birds
+  const birdSighting = userStore.getOriginalBirdSighting(identifiedBird.value.formattedComName);
+  seenBirdStore.addBird({ ...identifiedBird.value, ...birdSighting });
+
+  console.log('submitted sighting: ', birdSighting);
 }
 
 function resetIdentification() {
@@ -341,14 +350,22 @@ p {
 
 .option-image {
   object-fit: contain;
+  /*
   margin-bottom: 10px;
+  */
 }
+.picture-frame {
+  background-color: rgba(255, 255, 255, 0.7);;
+  padding: 5px;
+}
+
 
 .color-swatch {
   width: 2.5em;
   height: 2.5em;
   margin-bottom: 10px;
 }
+
 
 .option-label {
   /*
@@ -398,6 +415,32 @@ ion-button {
   --background-activated: #5e2f0d;
   --background-hover: #724011;
   --color: white;
+}
+
+button {
+  background-color: #5e2f0d;
+  color: #f0e6d2;
+  border: none;
+  border-radius: 5%;
+  height: 40px;
+  font-size: 1.6em;
+  font-family: 'Just Another Hand', cursive;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+  margin-right: 10px;
+  padding: 5px 10px;
+}
+
+button:hover {
+  background-color: #7a3d10;
+}
+
+button:disabled {
+  background-color: rgba(139, 69, 19, 0.5);
+  color: #f0e6d2;
+  cursor: not-allowed;
 }
 
 .step-tracker {

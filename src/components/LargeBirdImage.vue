@@ -12,7 +12,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
 import gameImage from '../assets/badges/in-game-badge2.png';
 import { useUserStore } from '../stores/userStore';
 
@@ -35,15 +34,6 @@ const props = defineProps({
 
 const randomRotation = () => `${Math.random() * 6 - 3}deg`;
 const randomTapeRotation = () => `${Math.random() * 20 - 10}deg`;
-
-onMounted(() => {
-  console.log('LargeBirdImage mounted with props:', props);
-
-  // wait 5 seconds before printing
-  setTimeout(() => {
-    console.log('1 second later:', props);
-  }, 1000);
-});
 
 </script>
 

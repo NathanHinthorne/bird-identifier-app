@@ -49,7 +49,6 @@
                   <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Listen</h3>
                 </div>
-                <!-- <AudioPlayer audioSrc="https://upload.wikimedia.org/wikipedia/commons/0/05/Melanerpes_formicivorus_-_Acorn_Woodpecker_XC110258.mp3"></AudioPlayer> -->
                 <AudioPlayer :audioSrc="bird.sound1" />
                 <AudioPlayer :audioSrc="bird.sound2" v-if="bird.sound2"/>
                 <AudioPlayer :audioSrc="bird.sound3" v-if="bird.sound3"/>
@@ -60,7 +59,7 @@
                   <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Learn More</h3>
                 </div>
-                <p>Find out more about the {{ bird.comName }} on the <a :href="bird.learnMoreLink" target="_blank" rel="noopener noreferrer">All About Birds</a> website.</p>
+                <p>Find out more about the {{ bird.comName }} on the <a :href="bird.learnMoreLink" target="_blank" rel="noopener noreferrer">AllAboutBirds</a> website.</p>
               </div>
             </div>
           </div>

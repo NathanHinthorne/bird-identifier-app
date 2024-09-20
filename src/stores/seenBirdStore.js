@@ -17,7 +17,12 @@ export const useSeenBirdStore = defineStore('seenBirds', {
             this.fetchingBirds = false;
         },
         addBird(bird) {
-            this.totalSeenBirds.push(bird);
+            // this.totalSeenBirds.push(bird);
+
+            // add to front of array
+            this.totalSeenBirds.unshift(bird);
+
+            this.refreshDisplayedBirds();
         },
         clearBirds() {
             this.totalSeenBirds = [];
@@ -87,6 +92,9 @@ export const useSeenBirdStore = defineStore('seenBirds', {
         },
         allBirdsLoaded() {
             return this.displayedSeenBirds.length >= this.totalSeenBirds.length;
+        },
+        refreshDisplayedBirds() {
+            this.displayedSeenBirds = this.filterBirds().slice(0, this.birdsPerPage);
         }
     },
 });

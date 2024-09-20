@@ -8,8 +8,9 @@ import Settings from './views/Settings.vue';
 import Identify from './views/Identify.vue';
 import IdentifyBySound from './views/IdentifyBySound.vue';
 import IdentifyByDescription from './views/IdentifyByDescription.vue';
-import SeenBirdInfo from './views/SeenBirdInfo.vue';
 import RegionalBirdInfo from './views/RegionalBirdInfo.vue';
+import SeenBirdInfo from './views/SeenBirdInfo.vue';
+import SightingHistory from './views/SightingHistory.vue';
 import Auth from './views/Auth.vue';
 
 
@@ -58,6 +59,11 @@ const routes = [
                 name: 'SeenBirdInfo',
                 component: SeenBirdInfo,
                 props: true
+            },
+            {
+                path: 'life-list/bird-info/:birdName/sighting-history',
+                name: 'SightingHistory',
+                component: SightingHistory
             },
             {
                 path: 'explore/bird-info/:birdName',

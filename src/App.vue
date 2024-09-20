@@ -1,9 +1,9 @@
 <template>
-  <ion-app>
-    <ion-content>
-      <ion-router-outlet />
-    </ion-content>
-  </ion-app>
+<ion-app>
+  <ion-content>
+    <ion-router-outlet />
+  </ion-content>
+</ion-app>
 </template>
 
 <script setup>
@@ -29,85 +29,81 @@ const userStore = useUserStore();
 
 
 const getCurrentPosition = async () => {
-  const coordinates = await Geolocation.getCurrentPosition();
-  return {
-    latitude: coordinates.coords.latitude,
-    longitude: coordinates.coords.longitude,
-  };
+const coordinates = await Geolocation.getCurrentPosition();
+return {
+  latitude: coordinates.coords.latitude,
+  longitude: coordinates.coords.longitude,
+};
 };
 
 // Watch for changes in the user's authentication state
 watch(
-  () => userStore.isAuthenticated,
-  async (isAuthenticated) => {
-    if (isAuthenticated) {
-      console.log("App.vue noticed user is authenticated, triggering setup...");
-      setup();
-    }
+() => userStore.isAuthenticated,
+async (isAuthenticated) => {
+  if (isAuthenticated) {
+    console.log("App.vue noticed user is authenticated, triggering setup...");
+    setup();
   }
+}
 );
 
 
 onMounted(async () => {
-  console.log("App mounted");
+console.log("App mounted");
 
-  // Show the splash for an indefinite amount of time
-  await SplashScreen.show({
-    autoHide: false,
-  });
+// Show the splash for an indefinite amount of time
+// await SplashScreen.show({
+//   autoHide: false,
+// });
 
-  userStore.init();
+userStore.init();
 });
 
 const setup = async () => {
-  // Setup a simple data pipeline to process data
-  
-  // Step 1: Find location with reverse geocoding
-  const position = await getCurrentPosition();
-  const location = await getLocation(position.latitude, position.longitude);
-  userStore.setLocation(location);
+// Setup a simple data pipeline to process data
 
-  // Step 2: Find birds in the region
-  const regionalBirds = await firestoreService.fetchRegionalBirds(location);
+// Step 1: Find location with reverse geocoding
+const position = await getCurrentPosition();
+const location = await getLocation(position.latitude, position.longitude);
+userStore.setLocation(location);
 
-  // TEMPORARY:
-  // check through each bird to see if it's null, then log its index and remove it
-  regionalBirds.forEach((bird, index) => {
-    if (bird.comName === "" || bird.comName === undefined) {
-      console.log("null bird at bird index: ", index);
-      regionalBirds.splice(index, 1);
-    }
-  });
+// Step 2: Find birds in the region
+let regionalBirds = await firestoreService.fetchRegionalBirds(location);
 
-  // sort a-z
-  const sortedRegionalBirds = regionalBirds.sort((a, b) => {
-    return a.comName.localeCompare(b.comName);
-  });
+// TEMPORARY:
+// check through each bird to see if it's null, then log its index and remove it
+regionalBirds.forEach((bird, index) => {
+  if (bird.comName === "" || bird.comName === undefined) {
+    console.log("null bird at bird index: ", index);
+    regionalBirds.splice(index, 1);
+  }
+});
 
-  // sort by rarity
-  // const sortedRegionalBirds = regionalBirds.sort((a, b) => {
-  //   return a.rarity - b.rarity;
-  // });
+// sort a-z
+// regionalBirds = regionalBirds.sort((a, b) => {
+//   return a.comName.localeCompare(b.comName);
+// });
 
+// sort by rarity
+regionalBirds = regionalBirds.sort((a, b) => {
+  return a.rarity - b.rarity;
+});
 
-  regionalBirdStore.setBirds(sortedRegionalBirds);
-  console.log("regionalBirds: ", sortedRegionalBirds);
+regionalBirdStore.setBirds(regionalBirds);
 
-  // Step 3: Find birds that user has seen
-  const userBirdNames = userStore.seenBirdNames;
-  console.log("userBirdNames: ", userBirdNames);
-  
-  // Step 4: Find birds with given names
-  // NOTE: after expanding regions, we can't rely on the regionalBirdStore to contain ALL of our seen birds
-  const userBirds = await firestoreService.fetchBirdsByName(userBirdNames);
-  const sortedUserBirds = userBirds.sort((a, b) => {
-    return a.comName.localeCompare(b.comName);
-  });
-  seenBirdStore.setBirds(sortedUserBirds);
-  console.log("userBirds: ", sortedUserBirds);
+// Step 3: Find birds that user has seen
+  const userBirdNames = Object.keys(userStore.seenBirdNames);
 
-  console.log("finished loading birds in your region");
-  
-  await SplashScreen.hide();
+// Step 4: Find birds with given names
+// NOTE: after expanding regions, we can't rely on the regionalBirdStore to contain ALL of our seen birds
+let userBirds = await firestoreService.fetchBirdsByName(userBirdNames);
+// userBirds = userBirds.sort((a, b) => {
+//   return a.comName.localeCompare(b.comName);
+// });
+seenBirdStore.setBirds(userBirds);
+
+console.log("finished loading birds in your region");
+
+// await SplashScreen.hide();
 };
 </script>

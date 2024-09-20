@@ -10,11 +10,11 @@
       </div>
     </ion-item>
 
-    <ion-item v-if="isLoading" v-for="i in 2" :key="i">
+    <!-- <ion-item v-if="isLoading" v-for="i in 2" :key="i">
       <div class="bird-entry skeleton">
         <SmallBirdImage isSkeleton />
       </div>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
 
   <ion-infinite-scroll @ionInfinite="loadMoreBirds" threshold="100px">

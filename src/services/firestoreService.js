@@ -24,6 +24,11 @@ export const firestoreService = {
      */
     async fetchBirdsByName(names) {
         const birdsRef = collection(firestore, "birds");
+
+        if (names.length === 0) {
+            return [];
+        }
+
         // group all names in a single query to reduce calls to firestore
         const q = query(birdsRef, where("formattedComName", "in", names));
         const querySnapshot = await getDocs(q);

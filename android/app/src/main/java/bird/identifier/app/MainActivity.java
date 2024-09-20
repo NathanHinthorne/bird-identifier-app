@@ -4,6 +4,7 @@ import android.os.Bundle;
 import com.getcapacitor.BridgeActivity;
 import com.getcapacitor.Plugin;
 import java.util.ArrayList;
+import android.view.View;
 
 public class MainActivity extends BridgeActivity {
     @Override
@@ -12,5 +13,6 @@ public class MainActivity extends BridgeActivity {
 
         // Initialize the Splash Screen plugin
         registerPlugin(com.capacitorjs.plugins.splashscreen.SplashScreenPlugin.class);
+
     }
 }

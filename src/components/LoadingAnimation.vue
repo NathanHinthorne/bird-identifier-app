@@ -15,9 +15,17 @@
       <div class="cloud-part"></div>
       <div class="cloud-part"></div>
     </div>
-    <div class="loading-text">Loading birds...</div>
+    <div class="loading-text">{{ props.loadingText }}</div>
   </div>
 </template>
+
+<script setup>
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  loadingText: String 
+});
+</script>
 
 <style scoped>
 .scrapbook-loader {

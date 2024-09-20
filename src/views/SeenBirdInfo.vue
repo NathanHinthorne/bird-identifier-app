@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button default-href="/life-list" text="Back"></ion-back-button>
+          <ion-back-button text="Back"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ bird.comName }}</ion-title>
       </ion-toolbar>
@@ -20,7 +20,12 @@
 
               <BirdRarityLabel :rarity="bird.rarity" />
 
-              <div v-if="userStore.settings.showGameInfo" class="bird-section">
+                <button @click="goToSightingHistory" class="scrapbook-button">
+                  View Sighting History
+                   <!-- <ion-icon :icon="calendarOutline"></ion-icon> -->
+                </button>
+
+              <div v-if="userStore.settings.showGameInfo && bird.inGame" class="bird-section">
                 <div class="section-header">
                   <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Stats</h3>
@@ -44,22 +49,22 @@
                 <p>{{ bird.howToFind }}</p>
               </div>
 
-              <div class="bird-section">
+              <div class="bird-section" v-if="bird.sound1">
                 <div class="section-header">
                   <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Listen</h3>
                 </div>
-                <!-- <AudioPlayer :audioSrc="bird.sound" /> -->
-                <AudioPlayer :audioSrc="'https://upload.wikimedia.org/wikipedia/commons/5/5b/Poecile_atricapillus_-_Black-capped_Chickadee_XC70185.mp3'" />
-                
-              </div>
+                <AudioPlayer :audioSrc="bird.sound1" />
+                <AudioPlayer :audioSrc="bird.sound2" v-if="bird.sound2"/>
+                <AudioPlayer :audioSrc="bird.sound3" v-if="bird.sound3"/>
+              </div>  
               
               <div class="bird-section">
                 <div class="section-header">
                   <img src="../assets/containers/paper-piece-long-dark-tape.png" alt="Paper tape" class="section-header-bg">
                   <h3>Learn More</h3>
                 </div>
-                <p>Find out more about the {{ bird.comName }} on the <a :href="bird.learnMoreLink" target="_blank" rel="noopener noreferrer">All About Birds</a> website.</p>
+                <p>Find out more about the {{ bird.comName }} on the <a :href="bird.learnMoreLink" target="_blank" rel="noopener noreferrer">AllAboutBirds</a> website.</p>
               </div>
             </div>
           </div>
@@ -73,6 +78,8 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons } from '@ionic/vue';
+import { calendarOutline } from 'ionicons/icons';
+import { useRouter } from 'vue-router';
 import { useSeenBirdStore } from '../stores/seenBirdStore';
 import AudioPlayer from '../components/AudioPlayer.vue';
 import LargeBirdImage from '../components/LargeBirdImage.vue';
@@ -82,6 +89,7 @@ import { useUserStore } from '../stores/userStore';
 
 const userStore = useUserStore(); // user store for game info toggle
 const route = useRoute();
+const router = useRouter();
 const seenBirdStore = useSeenBirdStore();
 const bird = ref({});
 
@@ -100,6 +108,10 @@ onMounted(async () => {
   const birdName = route.params.birdName;
   bird.value = await seenBirdStore.getBirdByName(birdName);
 });
+
+const goToSightingHistory = () => {
+  router.push('/life-list/bird-info/' + bird.value.formattedComName + '/sighting-history');
+};
 </script>
 
 <style scoped>
@@ -219,6 +231,67 @@ onMounted(async () => {
   text-align: center;
   width: 100%;
 }
+
+
+
+
+
+.scrapbook-button {
+  font-family: 'Just Another Hand', cursive;
+  font-size: 28px;
+  color: #4a4a4a;
+  background-color: #f0e6d2;
+  border: none;
+  padding: 10px 20px;
+  margin: 20px 0;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  width: 100%;
+  text-align: center;
+}
+
+.scrapbook-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/textures/paper-texture.png');
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.scrapbook-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 48%, #d4c4a8 48%, #d4c4a8 52%, transparent 52%);
+  background-size: 6px 6px;
+  z-index: 2;
+}
+
+.scrapbook-button span {
+  position: relative;
+  z-index: 3;
+}
+
+.scrapbook-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.scrapbook-button:active {
+  transform: scale(0.98);
+}
+
+
+
 
 
 /* Override styles on smaller screens */

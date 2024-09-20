@@ -12,7 +12,7 @@
       <div class="scrapbook-background"></div>
           
       <ion-content class="scrapbook-content">
-        <LoadingAnimation v-if="regionalBirdStore.fetchingBirds" />
+        <LoadingAnimation v-if="regionalBirdStore.fetchingBirds" loadingText="Loading birds..."/>
         <BirdList
           v-if="!regionalBirdStore.fetchingBirds" 
           :birds="displayedBirds" 

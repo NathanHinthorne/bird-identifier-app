@@ -15,24 +15,22 @@
         <div ref="waveform" id="waveform"></div>
       </div>
       
-      <ion-content>
-          <div class="birds-section">
-            <h2>Possible Birds</h2>
+      <!-- <div class="birds-section"> -->
+        <h2>Possible Birds</h2>
 
-            <IDBirdList 
-              :birds="possibleBirds"
-              @selectBird="handleSelectBird" 
-              @birdID="handleIdentifyBird"
-            />
+        <IDBirdList 
+          :birds="possibleBirds"
+          @selectBird="handleSelectBird" 
+          @birdID="handleIdentifyBird"
+        />
 
-            <SightingNote 
-              v-if="showNote"
-              @cancel="handleCancelNote"
-              @submit="handleSubmitNote"
-            />
-          </div>
+        <SightingNote 
+          v-if="showNote"
+          @cancel="handleCancelNote"
+          @submit="handleSubmitNote"
+        />
+      <!-- </div> -->
 
-      </ion-content>
 
       <ion-footer class="footer-section">
         <div class="record-button-container">
@@ -109,7 +107,7 @@ function createWaveSurfer() {
     fillParent: true,
     plugins: [
       Spectrogram.create({
-        height: 150,
+        height: 200,
         windowFunc: 'hann',
       }),
     ],
@@ -256,17 +254,38 @@ const handleCancelNote = () => {
 const handleSubmitNote = (noteText) => {
   showNote.value = false;
 
-  userStore.addSeenBirdName(identifiedBird.value);
-  seenBirdStore.addBird(identifiedBird.value)
-  userStore.addSeenBirdNote(noteText);
+  // add bird name along with all its sighting information
+  userStore.addBirdSighting(identifiedBird.value.formattedComName, noteText, '2024-01-01', 'Seattle, WA');
+
+  // place the bird in the storage for seen birds
+  const birdSighting = userStore.getOriginalBirdSighting(identifiedBird.value.formattedComName);
+  seenBirdStore.addBird({ ...identifiedBird.value, ...birdSighting });
+
+  console.log('submitted sighting: ', birdSighting);
 }
+
+function handleScroll() {
+  const birdList = $refs.birdList;
+  const scrollHeight = birdList.scrollHeight;
+  const offsetHeight = birdList.offsetHeight;
+  const scrollTop = birdList.scrollTop;
+
+  // Check if the user has scrolled to the bottom of the list
+  if (scrollHeight - offsetHeight - scrollTop < 10) {
+    // Automatically scroll to the bottom
+    birdList.scrollTo({ top: scrollHeight, behavior: 'smooth' });
+  }
+}
+
 
 /* TEMP FUNCTIONS TO TEST BIRDS */
 
 async function startBirdInterval() {
   birdInterval = setInterval(async () => {
     const newBird = await generateFakeBird();
-    possibleBirds.value.push(newBird);
+    if (!possibleBirds.value.includes(newBird)) {
+      possibleBirds.value.push(newBird);
+    }
     console.log("heard bird:", newBird.comName)
   }, 2000); // Add a new bird every 2 seconds
 }
@@ -318,7 +337,7 @@ h2 {
 .spectrogram-container {
   width: 100%;
   max-width: 600px;
-  height: 150px;
+  height: 200px;
   border: 3px solid #5e2f0d;
   border-radius: 10px;
   background-color: #d2b48c;

@@ -5,7 +5,7 @@
   "bundledWebRuntime": false,
   "plugins": {
     "SplashScreen": {
-      "launchAutoHide": false,
+      "launchAutoHide": true,
       "splashImmersive": true,
       "backgroundColor": "#ffffff",
       "androidSplashResourceName": "splash",

@@ -6,7 +6,6 @@
           v-for="bird in birds" 
           :key="bird.formattedComName" 
           class="bird-item"
-          :class="{ 'pulse': identifiedBird === bird.formattedComName }"
         >
           <div class="bird-image-wrapper" @click="selectBird(bird)">
             <SmallBirdImage :imageUrl="bird.previewPhoto" :birdName="bird.comName" :inGame="bird.inGame" />
@@ -46,8 +45,8 @@ const selectBird = (bird) => {
 
 const birdID = (bird) => {
   console.log("You identified a", bird.comName);
-  identifiedBird.value = bird.formattedComName;
-  emit('birdID', bird.formattedComName);
+  identifiedBird.value = bird; 
+  emit('birdID', bird);
   setTimeout(() => {
     identifiedBird.value = null;
   }, 2000);

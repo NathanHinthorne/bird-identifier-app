@@ -7,7 +7,8 @@ import {
     signOut as firebaseSignOut,
     updateEmail as firebaseUpdateEmail,
     updatePassword as firebaseUpdatePassword,
-    onAuthStateChanged
+    onAuthStateChanged,
+    updateProfile
 } from 'firebase/auth';
 import { ref as dbRef, set, get } from 'firebase/database';
 import router from '@/router';
@@ -22,14 +23,14 @@ export const useUserStore = defineStore('user', () => {
         enableMusic: true,
         enableSoundEffects: true,
         showGameInfo: true,
-        showBirdBattlerAd: false
+        showBirdBattlerAd: true
     };
 
     // State
     const user = ref(null);
     const isAuthenticated = computed(() => user.value !== null);
     const settings = ref({ ...defaultSettings });
-    const seenBirdNames = ref([]);
+    const seenBirdNames = ref({});
     const location = ref(null);
 
     // Helper functions
@@ -62,7 +63,7 @@ export const useUserStore = defineStore('user', () => {
 
                 // User is signed in, redirect to the home page
                 router.push({ name: 'Identify' });
-                console.log('User is signed in:', activeUser.uid, activeUser.email);
+                console.log('User is signed in:', activeUser.email);
             } else {
                 // No user is signed in, redirect to the auth page
                 router.push({ name: 'Auth' });
@@ -75,8 +76,9 @@ export const useUserStore = defineStore('user', () => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             user.value = userCredential.user;
-            await pullUserState();
-            console.log('Logged in as:', user.value);
+            pullUserState().then(() => {
+                console.log('Logged in as:', user.value);
+            })
 
         } catch (error) {
             console.error('Error logging in:', error);
@@ -103,7 +105,9 @@ export const useUserStore = defineStore('user', () => {
 
     const updateUsername = async (username) => {
         if (user.value) {
+            updateProfile(user.value, { displayName: username });
             await set(dbRef(rtdb, `users/${user.value.uid}/profile`), { username });
+
             console.log('Updated profile:', username);
         }
     };
@@ -150,7 +154,7 @@ export const useUserStore = defineStore('user', () => {
 
     // probably won't need this since we set loc instantly
     // if user doesn't have wifi, this wouldn't work anyway
-    // TODO find a way to cache user's location and use it when no wifi
+    // TODO find a way to cache user's location and use it when no wifi is available
     const pullLocation = async () => {
         if (user.value) {
             const snapshot = await get(dbRef(rtdb, `users/${user.value.uid}/location`));
@@ -170,23 +174,55 @@ export const useUserStore = defineStore('user', () => {
 
 
     //TODO Give each bird name an observationDate, observationLoc, and note
-    //TODO let user fill in observationLoc. 
+    //TODO let user fill in observationLoc and note
     //TODO Make observationDate automatically filled in.
-    //TODO let user add note later
 
-    const addSeenBirdName = async (birdName) => {
+    /**
+     * Adds a bird sighting to the user's seen birds
+     * @param {string} birdName - Name of the bird
+     * @param {string} birdNote - Note to associate with the bird sighting
+     * @param {string} birdDate - Date of the bird sighting
+     * @param {string} birdLoc - Location of the bird sighting
+     */
+    const addBirdSighting = async (birdName, birdNote, birdDate, birdLoc) => {
         if (user.value) {
-            seenBirdNames.value.push(birdName);
+            if (!seenBirdNames.value[birdName]) {
+                seenBirdNames.value[birdName] = [];
+            }
+
+            seenBirdNames.value[birdName].push({
+                note: birdNote,
+                date: birdDate,
+                location: birdLoc,
+            });
+
             await set(dbRef(rtdb, `users/${user.value.uid}/seenBirds`), seenBirdNames.value);
             console.log('Added seen bird:', birdName);
         }
     };
 
-    const addSeenBirdNote = async (birdNote) => {
-        if (user.value) {
-            console.log('TODO - add note to bird:', birdNote);
-        }
+    const getBirdSightings = (birdName) => {
+        return seenBirdNames.value[birdName];
     };
+
+    const getOriginalBirdSighting = (birdName) => {
+        return seenBirdNames.value[birdName][0];
+    }
+
+    const deleteBirdSighting = (birdName, index) => {
+        seenBirdNames.value[birdName].splice(index, 1);
+        set(dbRef(rtdb, `users/${user.value.uid}/seenBirds`), seenBirdNames.value);
+    };
+
+    const editBirdSighting = (birdName, index, newNote) => {
+        seenBirdNames.value[birdName][index] = {
+            note: newNote,
+            date: newDate,
+            location: newLoc
+        }
+        set(dbRef(rtdb, `users/${user.value.uid}/seenBirds`), seenBirdNames.value);
+    };
+
 
     /*
     const saveDataToCache = async () => {
@@ -249,8 +285,9 @@ export const useUserStore = defineStore('user', () => {
         updateEmail,
         updatePassword,
         saveSettings,
-        addSeenBirdName,
-        addSeenBirdNote,
+        addBirdSighting,
+        getBirdSightings,
+        getOriginalBirdSighting,
         setLocation,
         pullSettings,
         pullSeenBirdNames,

@@ -78,7 +78,8 @@
             </ion-item>
             </div>
           <div class="button-container">
-            <button @click="changeUsername">Change Username</button>
+            <button @click="isChangeUsernameModalOpen = false">Cancel</button>
+            <button @click="changeUsername">Confirm</button>
           </div>
         </div>
       </ion-content>
@@ -108,7 +109,8 @@
             </ion-item>
           </div>
           <div class="button-container">
-            <button @click="changePassword">Change Password</button>
+            <button @click="isChangePasswordModalOpen = false">Cancel</button>
+            <button @click="changePassword">Confirm</button>
           </div>
         </div>
       </ion-content>
@@ -117,7 +119,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { 
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, 
   IonLabel, IonInput, IonButton, IonModal, IonButtons, IonBackButton
@@ -148,10 +150,20 @@ onMounted(async () => {
     await userStore.pullSettings();
     email.value = userStore.user.email;
     username.value = userStore.user.displayName || '';
+
+    console.log('EMAIL, USERNAME:', email.value, username.value);
   } else {
     router.push('/auth');
   }
 });
+
+watch(username, () => {
+  console.log('Username changed:', username.value);
+})
+
+watch(email, () => {
+  console.log('Email changed:', email.value);
+})
 
 const saveSettings = async () => {
   await userStore.saveSettings();
@@ -305,7 +317,7 @@ ion-toggle {
   border: none;
   border-radius: 5%;
   height: 40px;
-  font-size: 1.2em;
+  font-size: 1.4rem;
   font-family: 'Just Another Hand', cursive;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -313,6 +325,8 @@ ion-toggle {
   
   margin-right: 10px;
   padding: 0 5px;
+
+  z-index: 3;
 }
 
 .button-container button:hover {
