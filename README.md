@@ -1,6 +1,6 @@
 <!-- main image -->
 <p align="center">
-  <img src="https://live.staticflickr.com/65535/54010198591_a43c01c817_b.jpg" width="800">
+  <img src="https://live.staticflickr.com/65535/54010198591_a43c01c817_b.jpg" width="700">
 </p>
 
 # Bird Identification App
@@ -22,6 +22,10 @@ It also has the option of syncing the user's life list to a separate bird battle
 Unlike other bird identification apps, this app is designed to be more of a personal bird journal, both in aesthetic and in features. It will allow users to upload their own photos of birds and write their own notes of birds they've seen.
 
 Keep in mind this app was produced by a single developer, not a whole lab of ornithology who have crazy amounts of data at their disposal. As a result, it currently only contains birds in the Washington State region and doesn't display information such as range maps, seasonal occurrence, etc. I hope to add more regions in the future. If you would like to contribute to the project, please see the [Future Plans](#future-plans) section below or shoot me an email at [nathanrh856@gmail.com](mailto:nathanrh856@gmail.com) about helping to expand my Google Sheet full of all the bird data.
+
+## Technology Details
+
+Utilizing Vue, Vite, and Ionic Capacitor, this project is what's known as a Progressive Web App (PWA). A PWA is a web application that behaves like a native app, but it's built with standard web technologies like HTML, CSS, and JavaScript. It mimicks the experience of a native mobile app without needing to be developed in Java (for Android) or Swift (for iOS). This paves the way for cross-compatibility between different devices and operating systems.
 
 ## 3rd Party Libraries
 
