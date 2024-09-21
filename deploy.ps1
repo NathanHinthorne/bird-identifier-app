@@ -1,3 +1,8 @@
+if ($currentBranch -ne "main") {
+    Write-Host "Please run this script from the main branch."
+    exit 1
+}
+
 # Step 1: Build the project to ensure dist folder exists
 if (-Not (Test-Path -Path "dist")) {
     Write-Host "Building the project..."
