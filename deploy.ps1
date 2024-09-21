@@ -11,11 +11,19 @@ git add dist -f
 git commit -m "Adding dist folder for deployment"
 
 # Step 3: Pull the gh-pages branch to avoid non-fast-forward issues
-git fetch origin gh-pages
-git subtree pull --prefix dist origin gh-pages -m "Merging latest gh-pages changes" || Write-Host "Nothing to pull or subtree pull failed"
+Try {
+    git fetch origin gh-pages
+    git subtree pull --prefix dist origin gh-pages -m "Merging latest gh-pages changes"
+} Catch {
+    Write-Host "Nothing to pull or subtree pull failed"
+}
 
 # Step 4: Push subtree to gh-pages
-git subtree push --prefix dist origin gh-pages || Write-Host "Subtree push failed"
+Try {
+    git subtree push --prefix dist origin gh-pages
+} Catch {
+    Write-Host "Subtree push failed"
+}
 
 # Step 5: Reset dist folder changes on the main branch so it isn't committed
 git reset HEAD dist
