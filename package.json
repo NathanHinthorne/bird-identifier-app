@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && git subtree push --prefix dist origin gh-pages",
+    "build": "vite build",
+    "web-deploy": "powershell -ExecutionPolicy Bypass -File ./deploy.ps1",
     "preview": "vite preview",
     "ionic:build": "npm run build",
     "ionic:serve": "vite dev --host"
