@@ -29,7 +29,7 @@
 
 <script setup>
 import { ref, onMounted, nextTick } from 'vue';
-import adImageUrl from '../assets/honk-bonk-pink.png';
+import adImageUrl from '../assets/misc/honk-bonk-pink.png';
 import { useUserStore } from '../stores/userStore';
 
 const userStore = useUserStore();

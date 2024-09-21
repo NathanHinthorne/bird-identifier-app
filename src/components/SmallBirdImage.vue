@@ -26,7 +26,7 @@
 
 <script setup>
 import { computed } from 'vue';
-import defaultImage from '../assets/bird-silhouette.png';
+import defaultImage from '../assets/misc/bird-silhouette.png';
 import gameBadge from '../assets/badges/in-game-badge2.png';
 import checkmarkBadge from '../assets/badges/checkmark.png'
 import { useUserStore } from '../stores/userStore';
