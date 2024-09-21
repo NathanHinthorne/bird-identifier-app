@@ -4,24 +4,24 @@ if (-Not (Test-Path -Path "dist")) {
     npm run build
 }
 
-# Step 2: Create and switch to a new orphan branch
+# Step 2: Create and switch to a new branch
 $tempBranch = "temp-deploy-$(Get-Date -Format 'yyyyMMddHHmmss')"
-git checkout --orphan $tempBranch
+git checkout -b $tempBranch
 
-# Step 3: Remove all files from the staging area
-git rm -rf .
+# Step 3: Remove all files except dist
+Get-ChildItem -Exclude dist | Remove-Item -Recurse -Force
 
-# Step 4: Copy contents of dist folder to the root
-Copy-Item -Path "dist/*" -Destination "." -Recurse
+# Step 4: Move contents of dist folder to the root
+Move-Item -Path "dist/*" -Destination "."
+Remove-Item -Path "dist" -Recurse -Force
 
 # Step 5: Add all files in the current directory
 git add .
 
 # Step 6: Commit the changes
-git commit -m "Deploy to GitHub Pages"
+git commit -m "Deploy to GitHub Pages" --allow-empty
 
-# Step 7: Delete the old gh-pages branch
-git branch -D gh-pages
+# Step 7: Delete the old gh-pages branch (if it exists)
 git push origin --delete gh-pages
 
 # Step 8: Rename the current branch to gh-pages
@@ -32,6 +32,6 @@ git push -f origin gh-pages
 
 # Step 10: Clean up - switch back to main and delete temporary branch
 git checkout main
-git branch -D $tempBranch
+git branch -D gh-pages
 
 Write-Host "Deployment completed successfully!"
