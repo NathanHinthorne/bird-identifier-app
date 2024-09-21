@@ -16,9 +16,8 @@
 
 <script setup>
 import { IonHeader, IonToolbar, IonTitle, IonText } from '@ionic/vue';
-// import logo from '../assets/birdingPalLogo3.png'
-import logo from '../assets/logo1c.png'
-import logoText from '../assets/logoText.png'
+import logo from '../assets/app/icon.png';
+import logoText from '../assets/misc/logoText.png';
 </script>
 
 <style scoped>
