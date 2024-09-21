@@ -20,4 +20,4 @@ git subtree push --prefix dist origin gh-pages
 git reset HEAD~1
 
 # Remove the dist directory from the working directory
-rm -rf dist
+git rm -rf dist
