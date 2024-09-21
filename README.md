@@ -25,7 +25,7 @@ Keep in mind this app was produced by a single developer, not a whole lab of orn
 
 ## Technology Details
 
-Utilizing Vue, Vite, and Ionic Capacitor, this project is what's known as a Progressive Web App (PWA). A PWA is a web application that behaves like a native app, but it's built with standard web technologies like HTML, CSS, and JavaScript. It mimicks the experience of a native mobile app without needing to be developed in Java (for Android) or Swift (for iOS). This paves the way for cross-compatibility between different devices and operating systems.
+Utilizing Vue, Vite, and Ionic Capacitor, this project is what's known as a Progressive Web App (PWA). A PWA is a web application that behaves like a native app, but it's built with standard web technologies like HTML, CSS, and JavaScript. It mimics the experience of a native mobile app without needing to be developed in Java (for Android) or Swift (for iOS). This paves the way for cross-compatibility between different devices and operating systems.
 
 ## 3rd Party Libraries
 
