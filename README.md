@@ -10,7 +10,7 @@
 
 ## Description
 
-This app is designed to help users identify birds they see in the wild. It uses machine learning to identify birds based on live audio recordings, as well as step-by-step questions to identify birds based on their characteristics.
+This Android app is designed to help users identify birds they see in the wild. It uses machine learning to identify birds based on live audio recordings, as well as step-by-step questions to identify birds based on their characteristics.
 
 It also has the option of syncing the user's life list to a separate bird battler [game I'm still developing](https://github.com/NathanHinthorne/bird-battler-game). The game is a simple RPG where the user's birds battle against other birds in a turn-based system.
 
