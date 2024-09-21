@@ -21,7 +21,7 @@
             @selectBird="handleSelectBird" 
             @loadMoreBirds="handleLoadMore" 
           />
-          <p v-else class="no-birds-message">No birds here. Try spotting some!</p>
+          <p v-else class="no-birds-message">No birds here. <br><br>Try spotting some outside, then use the Identify page to add them!</p>
         </template>
       </ion-content>
     </div>
@@ -125,5 +125,8 @@ const handleSelectBird = (bird) => {
   font-size: 2em;
   text-align: center;
   margin-top: 50px;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

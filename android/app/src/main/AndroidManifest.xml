@@ -15,11 +15,13 @@
 
     <!-- Permissions -->
 
-    <!-- Location -->
+    <!-- Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Location -->
+    <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-feature android:name="android.hardware.location.gps" />
+    <uses-feature android:name="android.hardware.location.gps" /> -->
 
     <!-- Mic -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />

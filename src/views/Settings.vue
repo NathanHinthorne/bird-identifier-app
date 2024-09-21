@@ -36,11 +36,11 @@
               <div class="scrapbook-section-content">
                 <ion-item>
                   <ion-label>Email</ion-label>
-                  <div>{{ email }}</div>
+                  <div>{{  userStore.user && userStore.user.email || '' }}</div>
                 </ion-item>
                 <ion-item>
                   <ion-label>Username</ion-label>
-                  <div>{{ username }}</div>
+                  <div>{{  userStore.user && userStore.user.displayName || '' }}</div>
                 </ion-item>
                 <div class="button-container">
                   <button @click="showChangeUsernameModal">Change Username</button>
@@ -119,7 +119,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue';
 import { 
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, 
   IonLabel, IonInput, IonButton, IonModal, IonButtons, IonBackButton
@@ -131,14 +131,6 @@ import BirdBattlerAd from '../components/BirdBattlerAd.vue'
 const userStore = useUserStore();
 const router = useRouter();
 
-const email = ref('');
-const username = ref('');
-// const email = computed(() => {
-//   return userStore.user.email;
-// })
-// const username = computed(() => {
-//   return userStore.user.displayName || '';
-// })
 const isChangeUsernameModalOpen = ref(false);
 const isChangePasswordModalOpen = ref(false);
 const newUsername = ref('');
@@ -148,22 +140,10 @@ const confirmPassword = ref('');
 onMounted(async () => {
   if (userStore.isAuthenticated) {
     await userStore.pullSettings();
-    email.value = userStore.user.email;
-    username.value = userStore.user.displayName || '';
-
-    console.log('EMAIL, USERNAME:', email.value, username.value);
   } else {
     router.push('/auth');
   }
 });
-
-watch(username, () => {
-  console.log('Username changed:', username.value);
-})
-
-watch(email, () => {
-  console.log('Email changed:', email.value);
-})
 
 const saveSettings = async () => {
   await userStore.saveSettings();
@@ -176,7 +156,6 @@ const showChangeUsernameModal = () => {
 const changeUsername = async () => {
   try {
     await userStore.updateUsername(newUsername.value);
-    username.value = newUsername.value;
     isChangeUsernameModalOpen.value = false;
     // Show success message
   } catch (error) {

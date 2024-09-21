@@ -15,7 +15,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 // services 
-import { getLocation } from './services/geocodeService';
+// import { getLocation } from './services/geocodeService';
 import { firestoreService } from './services/firestoreService';
 
 // stores
@@ -63,9 +63,9 @@ const setup = async () => {
 // Setup a simple data pipeline to process data
 
 // Step 1: Find location with reverse geocoding
-const position = await getCurrentPosition();
-const location = await getLocation(position.latitude, position.longitude);
-userStore.setLocation(location);
+// const position = await getCurrentPosition();
+// const location = await getLocation(position.latitude, position.longitude);
+// userStore.setLocation(location);
 
 // Step 2: Find birds in the region
 let regionalBirds = await firestoreService.fetchRegionalBirds(location);
@@ -92,7 +92,7 @@ regionalBirds = regionalBirds.sort((a, b) => {
 regionalBirdStore.setBirds(regionalBirds);
 
 // Step 3: Find birds that user has seen
-  const userBirdNames = Object.keys(userStore.seenBirdNames);
+const userBirdNames = Object.keys(userStore.seenBirdNames);
 
 // Step 4: Find birds with given names
 // NOTE: after expanding regions, we can't rely on the regionalBirdStore to contain ALL of our seen birds

@@ -5,15 +5,17 @@
         <div class="scrapbook-container">
           <div class="scrapbook-background"></div>
           <LoadingAnimation v-if="regionalBirdStore.fetchingBirds" loadingText="Loading..."/>
+          
+          <div class="button-container" v-else>
+            <button class="scrapbook-button sound-button" @click="identifyBySound">
+              <span>Identify by Sound</span>
+            </button>
+            <button class="scrapbook-button image-button" @click="identifyByImage">
+              <span>Identify by Description</span>
+            </button>
+          </div>
 
-            <div class="button-container" v-else>
-                <button class="scrapbook-button sound-button" @click="identifyBySound">
-                    <span>Identify by Sound</span>
-                </button>
-                <button class="scrapbook-button image-button" @click="identifyByImage">
-                    <span>Identify by Description</span>
-                </button>
-            </div>
+          <div class="notice">WORK IN PROGRESS: <br>Currently only includes birds from the state of Washington. This app will soon be expanded to cover the entire U.S.</div>
 
         </div>
     </ion-page>
@@ -81,6 +83,20 @@ const identifyByImage = () => {
     font-size: 20px;
     /* font-family: 'Cabin Sketch', bold; */
     font-family: 'Fredericka the Great', bold;
+}
+
+.notice {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    left: 5%;
+    background-color: #f8d7da; /* Light red background color */
+    color: #721c24; /* Dark red text color */
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.4em;
+    font-family: 'Just Another Hand', cursive;
+
 }
 
 

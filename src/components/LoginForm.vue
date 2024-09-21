@@ -32,8 +32,14 @@ const handleSubmit = async () => {
   try {
     await userStore.login(email.value, password.value);
 
-    // Redirect to home
-    router.push({ name: 'Identify' });
+    // `replace: true` means the browser's back button won't go back to the login page
+    // after a successful login. This is useful if you want to prevent users from
+    // going back to the login page after they've logged in.
+    router.push({ name: 'Identify' }, { replace: true });
+
+
+    // reload to ensure Settings is up-to-date
+    // window.location.reload();
 
   } catch (error) {
     console.error('Login failed:', error);

@@ -52,6 +52,7 @@ export const useUserStore = defineStore('user', () => {
         settings.value = { ...defaultSettings };
         seenBirdNames.value = [];
         location.value = null;
+        console.log('User state reset');
     };
 
     // Account management
