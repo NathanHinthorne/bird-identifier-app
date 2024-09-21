@@ -1,6 +1,9 @@
 # Bird Identification App
 
-<!-- add image to be displayed -->
+<!-- main image -->
+<img src="https://live.staticflickr.com/65535/54010198591_a43c01c817_b.jpg" width="400">
+
+<!-- app screenshots -->
 <p align="center">
   <img src="https://live.staticflickr.com/65535/53941243746_30d3aa168e_c.jpg" width="200">
   <img src="https://live.staticflickr.com/65535/53941233061_8ee12ef1de_c.jpg" width="200">
