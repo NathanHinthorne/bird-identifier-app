@@ -1,1 +1,0 @@
-Native Layer: Ensure that your native layer (Android/iOS) is correctly set up to display the full splash screen. This might involve checking your AndroidManifest.xml for Android or Info.plist for iOS.

@@ -1,7 +1,0 @@
-{
-  "name": "Birding Pal",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "custom"
-}
