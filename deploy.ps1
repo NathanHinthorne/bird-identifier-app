@@ -1,23 +1,21 @@
-# Build the project
-npm run build
+# Step 1: Ensure the dist folder is ignored in the main branch
+$gitignorePath = ".gitignore"
+if (-not (Select-String -Path $gitignorePath -Pattern "^dist$")) {
+    Add-Content -Path $gitignorePath -Value "`ndist"
+    git add .gitignore
+    git commit -m "Ignore dist folder in main branch"
+}
 
-# Force add the dist directory
-git add -f dist
+# Step 2: Add and commit the dist folder, force-add since it's in .gitignore
+git add dist -f
+git commit -m "Adding dist folder for deployment"
 
-# Commit the dist directory temporarily
-git commit -m "Temporary commit for dist directory"
-
-# Fetch the latest changes from the remote gh-pages branch
+# Step 3: Pull the gh-pages branch to avoid non-fast-forward issues
 git fetch origin gh-pages
+git subtree pull --prefix dist origin gh-pages -m "Merging latest gh-pages changes" || Write-Host "Nothing to pull or subtree pull failed"
 
-# Merge the latest changes into the local gh-pages branch
-git subtree pull --prefix dist origin gh-pages -m "Merge remote gh-pages"
+# Step 4: Push subtree to gh-pages
+git subtree push --prefix dist origin gh-pages || Write-Host "Subtree push failed"
 
-# Push the contents of the dist directory to the gh-pages branch
-git subtree push --prefix dist origin gh-pages
-
-# Undo the temporary commit
-git reset HEAD~1
-
-# Remove the dist directory from the working directory
-git rm -rf dist
+# Step 5: Reset dist folder changes on the main branch so it isn't committed
+git reset HEAD dist
