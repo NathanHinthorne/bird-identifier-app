@@ -16,21 +16,31 @@ if (-not (Select-String -Path $gitignorePath -Pattern "^dist$")) {
 git add dist -f
 git commit -m "Adding dist folder for deployment"
 
-# Step 4: Pull the gh-pages branch to avoid non-fast-forward issues
-Try {
-    git fetch origin gh-pages
-    git subtree pull --prefix dist origin gh-pages --allow-unrelated-histories -m "Merging latest gh-pages changes"
-} Catch {
-    Write-Host "Nothing to pull or subtree pull failed"
-}
+# Step 4: Fetch the gh-pages branch
+git fetch origin gh-pages
 
-# Step 5: Push subtree to gh-pages, force if necessary
-Try {
-    git subtree push --prefix dist origin gh-pages
-} Catch {
-    Write-Host "Subtree push failed, attempting a forced push"
-    git push origin `gh-pages --force
-}
+# Step 5: Create a new temporary branch for deployment
+$tempBranch = "temp-deploy-$(Get-Date -Format 'yyyyMMddHHmmss')"
+git checkout -b $tempBranch
 
-# Step 6: Reset dist folder changes on the main branch so it isn't committed
+# Step 6: Read the contents of the dist folder
+git read-tree --prefix=dist/ -u origin/gh-pages
+
+# Step 7: Commit the changes
+git commit -m "Merge latest gh-pages content"
+
+# Step 8: Create a new gh-pages branch from the current state
+git branch -D gh-pages
+git branch gh-pages
+
+# Step 9: Push the new gh-pages branch, force if necessary
+git push origin gh-pages --force
+
+# Step 10: Clean up - switch back to main and delete temporary branch
+git checkout main
+git branch -D $tempBranch
+
+# Step 11: Reset dist folder changes on the main branch so it isn't committed
 git reset HEAD dist
+
+Write-Host "Deployment completed successfully!"
