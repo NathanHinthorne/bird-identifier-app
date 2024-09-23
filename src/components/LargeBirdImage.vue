@@ -3,11 +3,11 @@
     <div class="bird-image-tape" :style="{ '--tape-rotation': randomTapeRotation() }"></div>
     <div class="bird-image-frame">
       <div class="bird-image-wrapper">
-        <img :src="imageUrl" :alt="birdName" class="bird-image" />
-        <img v-if="inGame && userStore.settings.showGameInfo" :src="gameImage" alt="In-game badge" class="in-game-badge" />
+        <img :src="bird.previewPhoto" :alt="bird.comName" class="bird-image" />
+        <img v-if="bird.inGame && userStore.settings.showGameInfo" :src="gameImage" alt="In-game badge" class="in-game-badge" />
       </div>
     </div>
-    <p class="bird-image-caption">{{ birdName }}</p>
+    <p class="bird-image-caption">{{ bird.comName }}</p>
   </div>
 </template>
 
@@ -18,18 +18,10 @@ import { useUserStore } from '../stores/userStore';
 const userStore = useUserStore(); // user store for game info toggle
 
 const props = defineProps({
-  imageUrl: {
-    type: String,
+  bird: {
+    type: Object,
     required: true
   },
-  birdName: {
-    type: String,
-    required: true
-  },
-  inGame: {
-    type: Boolean,
-    required: true
-  }
 });
 
 const randomRotation = () => `${Math.random() * 6 - 3}deg`;

@@ -52,7 +52,12 @@ onMounted(async () => {
 
 const formatDate = (dateString) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(dateString).toLocaleDateString(undefined, options);
+  const date = new Date(dateString);
+  
+  // Adjust for time zone offset
+  date.setDate(date.getDate() + 1);
+  
+  return date.toLocaleDateString(undefined, options);
 };
 </script>
 

@@ -97,15 +97,5 @@ const router = createRouter({
     routes
 });
 
-// router.beforeEach((to, from, next) => {
-//      const userStore = useUserStore();
-//     if (to.name !== 'Auth' && !userStore.isAuthenticated) {
-//         next({ name: 'Auth' });
-//     } else if (to.name === 'Auth' && userStore.isAuthenticated) {
-//         next({ name: 'Identify' });
-//     } else {
-//         next();
-//     }
-// });
 
 export default router;

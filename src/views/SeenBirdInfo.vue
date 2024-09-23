@@ -15,14 +15,14 @@
         <div class="scrapbook-content">
           <div class="bird-info-card">
             <div v-if="bird.photographer" class="photographer">Photographed by {{ bird.photographer }}</div>
-            <LargeBirdImage :imageUrl="bird.previewPhoto" :birdName="bird.comName" :inGame="bird.inGame" />
+            <LargeBirdImage :bird="bird" />
             <div class="bird-details">
 
               <BirdRarityLabel :rarity="bird.rarity" />
 
                 <button @click="goToSightingHistory" class="scrapbook-button">
-                  View Sighting History
-                   <!-- <ion-icon :icon="calendarOutline"></ion-icon> -->
+                  View Sighting History 
+                   <ion-icon :icon="calendarOutline"></ion-icon>
                 </button>
 
               <div v-if="userStore.settings.showGameInfo && bird.inGame" class="bird-section">
@@ -233,7 +233,13 @@ const goToSightingHistory = () => {
 }
 
 
-
+ion-icon {
+  font-size: 28px;
+  margin-right: 10px;
+  margin-left: 5px;
+  color: #333;
+  vertical-align: middle;
+}
 
 
 .scrapbook-button {

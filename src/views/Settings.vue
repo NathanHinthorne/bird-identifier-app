@@ -16,7 +16,7 @@
               <div class="scrapbook-section-title">Preferences</div>
               <div class="scrapbook-section-content">
                 <ion-item>
-                  <ion-label>Show Game Info</ion-label>
+                  <ion-label>Show Bird Battler Info</ion-label>
                   <input type="checkbox" v-model="userStore.settings.showGameInfo" @change="saveSettings" class="custom-checkbox">
                 </ion-item>
                 <ion-item>
@@ -42,10 +42,11 @@
                   <ion-label>Username</ion-label>
                   <div>{{  userStore.user && userStore.user.displayName || '' }}</div>
                 </ion-item>
+                <!-- :style="{ '--rotation': randomRotation() }" -->
                 <div class="button-container">
-                  <button @click="showChangeUsernameModal">Change Username</button>
-                  <button @click="showChangePasswordModal">Change Password</button>
-                  <button @click="logout">Logout</button>
+                  <button style="transform: rotate(2deg)" @click="showChangeUsernameModal">Change Username</button>
+                  <button style="transform: rotate(-2deg)" @click="showChangePasswordModal">Change Password</button>
+                  <button style="transform: rotate(2deg)" class="right-button"@click="logout">Logout</button>
                 </div>
                 <!-- <div class="button-container">
                   <button class="warn-button" @click="deleteAccount">Delete Account</button>
@@ -353,4 +354,6 @@ ion-modal {
   --background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(5px); /* Adds a blur effect to the modal background */
 }
+
+
 </style>

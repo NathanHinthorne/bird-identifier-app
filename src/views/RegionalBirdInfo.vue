@@ -15,7 +15,7 @@
         <div class="scrapbook-content">
           <div class="bird-info-card">
             <div v-if="bird.photographer" class="photographer">Photographed by {{ bird.photographer }}</div>
-            <LargeBirdImage :imageUrl="bird.previewPhoto" :birdName="bird.comName" :inGame="bird.inGame" />
+            <LargeBirdImage :bird="bird" />
             <div class="bird-details">
 
               <BirdRarityLabel :rarity="bird.rarity" />

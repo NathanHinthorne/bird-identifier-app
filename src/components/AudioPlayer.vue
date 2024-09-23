@@ -1,6 +1,21 @@
 <template>
   <div class="player">
     <div class="background">
+      <p v-if="isLoading">Loading...</p>
+      <div class="spectrogram-container" ref="spectrogramContainer" v-show="!isLoading">
+        <div ref="waveform"></div>
+      </div>
+      <div class="progress-bar-container">
+        <input
+          type="range"
+          min="0"
+          max="100"
+          step="0.1"
+          v-model="progress"
+          @input="onProgressChange"
+          class="progress-bar"
+        >
+      </div>
       <div class="controls">
         <button @click="rewind" class="control-button">
           <ion-icon :icon="playBack"></ion-icon>
@@ -11,9 +26,6 @@
         <button @click="fastForward" class="control-button">
           <ion-icon :icon="playForward"></ion-icon>
         </button>
-      </div>
-      <div class="spectrogram-container" ref="spectrogramContainer">
-        <div ref="waveform"></div>
       </div>
     </div>
   </div>
@@ -33,10 +45,12 @@ const props = defineProps({
   },
 });
 
+const isLoading = ref(true);
 const isPlaying = ref(false);
 const spectrogramContainer = ref(null);
 const waveform = ref(null);
 const wavesurfer = ref(null);
+const progress = ref(0);
 
 const skipTime = 3; // seconds
 
@@ -60,8 +74,19 @@ onMounted(() => {
 
   wavesurfer.value.load(props.audioSrc);
 
-  wavesurfer.value.on('audioprocess', updateScroll);
-  wavesurfer.value.on('seek', updateScroll);
+  wavesurfer.value.on('ready', () => {
+    console.log("WAVESURFER DONE LOADING");
+    isLoading.value = false;
+  });
+
+  wavesurfer.value.on('audioprocess', () => {
+    updateScroll();
+    updateProgress();
+  });
+  wavesurfer.value.on('seek', () => {
+    updateScroll();
+    updateProgress();
+  });
 
   wavesurfer.value.on('finish', () => {
     isPlaying.value = false;
@@ -116,6 +141,18 @@ const updateScroll = () => {
     spectrogramContainer.value.scrollLeft = Math.max(0, scrollPosition);
   }
 };
+
+const updateProgress = () => {
+  if (wavesurfer.value) {
+    progress.value = (wavesurfer.value.getCurrentTime() / wavesurfer.value.getDuration()) * 100;
+  }
+};
+
+const onProgressChange = () => {
+  if (wavesurfer.value) {
+    wavesurfer.value.seekTo(progress.value / 100);
+  }
+};
 </script>
 
 <style scoped>
@@ -136,31 +173,18 @@ const updateScroll = () => {
   align-items: center;
   background-color: #d2b48c;
   border-radius: 8px;
-  padding: 15px;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
-/* comment out for no spacing between control buttons
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 10px;
-}
-  */
 
 .controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-bottom: 10px;
-}
-
-.left-controls, .right-controls {
-  display: flex;
-  align-items: center;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .control-button {
@@ -192,11 +216,56 @@ const updateScroll = () => {
   width: 100%;
   max-width: 600px;
   height: 150px;
-  border: 2px solid #5e2f0d;
-  border-radius: 10px;
   background-color: #d2b48c;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
   overflow-x: auto;
   overflow-y: hidden;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.progress-bar {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 10px;
+  background: #d2b48c;
+  outline: none;
+  border-radius: 5px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #5e2f0d;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  /*
+  margin-top: -6px
+  */
+}
+
+.progress-bar::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #5e2f0d;
+  cursor: pointer;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  /*
+  margin-top: -6px
+  */
 }
 </style>

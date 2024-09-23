@@ -7,8 +7,9 @@
           <LoadingAnimation v-if="regionalBirdStore.fetchingBirds" loadingText="Loading..."/>
           
           <div class="button-container" v-else>
-            <button class="scrapbook-button sound-button" @click="identifyBySound">
+            <button class="scrapbook-button sound-button wip" @click="identifyBySound">
               <span>Identify by Sound</span>
+              <span class="wip-text">WORK IN PROGRESS</span>
             </button>
             <button class="scrapbook-button image-button" @click="identifyByImage">
               <span>Identify by Description</span>
@@ -119,6 +120,20 @@ const identifyByImage = () => {
     */
     transform: rotate(2deg);
 }
+
+.wip {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.wip-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 12px;
+    font-family: 'Just Another Hand', cursive;
+}
+
 .scrapbook-container {
   position: relative;
   width: 100%;

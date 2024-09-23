@@ -43,10 +43,10 @@
 
         <ion-footer class="footer-section">
           <div class="navigation-buttons">
-            <button @click="previousQuestion" :disabled="currentQuestionIndex === 0">
+            <button @click="previousQuestion" :disabled="currentQuestionIndex === 0" class="left-button">
               Previous
             </button>
-            <button @click="nextQuestion" :disabled="!isCurrentQuestionAnswered">
+            <button @click="nextQuestion" :disabled="!isCurrentQuestionAnswered" class="right-button">
               {{ currentQuestionIndex === questions.length - 1 ? 'Identify' : 'Next' }}
             </button>
           </div>
@@ -67,6 +67,7 @@
           v-if="showNote"
           @cancel="handleCancelNote"
           @submit="handleSubmitNote"
+          :showDateQuestion="true"
         />
     </div>
   </ion-page>
@@ -252,11 +253,14 @@ const handleCancelNote = () => {
   showNote.value = false;
 }
 
-const handleSubmitNote = (noteText) => {
+const handleSubmitNote = (text, date, location) => {
   showNote.value = false;
 
+  console.log('text, date, location: ', text, date, location);
+
   // add bird name along with all its sighting information
-  userStore.addBirdSighting(identifiedBird.value.formattedComName, noteText, '2024-01-01', 'Seattle, WA');
+  // '2024-01-01', 'Seattle, WA'
+  userStore.addBirdSighting(identifiedBird.value.formattedComName, text, date, location);
 
   // place the bird in the storage for seen birds
   const birdSighting = userStore.getOriginalBirdSighting(identifiedBird.value.formattedComName);
@@ -422,15 +426,16 @@ button {
   color: #f0e6d2;
   border: none;
   border-radius: 5%;
-  height: 40px;
-  font-size: 1.6em;
+  height: 45px;
+  width: auto;
+  font-size: 1.8em;
   font-family: 'Just Another Hand', cursive;
   cursor: pointer;
   transition: background-color 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   
   margin-right: 10px;
-  padding: 5px 10px;
+  padding: 8px 12px;
 }
 
 button:hover {
@@ -441,6 +446,14 @@ button:disabled {
   background-color: rgba(139, 69, 19, 0.5);
   color: #f0e6d2;
   cursor: not-allowed;
+}
+
+.left-button {
+  transform: rotate(-2deg);
+}
+
+.right-button {
+  transform: rotate(2deg);
 }
 
 .step-tracker {

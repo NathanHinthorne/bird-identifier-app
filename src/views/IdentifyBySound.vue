@@ -251,11 +251,13 @@ const handleCancelNote = () => {
   showNote.value = false;
 }
 
-const handleSubmitNote = (noteText) => {
+
+const handleSubmitNote = (text, date, location) => {
   showNote.value = false;
 
   // add bird name along with all its sighting information
-  userStore.addBirdSighting(identifiedBird.value.formattedComName, noteText, '2024-01-01', 'Seattle, WA');
+  // '2024-01-01', 'Seattle, WA'
+  userStore.addBirdSighting(identifiedBird.value.formattedComName, text, date, location);
 
   // place the bird in the storage for seen birds
   const birdSighting = userStore.getOriginalBirdSighting(identifiedBird.value.formattedComName);
