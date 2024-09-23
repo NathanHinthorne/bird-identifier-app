@@ -52,6 +52,7 @@ Utilizing Vue, Vite, and Ionic Capacitor, this project is what's known as a Prog
   - Add checkmark badge if bird is seen
   - Change "sighting history" button to look like a small page from a scrapbook with scribbles and horizontal lines to represent lists of birds.
   - Change "sighting history" PAGE to feature a couple pages piled on top of each other. Each page is a sighting, so the user will "flip" between the pages.
+  - Give ability to delete bird sighting from sighting history (with trash can icon).
   - During the sighting note pop-up, allow user to upload a photo. This photo will be displayed alongside the written note in the "sighting history" page.
 - Cache all regional birds in user's file system (Directory.Data) to allow offline use.
   - Use the [sqlite capacitor plugin](https://github.com/capacitor-community/sqlite) and phone's storage for that.
