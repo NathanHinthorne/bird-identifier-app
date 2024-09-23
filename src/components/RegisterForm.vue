@@ -19,11 +19,19 @@
       </button>
     </div>
   </form>
+
+  <ion-alert
+    :is-open="showAlert"
+    :header="alertHeader"
+    :message="alertMessage"
+    :buttons="['OK']"
+    @didDismiss="showAlert = false"
+  ></ion-alert>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { IonItem, IonLabel, IonInput, IonButton } from '@ionic/vue';
+import { IonItem, IonLabel, IonInput, IonButton, IonAlert } from '@ionic/vue';
 import { useUserStore } from '@/stores/userStore';
 import { useRouter } from 'vue-router';
 
@@ -32,6 +40,9 @@ const userStore = useUserStore();
 const email = ref('');
 const username = ref('');
 const password = ref('');
+const showAlert = ref(false);
+const alertHeader = ref('');
+const alertMessage = ref('');
 
 const handleSubmit = async () => {
   try {
@@ -40,7 +51,16 @@ const handleSubmit = async () => {
     router.push({ name: 'Identify' });
   } catch (error) {
     console.error('Registration failed:', error);
-    // Show error message to user
+    
+    alertHeader.value = 'Registration Failed';
+    username.value = '';
+
+    if (error.code === 'auth/email-already-in-use') {
+      alertMessage.value = 'That email is already in use. Please try a different one.';
+
+    } // else if ...
+    
+    showAlert.value = true;
   }
 };
 </script>
@@ -87,5 +107,24 @@ ion-label {
 
 .button-container button:hover {
   background-color: #7a3d10;
+}
+
+
+/* Custom styles for IonAlert to match the theme */
+::v-deep .alert-wrapper {
+  --background: #f0e6d2;
+  --max-width: 300px;
+}
+
+::v-deep .alert-head {
+  color: #5e2f0d;
+}
+
+::v-deep .alert-message {
+  color: #5e2f0d;
+}
+
+::v-deep .alert-button {
+  color: #5e2f0d;
 }
 </style>

@@ -83,6 +83,7 @@ export const useUserStore = defineStore('user', () => {
 
         } catch (error) {
             console.error('Error logging in:', error);
+            throw error;
         }
     };
 
@@ -101,6 +102,7 @@ export const useUserStore = defineStore('user', () => {
 
         } catch (error) {
             console.error('Error registering new user:', error);
+            throw error;
         }
     };
 

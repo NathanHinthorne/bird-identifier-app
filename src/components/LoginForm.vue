@@ -15,11 +15,19 @@
       </button>
     </div>
   </form>
+
+  <ion-alert
+    :is-open="showAlert"
+    :header="alertHeader"
+    :message="alertMessage"
+    :buttons="['OK']"
+    @didDismiss="showAlert = false"
+  ></ion-alert>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { IonItem, IonLabel, IonInput, IonButton } from '@ionic/vue';
+import { IonItem, IonLabel, IonInput, IonButton, IonAlert } from '@ionic/vue';
 import { useUserStore } from '@/stores/userStore';
 import { useRouter } from 'vue-router';
 
@@ -27,6 +35,9 @@ const router = useRouter();
 const userStore = useUserStore();
 const email = ref('');
 const password = ref('');
+const showAlert = ref(false);
+const alertHeader = ref('');
+const alertMessage = ref('');
 
 const handleSubmit = async () => {
   try {
@@ -37,13 +48,26 @@ const handleSubmit = async () => {
     // going back to the login page after they've logged in.
     router.push({ name: 'Identify' }, { replace: true });
 
-
-    // reload to ensure Settings is up-to-date
-    // window.location.reload();
-
   } catch (error) {
     console.error('Login failed:', error);
-    // Show error message to user
+    
+    alertHeader.value = 'Login Failed';
+    password.value = '';
+
+    if (error.code === 'auth/invalid-credential' ||
+      error.code === 'auth/wrong-password' ||
+      error.code === 'auth/user-not-found') {
+      alertMessage.value = 'Please check your email and password and try again.';
+
+    } else if (error.code === 'auth/too-many-requests') {
+      alertMessage.value = 'Too many failed login attempts. Please try again later.';
+
+    } else if (error.code === 'auth/user-disabled') {
+      alertMessage.value = 'Your account has been disabled. Please contact support.';
+
+    }
+
+    showAlert.value = true;
   }
 };
 </script>
@@ -94,5 +118,22 @@ ion-label {
 }
 
 
+/* Custom styles for IonAlert to match the theme */
+::v-deep .alert-wrapper {
+  --background: #f0e6d2;
+  --max-width: 300px;
+}
+
+::v-deep .alert-head {
+  color: #5e2f0d;
+}
+
+::v-deep .alert-message {
+  color: #5e2f0d;
+}
+
+::v-deep .alert-button {
+  color: #5e2f0d;
+}
 
 </style>

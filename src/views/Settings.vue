@@ -16,17 +16,17 @@
               <div class="scrapbook-section-title">Preferences</div>
               <div class="scrapbook-section-content">
                 <ion-item>
-                  <ion-label>Show Bird Battler Info</ion-label>
+                  <ion-label>Show Bird Battler Info (bird stats and game badges)</ion-label>
                   <input type="checkbox" v-model="userStore.settings.showGameInfo" @change="saveSettings" class="custom-checkbox">
                 </ion-item>
-                <ion-item>
+                <!-- <ion-item>
                   <ion-label>Enable Music</ion-label>
                   <input type="checkbox" v-model="userStore.settings.enableMusic" @change="saveSettings" class="custom-checkbox">
                 </ion-item>
                 <ion-item>
                   <ion-label>Enable Sound Effects</ion-label>
                   <input type="checkbox" v-model="userStore.settings.enableSoundEffects" @change="saveSettings" class="custom-checkbox">
-                </ion-item>
+                </ion-item> -->
               </div>
             </div>
 
@@ -334,6 +334,7 @@ ion-toggle {
   cursor: pointer;
   outline: none;
   transition: background-color 0.3s ease;
+  margin-left: 20px;
 }
 
 .custom-checkbox:checked {
