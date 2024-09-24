@@ -192,8 +192,8 @@ const onProgressChange = () => {
   color: #f0e6d2;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   font-size: 20px;
   cursor: pointer;
   transition: background-color 0.3s ease;

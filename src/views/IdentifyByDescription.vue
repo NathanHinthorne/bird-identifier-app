@@ -426,7 +426,7 @@ button {
   color: #f0e6d2;
   border: none;
   border-radius: 5%;
-  height: 45px;
+  height: 42px;
   width: auto;
   font-size: 1.8em;
   font-family: 'Just Another Hand', cursive;

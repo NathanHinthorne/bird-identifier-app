@@ -3,7 +3,7 @@
     <ion-toolbar>
       <!-- <ion-title>Birding Pal</ion-title> -->
        <div class="logoContainer">
-         <!-- <img :src="logo" class="logo" alt="Birding Pal logo" /> -->
+         <img :src="logo" class="logo" alt="Birding Pal logo" />
          <img :src="logoText" alt="Birding Pal logo text" />
        </div>
 
@@ -16,7 +16,7 @@
 
 <script setup>
 import { IonHeader, IonToolbar, IonTitle, IonText } from '@ionic/vue';
-// import logo from '../assets/app/icon.png';
+import logo from '../assets/app/logo2.png';
 import logoText from '../assets/misc/logoText.png';
 </script>
 

@@ -248,7 +248,7 @@ button {
   color: #f0e6d2;
   border: none;
   border-radius: 5%;
-  height: 40px;
+  height: 42px;
   font-size: 1.8em;
   font-family: 'Just Another Hand', cursive;
   cursor: pointer;

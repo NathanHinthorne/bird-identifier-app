@@ -7,7 +7,7 @@
     "SplashScreen": {
       "launchAutoHide": true,
       "splashImmersive": true,
-      "backgroundColor": "#ffffff",
+      "backgroundColor": "#D2B48C",
       "androidSplashResourceName": "splash",
       "showSpinner": true,
       "splashFullScreen": true
