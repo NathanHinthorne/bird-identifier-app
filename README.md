@@ -1,17 +1,83 @@
 <!-- main image -->
 <p align="center">
-  <img src="https://live.staticflickr.com/65535/54010198591_a43c01c817_b.jpg" width="700">
+  <img src="https://live.staticflickr.com/65535/54066956532_7d104b85f5_b.jpg" width="700">
 </p>
 
 # Bird Identification App
 
 <!-- app screenshots -->
-<p align="center">
-  <img src="https://live.staticflickr.com/65535/53941243746_30d3aa168e_c.jpg" width="200">
-  <img src="https://live.staticflickr.com/65535/53941233061_8ee12ef1de_c.jpg" width="200">
-  <img src="https://live.staticflickr.com/65535/53941685105_079f8d8308_c.jpg" width="200">
-  <img src="https://live.staticflickr.com/65535/53941566474_6aa9c4e2df_c.jpg" width="200">
-</p>
+<style>
+  .screenshot-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .screenshot-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .screenshot-group h3 {
+    margin-bottom: 10px;
+    font-size: 1.6em;
+  }
+  .screenshot {
+    width: 200px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  @media (max-width: 768px) {
+    .screenshot {
+      width: 150px;
+    }
+  }
+</style>
+
+<h2 align="center">App Screenshots</h2>
+
+<div class="screenshot-container">
+  <div class="screenshot-group">
+    <h3>Main Pages</h3>
+    <div class="screenshot-container">
+      <img src="./readme_images/home-page.png" alt="Home Page" class="screenshot">
+      <img src="./readme_images/life-list-page.png" alt="Life List Page" class="screenshot">
+      <img src="./readme_images/explore-page.png" alt="Explore Page" class="screenshot">
+      <img src="./readme_images/settings-page.png" alt="Settings Page" class="screenshot">
+    </div>
+  </div>
+
+  <div class="screenshot-group">
+    <h3>Identify by Description</h3>
+    <div class="screenshot-container">
+      <img src="./readme_images/by-description1.png" alt="By Description 1" class="screenshot">
+      <img src="./readme_images/by-description2.png" alt="By Description 2" class="screenshot">
+      <img src="./readme_images/by-description3.png" alt="By Description 3" class="screenshot">
+    </div>
+  </div>
+
+  <div class="screenshot-group">
+    <h3>Explore Bird Info</h3>
+    <div class="screenshot-container">
+      <img src="./readme_images/explore-info1.png" alt="Explore Info 1" class="screenshot">
+      <img src="./readme_images/explore-info2.png" alt="Explore Info 2" class="screenshot">
+      <img src="./readme_images/explore-info3.png" alt="Explore Info 3" class="screenshot">
+    </div>
+  </div>
+
+  <div class="screenshot-group">
+    <h3>Sighting Notes</h3>
+    <div class="screenshot-container">
+      <img src="./readme_images/note1.png" alt="Note 1" class="screenshot">
+      <img src="./readme_images/note2.png" alt="Note 2" class="screenshot">
+      <img src="./readme_images/note3.png" alt="Note 3" class="screenshot">
+      <img src="./readme_images/possible-birds.png" alt="Possible Birds" class="screenshot">
+      <img src="./readme_images/sighting-history.png" alt="Sighting History" class="screenshot">
+    </div>
+  </div>
+</div>
 
 ## Description
 
