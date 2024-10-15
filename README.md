@@ -7,36 +7,40 @@
 
 ## App Screenshots
 
-<div align="center">
-
-### Main Pages
-
+<details>
+<summary>Main Pages</summary>
+<br>
 <img src="./readme_images/home-page.png" width="200" alt="Home Page">
 <img src="./readme_images/explore-page.png" width="200" alt="Explore Page">
 <img src="./readme_images/life-list-page.png" width="200" alt="Life List Page">
 <img src="./readme_images/settings-page.png" width="200" alt="Settings Page">
+</details>
 
-### Identify by Description
-
+<details>
+<summary>Identify by Description</summary>
+<br>
 <img src="./readme_images/by-description1.png" width="200" alt="By Description 1">
 <img src="./readme_images/by-description2.png" width="200" alt="By Description 2">
 <img src="./readme_images/by-description3.png" width="200" alt="By Description 3">
 <img src="./readme_images/possible-birds.png" width="200" alt="Possible Birds">
+</details>
 
-### Explore Bird Info
-
+<details>
+<summary>Explore Bird Info</summary>
+<br>
 <img src="./readme_images/explore-info1.png" width="200" alt="Explore Info 1">
 <img src="./readme_images/explore-info2.png" width="200" alt="Explore Info 2">
 <img src="./readme_images/explore-info3.png" width="200" alt="Explore Info 3">
+</details>
 
-### Sighting Notes
-
+<details>
+<summary>Sighting Notes</summary>
+<br>
 <img src="./readme_images/note1.png" width="200" alt="Note 1">
 <img src="./readme_images/note2.png" width="200" alt="Note 2">
 <img src="./readme_images/note3.png" width="200" alt="Note 3">
 <img src="./readme_images/sighting-history.png" width="200" alt="Sighting History">
-
-</div>
+</details>
 
 ## Description
 
