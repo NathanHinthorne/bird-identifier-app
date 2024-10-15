@@ -21,6 +21,7 @@
 <img src="./readme_images/by-description1.png" width="200" alt="By Description 1">
 <img src="./readme_images/by-description2.png" width="200" alt="By Description 2">
 <img src="./readme_images/by-description3.png" width="200" alt="By Description 3">
+<img src="./readme_images/possible-birds.png" width="200" alt="Possible Birds">
 
 ### Explore Bird Info
 
@@ -33,7 +34,6 @@
 <img src="./readme_images/note1.png" width="200" alt="Note 1">
 <img src="./readme_images/note2.png" width="200" alt="Note 2">
 <img src="./readme_images/note3.png" width="200" alt="Note 3">
-<img src="./readme_images/possible-birds.png" width="200" alt="Possible Birds">
 <img src="./readme_images/sighting-history.png" width="200" alt="Sighting History">
 
 </div>
