@@ -20,7 +20,7 @@
           <li>Unique abilities for each bird species</li>
           <li>Perform upgrades to create a powerful bird army</li>
         </ul>
-        <a href="https://sites.google.com/view/bird-battler/home" target="_blank" rel="noopener noreferrer" class="cta-button">Learn More & Download</a>
+        <a href="https://sites.google.com/view/skyward-studio/home" target="_blank" rel="noopener noreferrer" class="cta-button">Learn More & Download</a>
         <button v-if="canRemove" @click="neverShowAgain" class="never-show-button">Never Show Again</button>
       </div>
     </div>

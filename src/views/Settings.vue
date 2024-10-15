@@ -19,11 +19,11 @@
                   <ion-label>Show Bird Battler Info (bird stats and game badges)</ion-label>
                   <input type="checkbox" v-model="userStore.settings.showGameInfo" @change="saveSettings" class="custom-checkbox">
                 </ion-item>
-                <!-- <ion-item>
+                <ion-item>
                   <ion-label>Enable Music</ion-label>
                   <input type="checkbox" v-model="userStore.settings.enableMusic" @change="saveSettings" class="custom-checkbox">
                 </ion-item>
-                <ion-item>
+                <!-- <ion-item>
                   <ion-label>Enable Sound Effects</ion-label>
                   <input type="checkbox" v-model="userStore.settings.enableSoundEffects" @change="saveSettings" class="custom-checkbox">
                 </ion-item> -->

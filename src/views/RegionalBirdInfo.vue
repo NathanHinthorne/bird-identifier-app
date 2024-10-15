@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-back-button text="Back"></ion-back-button>
         </ion-buttons>
-        <ion-title>{{ bird.comName }}</ion-title>
+        <ion-title>Bird Info</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -100,6 +100,10 @@ onMounted(async () => {
   const birdName = route.params.birdName;
   bird.value = await regionalBirdStore.getBirdByName(birdName);
 });
+
+const randomRotation = () => {
+  return `${Math.random() * 6 - 3}deg`; // Random rotation between -3 and 3 degrees
+};
 </script>
 
 <style scoped>
@@ -203,6 +207,8 @@ onMounted(async () => {
 .section-header-bg {
   width: 100%;
   height: auto;
+
+  transform: rotate(var(--rotation));
 }
 
 .section-header h3 {

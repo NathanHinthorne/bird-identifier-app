@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-back-button text="Back"></ion-back-button>
         </ion-buttons>
-        <ion-title>{{ bird.comName }}</ion-title>
+        <ion-title>Bird Info</ion-title>
       </ion-toolbar>
     </ion-header>
 

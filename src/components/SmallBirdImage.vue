@@ -115,6 +115,17 @@ const randomTapeRotation = () => {
   background-color: rgba(255, 255, 255, 0.7);
 }
 
+/* rotation animations */
+.bird-image-container:hover {
+  animation: subtle-sway 3s ease-in-out infinite;
+}
+
+@keyframes subtle-sway {
+  0% { transform: rotate(var(--rotation)); }
+  50% { transform: rotate(calc(var(--rotation) + 2deg)); }
+  100% { transform: rotate(var(--rotation)); }
+}
+
 /* this is used so the badge is latched to the bottom right of the image */
 .bird-image-wrapper {
   position: relative;

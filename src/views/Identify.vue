@@ -5,8 +5,15 @@
         <div class="scrapbook-container">
           <div class="scrapbook-background"></div>
           <LoadingAnimation v-if="regionalBirdStore.fetchingBirds" loadingText="Loading..."/>
+          <!-- <SpritesheetAnimation
+              :frameWidth="500"
+              :frameHeight="700"
+              :frameCount="19"
+              :duration="2000"
+          /> -->
+
           
-          <div class="button-container" v-else>
+          <div class="button-container" v-if="!regionalBirdStore.fetchingBirds">
             <button class="scrapbook-button sound-button wip" @click="identifyBySound">
               <span>Identify by Sound</span>
               <span class="wip-text">WORK IN PROGRESS</span>
@@ -26,6 +33,7 @@
 import { IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonPage, IonContent, IonIcon } from '@ionic/vue';
 import Header from '../components/Header.vue';
 import LoadingAnimation from '../components/LoadingAnimation.vue';
+import SpritesheetAnimation from '../components/SpritesheetAnimation.vue';
 import { useRegionalBirdStore } from '../stores/regionalBirdStore';
 import { useRouter } from 'vue-router';
 
@@ -49,6 +57,15 @@ const identifyByImage = () => {
 
 <style scoped>
 
+.temp {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
 .button-container {
     position: absolute;
     bottom: 100px;
@@ -57,6 +74,8 @@ const identifyByImage = () => {
     display: flex;
     justify-content: center;
     gap: 20px;
+
+    
 }
 
 .scrapbook-button {

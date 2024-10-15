@@ -57,6 +57,7 @@ const ionInfinite = (event) => {
   loadMoreBirds();
   setTimeout(() => event.target.complete(), 500);
 };
+
 </script>
 
 <style scoped>
@@ -92,17 +93,6 @@ const ionInfinite = (event) => {
   
   background-color: rgba(255, 255, 255, 0.7);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  
-}
-
-.bird-image-container:hover {
-  animation: subtle-sway 3s ease-in-out infinite;
-}
-
-@keyframes subtle-sway {
-  0% { transform: rotate(var(--rotation)); }
-  50% { transform: rotate(calc(var(--rotation) + 2deg)); }
-  100% { transform: rotate(var(--rotation)); }
 }
 
 .bird-selected {
