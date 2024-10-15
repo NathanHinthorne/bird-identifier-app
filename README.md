@@ -5,78 +5,37 @@
 
 # Bird Identification App
 
-<!-- app screenshots -->
-<style>
-  .screenshot-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .screenshot-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  .screenshot-group h3 {
-    margin-bottom: 10px;
-    font-size: 1.6em;
-  }
-  .screenshot {
-    width: 200px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  @media (max-width: 768px) {
-    .screenshot {
-      width: 150px;
-    }
-  }
-</style>
+## App Screenshots
 
-<h2 align="center">App Screenshots</h2>
+<div align="center">
 
-<div class="screenshot-container">
-  <div class="screenshot-group">
-    <h3>Main Pages</h3>
-    <div class="screenshot-container">
-      <img src="./readme_images/home-page.png" alt="Home Page" class="screenshot">
-      <img src="./readme_images/life-list-page.png" alt="Life List Page" class="screenshot">
-      <img src="./readme_images/explore-page.png" alt="Explore Page" class="screenshot">
-      <img src="./readme_images/settings-page.png" alt="Settings Page" class="screenshot">
-    </div>
-  </div>
+### Main Pages
 
-  <div class="screenshot-group">
-    <h3>Identify by Description</h3>
-    <div class="screenshot-container">
-      <img src="./readme_images/by-description1.png" alt="By Description 1" class="screenshot">
-      <img src="./readme_images/by-description2.png" alt="By Description 2" class="screenshot">
-      <img src="./readme_images/by-description3.png" alt="By Description 3" class="screenshot">
-    </div>
-  </div>
+<img src="./readme_images/home-page.png" width="200" alt="Home Page">
+<img src="./readme_images/explore-page.png" width="200" alt="Explore Page">
+<img src="./readme_images/life-list-page.png" width="200" alt="Life List Page">
+<img src="./readme_images/settings-page.png" width="200" alt="Settings Page">
 
-  <div class="screenshot-group">
-    <h3>Explore Bird Info</h3>
-    <div class="screenshot-container">
-      <img src="./readme_images/explore-info1.png" alt="Explore Info 1" class="screenshot">
-      <img src="./readme_images/explore-info2.png" alt="Explore Info 2" class="screenshot">
-      <img src="./readme_images/explore-info3.png" alt="Explore Info 3" class="screenshot">
-    </div>
-  </div>
+### Identify by Description
 
-  <div class="screenshot-group">
-    <h3>Sighting Notes</h3>
-    <div class="screenshot-container">
-      <img src="./readme_images/note1.png" alt="Note 1" class="screenshot">
-      <img src="./readme_images/note2.png" alt="Note 2" class="screenshot">
-      <img src="./readme_images/note3.png" alt="Note 3" class="screenshot">
-      <img src="./readme_images/possible-birds.png" alt="Possible Birds" class="screenshot">
-      <img src="./readme_images/sighting-history.png" alt="Sighting History" class="screenshot">
-    </div>
-  </div>
+<img src="./readme_images/by-description1.png" width="200" alt="By Description 1">
+<img src="./readme_images/by-description2.png" width="200" alt="By Description 2">
+<img src="./readme_images/by-description3.png" width="200" alt="By Description 3">
+
+### Explore Bird Info
+
+<img src="./readme_images/explore-info1.png" width="200" alt="Explore Info 1">
+<img src="./readme_images/explore-info2.png" width="200" alt="Explore Info 2">
+<img src="./readme_images/explore-info3.png" width="200" alt="Explore Info 3">
+
+### Sighting Notes
+
+<img src="./readme_images/note1.png" width="200" alt="Note 1">
+<img src="./readme_images/note2.png" width="200" alt="Note 2">
+<img src="./readme_images/note3.png" width="200" alt="Note 3">
+<img src="./readme_images/possible-birds.png" width="200" alt="Possible Birds">
+<img src="./readme_images/sighting-history.png" width="200" alt="Sighting History">
+
 </div>
 
 ## Description
