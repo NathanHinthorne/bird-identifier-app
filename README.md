@@ -111,7 +111,7 @@ gradlew assembleDebug
 
 ## Credits
 
-A big thank you to my friend Ethan for his help writing bird descriptions and his contribution of over 100 bird images he spent years personally photographing and organizing! You can find a wonderful wildlife book he wrote [here on Amazon](https://www.amazon.com/Masterpieces-Evergreen-State-Narration-Washington/dp/B09GCXXTBX). I would highly recommend checking it out!
+A big thank you to my friend **Ethan Wright** for his help writing bird descriptions and his contribution of over 100 bird images he spent years personally photographing and organizing! You can find a wonderful wildlife book he wrote [here on Amazon](https://www.amazon.com/Masterpieces-Evergreen-State-Narration-Washington/dp/B09GCXXTBX). I would highly recommend checking it out!
 
 ## License
 
